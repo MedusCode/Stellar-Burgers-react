@@ -1,0 +1,23 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 40px;
+  color: #8585AD;
+  cursor: pointer;
+}
+
+.buttonActive {
+  composes: button;
+  color: #F2F2F3;
+}
+
+.button:first-child {
+  margin-right: 8px;
+}
+
+.button:hover {
+  opacity: 0.8;
+}

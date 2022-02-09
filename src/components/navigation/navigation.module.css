@@ -1,0 +1,16 @@
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.container {
+  display: flex;
+}
+
+.container:last-child {
+  flex-grow: 0.464;
+  justify-content: right;
+}
