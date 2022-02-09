@@ -3,16 +3,15 @@ import styles from './navigation-button.module.css';
 
 const NavigationButton = (props) => {
   const clickHandler = () => {
-    console.log('hey')
     switch (props.text) {
       case 'Конструктор':
-        props.setActivePage('Constructor');
+        props.setActiveButton('Constructor');
         break;
       case 'Лента заказов':
-        props.setActivePage('Order list');
+        props.setActiveButton('Order list');
         break;
       case 'Личный кабинет':
-        props.setActivePage('Profile');
+        props.setActiveButton('Profile');
         break;
     }
   }
