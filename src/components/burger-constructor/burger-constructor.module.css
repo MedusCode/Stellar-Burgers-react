@@ -1,0 +1,22 @@
+.constructor {
+  max-width: 600px;
+}
+
+.takeOrderContainer {
+  display: flex;
+  justify-content: right;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+}
+
+.clearCart {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

@@ -7,6 +7,13 @@ import OtherPage from '../other-page/other-page';
 const App = () => {
   const [activePage, setActivePage] = React.useState('Constructor');
 
+  // React.useEffect(() => {
+  //   const url = 'https://norma.nomoreparties.space/api/ingredients';
+  //   const getData = (url) => {
+
+  //   }
+  // }, [])
+
   return (
     <>
       <AppHeader setActivePage={setActivePage}/>

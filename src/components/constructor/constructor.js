@@ -1,5 +1,7 @@
 import React from 'react';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
+import styles from './constructor.module.css';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 const Constructor = () => {
   React.useEffect(() => {
@@ -18,7 +20,10 @@ const Constructor = () => {
   }, [])
 
   return (
-    <BurgerIngredients />
+    <section className={styles.constructorPage}>
+      <BurgerIngredients />
+      <BurgerConstructor />
+    </section>
   )
 }
 
