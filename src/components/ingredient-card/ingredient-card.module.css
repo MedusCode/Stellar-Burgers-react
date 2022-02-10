@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,4 +27,18 @@
   display: flex;
   align-items: center;
   color: #F2F2F3;
+}
+
+.counter {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 100%;
+  color: #F2F2F3;
+  background-color: #4C4CFF;
 }

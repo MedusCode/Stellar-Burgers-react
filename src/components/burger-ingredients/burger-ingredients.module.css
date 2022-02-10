@@ -17,6 +17,10 @@
   overflow-y: overlay;
 }
 
+.link {
+  text-decoration: none;
+}
+
 ::-webkit-scrollbar {
   background-color: #2F2F37;
   width: 8px;
