@@ -3,7 +3,7 @@ import styles from './constructor.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-const Constructor = () => {
+const Constructor = ({ filteredData, ingredientsData }) => {
   React.useEffect(() => {
     const smoothLinks = document.querySelectorAll('a[href^="#"]');
     for (let smoothLink of smoothLinks) {
@@ -21,8 +21,8 @@ const Constructor = () => {
 
   return (
     <section className={styles.constructorPage}>
-      <BurgerIngredients />
-      <BurgerConstructor />
+      <BurgerIngredients filteredData={filteredData} />
+      <BurgerConstructor ingredientsData={ingredientsData}/>
     </section>
   )
 }

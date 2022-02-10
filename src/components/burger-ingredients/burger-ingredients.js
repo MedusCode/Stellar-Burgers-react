@@ -3,36 +3,9 @@ import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientsSection from '../ingredients-section/ingredients-section'
 
-import ingr from '../aaa'
-
-const BurgerIngredients = () => {
+const BurgerIngredients = ({ filteredData }) => {
   const sectionListRef = React.useRef(null)
   const [current, setCurrent] = React.useState('bun')
-  const [ingredients, setIngredients] = React.useState({
-    bun: [],
-    sauce: [],
-    main: []
-  })
-
-  React.useEffect(() => {
-    function tryy() {
-      setTimeout(() => {
-        const bun = [];
-        const sauce = [];
-        const main = [];
-
-        ingr.forEach((ingredient) => {
-          ingredient.type === 'bun' && bun.push(ingredient)
-          ingredient.type === 'sauce' && sauce.push(ingredient);
-          ingredient.type === 'main' && main.push(ingredient);
-        })
-
-        setIngredients({bun, sauce, main});
-      }, 1000)
-    }
-
-    tryy()
-  }, [])
 
   React.useEffect(() => {
     const sectionListSizing = () => {
@@ -62,9 +35,9 @@ const BurgerIngredients = () => {
         </a>
       </div>
       <ul ref={sectionListRef} className={styles.sectionsList}>
-        <li><IngredientsSection id='bun' title='Булки' ingredients={ingredients.bun}/></li>
-        <li><IngredientsSection id='sauce' title='Соусы' ingredients={ingredients.sauce}/></li>
-        <li><IngredientsSection id='main' title='Начинка' ingredients={ingredients.main}/></li>
+        <li><IngredientsSection id='bun' title='Булки' ingredients={filteredData.bun}/></li>
+        <li><IngredientsSection id='sauce' title='Соусы' ingredients={filteredData.sauce}/></li>
+        <li><IngredientsSection id='main' title='Начинка' ingredients={filteredData.main}/></li>
       </ul>
     </section>
   )

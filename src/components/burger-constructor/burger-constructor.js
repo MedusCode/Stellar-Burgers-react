@@ -1,18 +1,18 @@
 import React from 'react';
 import styles from './burger-constructor.module.css';
-import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Cart from '../cart/cart';
-import cartIngredients from '../cart-ingredients';
 import CurrencyIconLarge from '../currency-icon-large/currency-icon-large';
 
-const BurgerConstructor = () => {
-  const [cart, setCart] = React.useState(cartIngredients);
+const BurgerConstructor = ({ ingredientsData }) => {
+  const [cart, setCart] = React.useState(ingredientsData);
   const [price, setPrice] = React.useState(0)
 
+
   React.useEffect(() => {
-    const newPrice = cart.reduce((prev, curr) => prev + curr.price, 0);
-    setPrice(newPrice);
-  }, [cart])
+    setCart(ingredientsData);
+    setPrice(cart.reduce((prev, curr) => prev + curr.price, 0));
+  })
 
   return (
     cart.length > 0 ?

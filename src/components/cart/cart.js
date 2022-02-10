@@ -31,7 +31,7 @@ const Cart = (props) => {
       </li>
       <div className={styles.container} ref={cartContainerRef}>
         {props.cart.map((item, index) => {
-          if (index !== 0) {
+          if (item.type !== 'bun') {
             return (
             <li className={`${styles.ingredient} ml-4 mr-4`} key={index}>
               <DragIcon type="primary" />

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ingredients-section.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
 
-const IngredientsSection = (props) => {
+const IngredientsSection = React.memo((props) => {
   return (
     <section>
       <h2 id={props.id} className={`${styles.title} text text_type_main-medium mb-6`}>
@@ -13,6 +13,6 @@ const IngredientsSection = (props) => {
       </ul>
     </section>
   )
-}
+})
 
 export default IngredientsSection;
