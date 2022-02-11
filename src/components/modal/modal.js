@@ -33,7 +33,7 @@ const Modal = (props) => {
       </section>
       <ModalOverlay onClick={closeModal} />
     </>
-  ), document.getElementById('root'));
+  ), document.getElementById('modals'));
 }
 
 Modal.propTypes = {

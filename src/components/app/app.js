@@ -17,11 +17,16 @@ const App = () => {
     main: []
   })
 
+  const checkResponse = (res) => {
+    if (res.ok) return res.json();
+    return Promise.reject(res.status);
+  }
+
   React.useEffect(() => {
     const getData = () => {
       setStatus({isLoading: true, hasError: false})
       fetch(apiUrl)
-        .then(res => res.json())
+        .then(checkResponse)
         .then(data => {
           const bun = [];
           const sauce = [];
@@ -37,8 +42,8 @@ const App = () => {
           setFilteredData({bun, sauce, main});
           setStatus({isLoading: false, hasError: false})
         })
-        .catch(e => {
-          setStatus({hasError: true, isLoading: false});
+        .catch(error => {
+          setStatus({hasError: true, isLoading: false, errorCode: error});
         });
     }
 
@@ -58,12 +63,10 @@ const App = () => {
         </>
         : status.isLoading
           ? <InfoPage>Загрузка...</InfoPage>
-          : <InfoPage info='Попробуйте перезапусть страницу.'>Произошла ошибка :(</InfoPage>
+          : <InfoPage info='Попробуйте перезапустить страницу.'>Произошла ошибка: {status.errorCode} :(</InfoPage>
       }
     </>
   )
 }
-
-
 
 export default App;

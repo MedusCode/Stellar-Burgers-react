@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ingredientType from '../../assets/scripts/propTypes';
 import styles from './cart.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { nanoid } from 'nanoid';
 
 const Cart = (props) => {
   const cartContainerRef = React.useRef(null);
@@ -21,8 +22,8 @@ const Cart = (props) => {
   }, [])
 
   return (
-    <ul className={styles.cart} key={0}>
-      <li className='ml-4 mr-4 pl-8'>
+    <ul className={styles.cart}>
+      <li className='ml-4 mr-4 pl-8' key={nanoid()}>
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -32,10 +33,10 @@ const Cart = (props) => {
         />
       </li>
       <div className={styles.container} ref={cartContainerRef}>
-        {props.cart.map((item, index) => {
+        {props.cart.map((item) => {
           if (item.type !== 'bun') {
             return (
-            <li className={`${styles.ingredient} ml-4 mr-4`} key={index}>
+            <li className={`${styles.ingredient} ml-4 mr-4`} key={nanoid()}>
               <DragIcon type="primary" />
               <ConstructorElement
               text={item.name}
@@ -47,7 +48,7 @@ const Cart = (props) => {
           }
         })}
       </div>
-      <li className='ml-4 mr-4 pl-8' key={props.cart.length}>
+      <li className='ml-4 mr-4 pl-8' key={nanoid()}>
         <ConstructorElement
           type="bottom"
           isLocked={true}
