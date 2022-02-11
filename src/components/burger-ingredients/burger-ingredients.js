@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import ingredientType from '../../assets/scripts/propTypes';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientsSection from '../ingredients-section/ingredients-section'
@@ -58,6 +60,14 @@ const BurgerIngredients = ({ filteredData }) => {
       </ul>
     </section>
   )
+}
+
+BurgerIngredients.propTypes = {
+  filteredData: PropTypes.shape({
+    bun: PropTypes.arrayOf(ingredientType).isRequired,
+    sauce: PropTypes.arrayOf(ingredientType).isRequired,
+    main: PropTypes.arrayOf(ingredientType).isRequired
+  }).isRequired
 }
 
 export default BurgerIngredients;

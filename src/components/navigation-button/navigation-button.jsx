@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './navigation-button.module.css';
 
 const NavigationButton = (props) => {
@@ -24,6 +25,13 @@ const NavigationButton = (props) => {
       </span>
     </button>
   )
+}
+
+NavigationButton.propTypes = {
+  children: PropTypes.element,
+  isActive: PropTypes.bool.isRequired,
+  setActiveButton: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired
 }
 
 export default NavigationButton;

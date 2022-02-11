@@ -1,4 +1,5 @@
 import React from 'react';
+import ingredientType from '../../assets/scripts/propTypes';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
@@ -25,6 +26,10 @@ const IngredientCard = ({ ingredient, count }) => {
       }
     </>
   )
+}
+
+IngredientCard.propTypes = {
+  ingredient: ingredientType.isRequired
 }
 
 export default IngredientCard;

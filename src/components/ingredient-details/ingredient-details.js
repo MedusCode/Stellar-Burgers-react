@@ -1,4 +1,5 @@
 import React from 'react';
+import ingredientType from '../../assets/scripts/propTypes';
 import styles from './ingredient-details.module.css';
 
 const IngredientDetails = ({ ingredient }) => {
@@ -26,6 +27,10 @@ const IngredientDetails = ({ ingredient }) => {
       </div>
     </div>
   )
+}
+
+IngredientDetails.propTypes = {
+  ingredient: ingredientType.isRequired
 }
 
 export default IngredientDetails;

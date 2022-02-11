@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import ingredientType from '../../assets/scripts/propTypes';
 import styles from './ingredients-section.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
 
@@ -14,5 +16,11 @@ const IngredientsSection = React.memo((props) => {
     </section>
   )
 })
+
+IngredientsSection.propTypes = {
+  id: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
+  title: PropTypes.string.isRequired
+}
 
 export default IngredientsSection;

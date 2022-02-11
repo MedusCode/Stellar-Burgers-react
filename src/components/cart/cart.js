@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import ingredientType from '../../assets/scripts/propTypes';
 import styles from './cart.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -56,6 +58,11 @@ const Cart = (props) => {
       </li>
     </ul>
   )
+}
+
+Cart.propTypes = {
+  cart: PropTypes.arrayOf(ingredientType).isRequired,
+  setCart: PropTypes.func.isRequired,
 }
 
 export default Cart;

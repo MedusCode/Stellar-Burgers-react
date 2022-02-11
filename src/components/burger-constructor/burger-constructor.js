@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import ingredientType from '../../assets/scripts/propTypes';
 import styles from './burger-constructor.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Cart from '../cart/cart';
@@ -37,6 +39,10 @@ const BurgerConstructor = ({ ingredientsData }) => {
       {isModalOpened && <Modal setState={setIsModalOpened}><OrderDetails /></Modal>}
     </>
   )
+}
+
+BurgerConstructor.propTypes = {
+  ingredientsData: PropTypes.arrayOf(ingredientType).isRequired
 }
 
 export default BurgerConstructor;

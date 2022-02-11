@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './app-header.module.css';
 import Navigation from '../navigation/navigation';
 
@@ -8,6 +9,10 @@ const AppHeader = (props) => {
       <Navigation setActivePage={props.setActivePage} />
     </header>
   )
+}
+
+AppHeader.propTypes = {
+  setActivePage: PropTypes.func.isRequired
 }
 
 export default AppHeader;
