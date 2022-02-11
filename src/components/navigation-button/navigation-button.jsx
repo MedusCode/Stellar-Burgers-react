@@ -17,9 +17,9 @@ const NavigationButton = (props) => {
   }
 
   return (
-    <button className={`${props.isActive ? styles.buttonActive : styles.button} pt-4 pr-5 pb-4 pl-5`} onClick={clickHandler}>
+    <button className={`${styles.button} pt-4 pr-5 pb-4 pl-5`} onClick={clickHandler}>
       {props.children}
-      <span className="text text_type_main-default ml-2">
+      <span className={`${!props.isActive && 'text_color_inactive'} text text_type_main-default ml-2`}>
         {props.text}
       </span>
     </button>
