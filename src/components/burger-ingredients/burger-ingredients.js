@@ -5,6 +5,7 @@ import IngredientsSection from '../ingredients-section/ingredients-section'
 
 const BurgerIngredients = ({ filteredData }) => {
   const sectionListRef = React.useRef(null)
+  const tabRef = React.useRef(null)
   const [current, setCurrent] = React.useState('bun')
 
   React.useEffect(() => {
@@ -20,10 +21,26 @@ const BurgerIngredients = ({ filteredData }) => {
     }
   }, [])
 
+  React.useEffect(() => {
+    const smoothLinks = tabRef.current.querySelectorAll('a[href^="#"]');
+
+    for (let smoothLink of smoothLinks) {
+        smoothLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            const id = smoothLink.getAttribute('href');
+
+            sectionListRef.current.querySelector(id).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    };
+  }, [])
+
   return (
     <section className={styles.container}>
       <h1 className={`${styles.title} text text_type_main-large pt-10 mb-5`}>Соберите бургер</h1>
-      <div className={`${styles.tabs} mb-10`}>
+      <div ref={tabRef} className={`${styles.tabs} mb-10`}>
         <a className={styles.link} href='#bun'>
           <Tab value="bun" active={current === 'bun'} onClick={() => setCurrent('bun')}>Булки</Tab>
         </a>

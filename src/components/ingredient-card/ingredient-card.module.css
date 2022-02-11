@@ -19,6 +19,7 @@
 }
 
 .text {
+  min-height: 48px;
   text-align: center;
   color: #F2F2F3;
 }
