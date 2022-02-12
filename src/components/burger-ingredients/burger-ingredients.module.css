@@ -1,0 +1,18 @@
+.container {
+  max-width: 600px;
+}
+
+.title {
+  color: #F2F2F3;
+}
+
+.tabs {
+  display: flex;
+}
+
+.sectionsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: overlay;
+}
