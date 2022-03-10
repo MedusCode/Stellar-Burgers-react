@@ -1,11 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import ingredientType from '../../assets/scripts/propTypes';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientsSection from '../ingredients-section/ingredients-section'
 
-const BurgerIngredients = ({ filteredData }) => {
+const BurgerIngredients = () => {
+  const { bun, sauce, main } = useSelector(store => ({bun: store.ingredients.bun, sauce: store.ingredients.sauce, main: store.ingredients.main}))
   const sectionListRef = React.useRef(null);
   const bunSectionRef = React.useRef(null);
   const sauceSectionRef = React.useRef(null);
@@ -50,20 +52,20 @@ const BurgerIngredients = ({ filteredData }) => {
           }}>Начинки</Tab>
       </div>
       <ul ref={sectionListRef} className={styles.sectionsList}>
-        <li><IngredientsSection ref={bunSectionRef} title='Булки' ingredients={filteredData.bun}/></li>
-        <li><IngredientsSection ref={sauceSectionRef} title='Соусы' ingredients={filteredData.sauce}/></li>
-        <li><IngredientsSection ref={mainSectionRef} title='Начинка' ingredients={filteredData.main}/></li>
+        <li><IngredientsSection ref={bunSectionRef} title='Булки' ingredients={bun}/></li>
+        <li><IngredientsSection ref={sauceSectionRef} title='Соусы' ingredients={sauce}/></li>
+        <li><IngredientsSection ref={mainSectionRef} title='Начинка' ingredients={main}/></li>
       </ul>
     </section>
   )
 }
 
-BurgerIngredients.propTypes = {
-  filteredData: PropTypes.shape({
-    bun: PropTypes.arrayOf(ingredientType).isRequired,
-    sauce: PropTypes.arrayOf(ingredientType).isRequired,
-    main: PropTypes.arrayOf(ingredientType).isRequired
-  }).isRequired
-}
+// BurgerIngredients.propTypes = {
+//   filteredData: PropTypes.shape({
+//     bun: PropTypes.arrayOf(ingredientType).isRequired,
+//     sauce: PropTypes.arrayOf(ingredientType).isRequired,
+//     main: PropTypes.arrayOf(ingredientType).isRequired
+//   }).isRequired
+// }
 
 export default BurgerIngredients;

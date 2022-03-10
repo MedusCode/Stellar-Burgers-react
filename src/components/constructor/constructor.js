@@ -1,25 +1,35 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import InfoPage from '../info-page/info-page';
 import PropTypes from 'prop-types';
 import ingredientType from '../../assets/scripts/propTypes';
 import styles from './constructor.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-const Constructor = ({ filteredData, ingredientsData }) => {
+const Constructor = ({ ingredientsData }) => {
+  const { ingredientsRequest, ingredientsFailed, errorCode } = useSelector(store => ({
+    ingredientsRequest: store.ingredients.ingredientsRequest,
+    ingredientsFailed: store.ingredients.ingredientsFailed,
+    errorCode: store.ingredients.errorCode
+  }));
+
   return (
-    <section className={styles.constructorPage}>
-      <BurgerIngredients filteredData={filteredData} />
-      <BurgerConstructor ingredientsData={ingredientsData}/>
-    </section>
+    <>
+      {!ingredientsRequest && !ingredientsFailed ?
+        <section className={styles.constructorPage}>
+          <BurgerIngredients />
+          <BurgerConstructor ingredientsData={ingredientsData}/>
+        </section>
+        : ingredientsRequest
+          ? <InfoPage>Загрузка...</InfoPage>
+          : <InfoPage info='Попробуйте перезапустить страницу.'>Произошла ошибка: {errorCode}</InfoPage>
+      }
+    </>
   )
 }
 
 Constructor.propTypes = {
-  filteredData: PropTypes.shape({
-    bun: PropTypes.arrayOf(ingredientType).isRequired,
-    sauce: PropTypes.arrayOf(ingredientType).isRequired,
-    main: PropTypes.arrayOf(ingredientType).isRequired
-  }).isRequired,
   ingredientsData: PropTypes.arrayOf(ingredientType).isRequired
 }
 
