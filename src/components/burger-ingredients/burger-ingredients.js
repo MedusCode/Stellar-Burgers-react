@@ -1,10 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import ingredientType from '../../assets/scripts/propTypes';
 import styles from './burger-ingredients.module.css';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import IngredientsSection from '../ingredients-section/ingredients-section'
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import IngredientsSection from '../ingredients-section/ingredients-section';
 
 const BurgerIngredients = () => {
   const { bun, sauce, main } = useSelector(store => ({bun: store.ingredients.bun, sauce: store.ingredients.sauce, main: store.ingredients.main}))
@@ -21,16 +19,31 @@ const BurgerIngredients = () => {
     });
   }
 
+  const handleSectionListScrolling = () => {
+    const bunSectionRectTop = bunSectionRef.current.getBoundingClientRect().top;
+    const sauceSectionRectTop = sauceSectionRef.current.getBoundingClientRect().top;
+    const mainSectionRectTop = mainSectionRef.current.getBoundingClientRect().top;
+    if (mainSectionRectTop <= sectionListRef.current.offsetTop) {
+      setCurrent('main')
+    }
+    else if (sauceSectionRectTop <= sectionListRef.current.offsetTop) {
+      setCurrent('sauce')
+    }
+    else if (bunSectionRectTop <= sectionListRef.current.offsetTop) {
+      setCurrent('bun')
+    }
+    console.log(bunSectionRectTop)
+  }
   React.useEffect(() => {
-    const sectionListSizing = () => {
+    const handleSectionListSizing = () => {
       sectionListRef.current.style.maxHeight = `${window.innerHeight - sectionListRef.current.offsetTop - 40}px`;
     }
 
-    window.addEventListener('resize', sectionListSizing);
-    sectionListSizing()
+    window.addEventListener('resize', handleSectionListSizing);
+    handleSectionListSizing()
 
     return () => {
-      window.removeEventListener('resize', sectionListSizing);
+      window.removeEventListener('resize', handleSectionListSizing);
     }
   }, [])
 
@@ -51,7 +64,7 @@ const BurgerIngredients = () => {
           scrollSmoothly(mainSectionRef);
           }}>Начинки</Tab>
       </div>
-      <ul ref={sectionListRef} className={styles.sectionsList}>
+      <ul ref={sectionListRef} className={styles.sectionsList} onWheel={handleSectionListScrolling}>
         <li><IngredientsSection ref={bunSectionRef} title='Булки' ingredients={bun}/></li>
         <li><IngredientsSection ref={sauceSectionRef} title='Соусы' ingredients={sauce}/></li>
         <li><IngredientsSection ref={mainSectionRef} title='Начинка' ingredients={main}/></li>
@@ -59,13 +72,5 @@ const BurgerIngredients = () => {
     </section>
   )
 }
-
-// BurgerIngredients.propTypes = {
-//   filteredData: PropTypes.shape({
-//     bun: PropTypes.arrayOf(ingredientType).isRequired,
-//     sauce: PropTypes.arrayOf(ingredientType).isRequired,
-//     main: PropTypes.arrayOf(ingredientType).isRequired
-//   }).isRequired
-// }
 
 export default BurgerIngredients;
