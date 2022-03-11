@@ -7,7 +7,7 @@ import styles from './constructor.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-const Constructor = ({ ingredientsData }) => {
+const Constructor = () => {
   const { ingredientsRequest, ingredientsFailed, errorCode } = useSelector(store => ({
     ingredientsRequest: store.ingredients.ingredientsRequest,
     ingredientsFailed: store.ingredients.ingredientsFailed,
@@ -19,7 +19,7 @@ const Constructor = ({ ingredientsData }) => {
       {!ingredientsRequest && !ingredientsFailed ?
         <section className={styles.constructorPage}>
           <BurgerIngredients />
-          <BurgerConstructor ingredientsData={ingredientsData}/>
+          <BurgerConstructor />
         </section>
         : ingredientsRequest
           ? <InfoPage>Загрузка...</InfoPage>
@@ -27,10 +27,6 @@ const Constructor = ({ ingredientsData }) => {
       }
     </>
   )
-}
-
-Constructor.propTypes = {
-  ingredientsData: PropTypes.arrayOf(ingredientType).isRequired
 }
 
 export default Constructor;

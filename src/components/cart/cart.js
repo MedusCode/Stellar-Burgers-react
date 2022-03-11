@@ -1,12 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import ingredientType from '../../assets/scripts/propTypes';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './cart.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { nanoid } from 'nanoid';
+import whiteBun from '../../assets/images/whiteBun.png'
+import { removeFromConstructor } from '../../services/actions/burger-constructor';
 
-const Cart = (props) => {
+const Cart = () => {
+  const dispatch = useDispatch();
+  const { bun, ingredients } = useSelector(store => ({
+    bun: store.burgerConstructor.bun,
+    ingredients: store.burgerConstructor.ingredients
+  }))
   const cartContainerRef = React.useRef(null);
+
+  const removeElement = (ingredient) => {
+    dispatch(removeFromConstructor(ingredient));
+  }
 
   React.useEffect(() => {
     const sectionListSizing = () => {
@@ -22,48 +32,49 @@ const Cart = (props) => {
   }, [])
 
   return (
-    <ul className={styles.cart}>
-      <li className='ml-4 mr-4 pl-8' key={nanoid()}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${props.cart[0].name} (верх)`}
-          price={props.cart[0].price}
-          thumbnail={props.cart[0].image}
-        />
-      </li>
-      <div className={styles.container} ref={cartContainerRef}>
-        {props.cart.map((item) => {
-          if (item.type !== 'bun') {
+    <>
+      <ul className={styles.cart}>
+        <li className='ml-4 mr-4 pl-8' key={nanoid()}>
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={bun._id ? `${bun.name} (верх)` : 'Перетащите сюда булку'}
+            price={bun._id ? bun.price : ''}
+            thumbnail={bun._id ? bun.image : whiteBun}
+          />
+        </li>
+        <div className={styles.container} ref={cartContainerRef}>
+          {ingredients.length > 0 ? ingredients.map((item) => {
             return (
-            <li className={`${styles.ingredient} ml-4 mr-4`} key={nanoid()}>
+            <li className={`${styles.ingredient} ml-4 mr-4`} key={item.nanoid}>
               <DragIcon type="primary" />
               <ConstructorElement
               text={item.name}
               price={item.price}
               thumbnail={item.image}
+              handleClose={() => {removeElement(item)}}
               />
             </li>
             )
+          })
+          :
+          <li className={`${styles.ingredient} ml-4 mr-4`}>
+            <div className={`${styles.empty} ml-8`}></div>
+          </li>
           }
-        })}
-      </div>
-      <li className='ml-4 mr-4 pl-8' key={nanoid()}>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${props.cart[0].name} (низ)`}
-          price={props.cart[0].price}
-          thumbnail={props.cart[0].image}
-        />
-      </li>
-    </ul>
+        </div>
+        <li className='ml-4 mr-4 pl-8' key={nanoid()}>
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={bun._id ? `${bun.name} (низ)` : 'Перетащите сюда булку'}
+            price={bun._id ? bun.price : ''}
+            thumbnail={bun._id ? bun.image : whiteBun}
+          />
+        </li>
+      </ul>
+    </>
   )
-}
-
-Cart.propTypes = {
-  cart: PropTypes.arrayOf(ingredientType).isRequired,
-  setCart: PropTypes.func.isRequired,
 }
 
 export default Cart;

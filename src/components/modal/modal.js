@@ -1,13 +1,17 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+import { CLOSE_MODAL } from '../../services/actions/modal'
 
 const Modal = (props) => {
+  const dispatch = useDispatch();
+
   const closeModal = () => {
-    props.setState(false);
+    dispatch({type: CLOSE_MODAL})
   }
 
   React.useEffect(() => {
@@ -38,7 +42,6 @@ const Modal = (props) => {
 
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
-  setState: PropTypes.func.isRequired,
   title: PropTypes.string
 }
 
