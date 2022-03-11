@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { ADD_INGREDIENT_TO_CONSTRUCTOR, REMOVE_INGREDIENT_FROM_CONSTRUCTOR } from '../actions/burger-constructor';
+import { ADD_INGREDIENT_TO_CONSTRUCTOR, REMOVE_INGREDIENT_FROM_CONSTRUCTOR, CLEAR_CONSTRUCTOR } from '../actions/burger-constructor';
 
 const initialState = {
   bun: {
@@ -23,6 +23,11 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         ...state,
         ingredients: state.ingredients.filter(ingredient => ingredient.nanoid !== action.ingredient.nanoid),
         price: state.price - action.ingredient.price
+      }
+    }
+    case CLEAR_CONSTRUCTOR: {
+      return {
+        ...initialState
       }
     }
     default: {

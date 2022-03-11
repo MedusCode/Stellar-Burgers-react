@@ -3,7 +3,8 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
   INCREASE_INGREDIENTS_COUNTER,
-  DECREASE_INGREDIENTS_COUNTER } from '../actions/ingredients';
+  DECREASE_INGREDIENTS_COUNTER,
+  CLEAR_COUNTERS } from '../actions/ingredients';
 
 const initialState = {
   bun: [],
@@ -58,13 +59,21 @@ export const ingredientsReducer = (state = initialState, action) => {
       }
     }
     case DECREASE_INGREDIENTS_COUNTER: {
-      const key = action.ingredient.type;
+      const type = action.ingredient.type;
       return {
         ...state,
-        [key]: [...state[key].map(ingredient => {
+        [type]: [...state[type].map(ingredient => {
           if (ingredient._id === action.ingredient._id) return {...ingredient, __v: ingredient.__v - 1}
           return ingredient
         })]
+      }
+    }
+    case CLEAR_COUNTERS: {
+      return {
+        ...state,
+        bun: [...state.bun.map(ingredient => ({...ingredient, __v: 0}))],
+        sauce: [...state.sauce.map(ingredient => ({...ingredient, __v: 0}))],
+        main: [...state.main.map(ingredient => ({...ingredient, __v: 0}))]
       }
     }
     default: {

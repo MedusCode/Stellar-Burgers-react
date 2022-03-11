@@ -23,6 +23,7 @@ const BurgerIngredients = () => {
     const bunSectionRectTop = bunSectionRef.current.getBoundingClientRect().top;
     const sauceSectionRectTop = sauceSectionRef.current.getBoundingClientRect().top;
     const mainSectionRectTop = mainSectionRef.current.getBoundingClientRect().top;
+
     if (mainSectionRectTop <= sectionListRef.current.offsetTop) {
       setCurrent('main')
     }
@@ -32,8 +33,8 @@ const BurgerIngredients = () => {
     else if (bunSectionRectTop <= sectionListRef.current.offsetTop) {
       setCurrent('bun')
     }
-    console.log(bunSectionRectTop)
   }
+
   React.useEffect(() => {
     const handleSectionListSizing = () => {
       sectionListRef.current.style.maxHeight = `${window.innerHeight - sectionListRef.current.offsetTop - 40}px`;

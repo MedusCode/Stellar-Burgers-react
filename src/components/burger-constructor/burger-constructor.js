@@ -8,7 +8,10 @@ import { OPEN_MODAL } from '../../services/actions/modal'
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const { price, bun } = useSelector(store => ({price: store.burgerConstructor.price, bun: store.burgerConstructor.bun}))
+  const { price, bun } = useSelector(store => ({
+    price: store.burgerConstructor.price,
+    bun: store.burgerConstructor.bun
+  }))
 
   const openModal = () => {
     dispatch({type: OPEN_MODAL})
