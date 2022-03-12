@@ -27,7 +27,7 @@ const OrderDetails = () => {
             <span className='text text_type_main-default text_color_inactive mb-15'>Дождитесь готовности на орбитальной станции</span>
           </div>
           : orderFailed ?
-            <h2 className={`${styles.message} text text_type_main-large`}>{`Произошла ошибка ${errorCode ? errorCode : ''}`}</h2>
+            <h2 className={`${styles.message} text text_type_main-large`}>Произошла ошибка :(</h2>
             : <h2 className={`${styles.message} text text_type_main-large`}>Отправляем заказ...</h2>
       }
     </>

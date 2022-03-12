@@ -8,7 +8,6 @@ const initialState = {
   orderRequest: false,
   orderSuccess: false,
   orderFailed: false,
-  errorCode: ''
 }
 
 export const orderReducer = (state = initialState, action) => {
@@ -38,7 +37,6 @@ export const orderReducer = (state = initialState, action) => {
         orderFailed: true,
         name: '',
         orderNum: 0,
-        errorCode: action.errorStatus,
         orderIngredients: []
       }
     }

@@ -3,10 +3,11 @@ import { INCREASE_INGREDIENTS_COUNTER, DECREASE_INGREDIENTS_COUNTER, CLEAR_COUNT
 const ADD_INGREDIENT_TO_CONSTRUCTOR = 'ADD_INGREDIENT_TO_CONSTRUCTOR';
 const REMOVE_INGREDIENT_FROM_CONSTRUCTOR = 'REMOVE_INGREDIENT_FROM_CONSTRUCTOR';
 const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
+const REPLACE_CONSTRUCTOR_ARRAY = 'REPLACE_CONSTRUCTOR_ARRAY';
 
-const addToConstructor = (ingredient) => {
+const addToConstructor = (ingredient, index) => {
   return (dispatch) => {
-    dispatch({type: ADD_INGREDIENT_TO_CONSTRUCTOR, ingredient: ingredient});
+    dispatch({type: ADD_INGREDIENT_TO_CONSTRUCTOR, ingredient: ingredient, index: index});
     dispatch({type: INCREASE_INGREDIENTS_COUNTER, ingredient: ingredient});
   }
 }
@@ -28,6 +29,7 @@ const clearConstructor = () => {
 export { ADD_INGREDIENT_TO_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   CLEAR_CONSTRUCTOR,
+  REPLACE_CONSTRUCTOR_ARRAY,
   addToConstructor,
   removeFromConstructor,
   clearConstructor
