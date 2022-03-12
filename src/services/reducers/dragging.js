@@ -7,6 +7,7 @@ const initialState = {
   ingredient: {},
   constructorArray: [],
   previousIndex: 0,
+  initialArray: [],
   newIndex: 0
 }
 
@@ -18,6 +19,7 @@ export const draggingReducer = (state = initialState, action) => {
         ...state,
         ingredient: {...action.ingredient, nanoid: id},
         constructorArray: [{...action.ingredient, nanoid: id}, ...action.constructorArray],
+        initialArray: action.initialArray ? {...action.initialArray} : [],
         previousIndex: 0,
         newIndex: 0
       }

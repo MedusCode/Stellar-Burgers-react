@@ -2,12 +2,12 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from "react-dnd";
 import styles from './cart.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import ConstructorCard from '../constructor-card/constructor-card'
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { nanoid } from 'nanoid';
 import whiteBun from '../../assets/images/whiteBun.png'
-import { removeFromConstructor } from '../../services/actions/burger-constructor';
 import { CHANGE_DRAGGING_POSSITION } from '../../services/actions/dragging';
-import { addToConstructor } from '../../services/actions/burger-constructor';
+import { addToConstructor, removeFromConstructor } from '../../services/actions/burger-constructor';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -24,9 +24,6 @@ const Cart = () => {
   const buns = useSelector(store => store.ingredients.bun)
   const cartContainerRef = React.useRef(null);
 
-  const removeElement = (ingredient) => {
-    dispatch(removeFromConstructor(ingredient));
-  }
 
   const [{ingredientIsOver}, ingredientTarget] = useDrop({
     accept: "ingredient",
@@ -44,7 +41,7 @@ const Cart = () => {
         newIndex: newIndex
       });
     },
-    drop() {
+    drop(id) {
       dispatch(addToConstructor(draggingIngredient, index));
     }
   });
@@ -91,6 +88,7 @@ const Cart = () => {
     }
   }, [])
 
+
   return (
     <>
       <ul className={styles.cart}>
@@ -107,41 +105,14 @@ const Cart = () => {
           <div className={styles.container} ref={cartContainerRef}>
             {ingredients.length > 0 && !ingredientIsOver
               ? ingredients.map((item) => {
-                  return (
-                    <li className={`${styles.ingredient} ml-4 mr-4`} key={item.nanoid}>
-                      <DragIcon type="primary"/>
-                      <ConstructorElement
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image}
-                      handleClose={() => {removeElement(item)}}
-                      />
-                    </li>
-                  )
+                  return (<ConstructorCard ingredient={item} key={item.nanoid} />)
                 })
               : ingredients.length > 0
                 ? constructorDublicate.map((item) => {
-                    return (
-                    <li className={`${styles.ingredient} ml-4 mr-4`} key={item.nanoid}>
-                      <DragIcon type="primary" />
-                      <ConstructorElement
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image}
-                      handleClose={() => {removeElement(item)}}
-                      />
-                    </li>
-                    )
+                    return (<ConstructorCard ingredient={item} key={item.nanoid} />)
                   })
                 : ingredientIsOver
-                  ? <li className={`${styles.ingredient} ml-4 mr-4`}>
-                      <DragIcon type="primary" />
-                      <ConstructorElement
-                      text={draggingIngredient.name}
-                      price={draggingIngredient.price}
-                      thumbnail={draggingIngredient.image}
-                      />
-                    </li>
+                  ? <ConstructorCard ingredient={draggingIngredient} key={draggingIngredient.nanoid} />
                   : <li className={`${styles.ingredient} ml-4 mr-4`}>
                       <div className={`${styles.empty} ml-8`}></div>
                     </li>

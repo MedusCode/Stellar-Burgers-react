@@ -5,17 +5,17 @@ import ingredientType from '../../assets/scripts/propTypes';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OPEN_MODAL } from '../../services/actions/modal';
-import { START_DRAGGING } from '../../services/actions/dragging'
+import { START_DRAGGING } from '../../services/actions/dragging';
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();
   const constructorArray = useSelector(store => store.burgerConstructor.ingredients)
+  const id = ingredient._id;
 
   const openModal = () => {
     dispatch({type: OPEN_MODAL, ingredient: ingredient })
   }
 
-  const id = ingredient._id;
   const [{isDragging}, ingredientRef] = useDrag({
     type: "ingredient",
     item: { id },
