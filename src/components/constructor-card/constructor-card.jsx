@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
-import { removeFromConstructor, NEW_CONSTRUCTOR_ORDER } from '../../services/actions/burger-constructor';
+import { removeFromConstructor } from '../../services/actions/burger-constructor';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-card.module.css';
 import ingredientType from '../../assets/scripts/propTypes'

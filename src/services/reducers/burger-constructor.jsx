@@ -9,6 +9,7 @@ const initialState = {
     price: 0
   },
   ingredients: [],
+  temporaryIngredients: [],
   price: 0
 }
 
@@ -30,12 +31,6 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         ...state,
         ingredients: state.ingredients.filter(ingredient => ingredient.nanoid !== action.ingredient.nanoid),
         price: state.price - action.ingredient.price
-      }
-    }
-    case NEW_CONSTRUCTOR_ORDER: {
-      return {
-        ...state,
-        ingredients: [...action.ingredients]
       }
     }
     case CLEAR_CONSTRUCTOR: {
