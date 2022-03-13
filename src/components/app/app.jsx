@@ -7,6 +7,7 @@ import OtherPage from '../other-page/other-page';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
+import { CLOSE_MODAL } from '../../services/actions/modal'
 import { getIngredients } from '../../services/actions/ingredients'
 
 const App = () => {
@@ -16,6 +17,10 @@ const App = () => {
     modalType: store.modal.type
   }));
   const activePage = useSelector(store => store.app.activePage)
+
+  const closeCommonModal = () => {
+    dispatch({type: CLOSE_MODAL})
+  }
 
   React.useEffect(() => {
     dispatch(getIngredients())
@@ -30,8 +35,8 @@ const App = () => {
           : <OtherPage />}
       </main>
       {isModalOpened && (modalType === 'ingredient'
-        ? <Modal title='Детали ингредиента'><IngredientDetails /></Modal>
-        : <Modal><OrderDetails /></Modal>)
+        ? <Modal title='Детали ингредиента' onClose={closeCommonModal}><IngredientDetails /></Modal>
+        : <Modal onClose={closeCommonModal}><OrderDetails /></Modal>)
       }
     </>
   )

@@ -1,25 +1,19 @@
-import { nanoid } from 'nanoid';
-import {
-  START_DRAGGING,
-  CHANGE_DRAGGING_POSSITION } from '../actions/dragging'
+import {START_DRAGGING, CHANGE_DRAGGING_POSSITION } from '../actions/dragging'
 
 const initialState = {
   ingredient: {},
   constructorArray: [],
   previousIndex: 0,
-  initialArray: [],
   newIndex: 0
 }
 
 export const draggingReducer = (state = initialState, action) => {
   switch (action.type) {
     case START_DRAGGING: {
-      const id = nanoid();
       return {
         ...state,
-        ingredient: {...action.ingredient, nanoid: id},
-        constructorArray: [{...action.ingredient, nanoid: id}, ...action.constructorArray],
-        initialArray: action.initialArray ? {...action.initialArray} : [],
+        ingredient: action.ingredient,
+        constructorArray: action.constructorArray,
         previousIndex: 0,
         newIndex: 0
       }
@@ -38,7 +32,7 @@ export const draggingReducer = (state = initialState, action) => {
       }
     }
     default: {
-      return {...state}
+      return state;
     }
   }
 }

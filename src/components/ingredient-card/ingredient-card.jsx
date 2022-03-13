@@ -5,7 +5,7 @@ import ingredientType from '../../assets/scripts/propTypes';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OPEN_MODAL } from '../../services/actions/modal';
-import { START_DRAGGING } from '../../services/actions/dragging';
+import { startDragging } from '../../services/actions/dragging';
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const IngredientCard = ({ ingredient }) => {
   });
 
   React.useEffect(() => {
-    isDragging && dispatch({type: START_DRAGGING, ingredient: ingredient, constructorArray: constructorArray});
+    isDragging && dispatch(startDragging(ingredient, constructorArray));
   }, [isDragging])
 
   return (

@@ -26,7 +26,6 @@ export const burgerConstructorReducer = (state = initialState, action) => {
       return {...newState, price: newPrice}
     }
     case REMOVE_INGREDIENT_FROM_CONSTRUCTOR: {
-      console.log('hey')
       return {
         ...state,
         ingredients: state.ingredients.filter(ingredient => ingredient.nanoid !== action.ingredient.nanoid),
@@ -45,7 +44,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
       }
     }
     default: {
-      return {...state}
+      return state;
     }
   }
 }

@@ -10,7 +10,7 @@ export const appReducer = (state = initialState, action) => {
       return {...state, activePage: action.activePage}
     }
     default: {
-      return {...state}
+      return state;
     }
   }
 }

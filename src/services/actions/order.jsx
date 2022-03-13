@@ -1,10 +1,11 @@
+import { checkResponse } from "../../assets/scripts/checkResponse";
+import { baseUrl } from "../../assets/scripts/baseUrl";
 import { clearConstructor } from './burger-constructor'
 
 const MAKE_ORDER_REQUEST = 'MAKE_ORDER_REQUEST';
 const MAKE_ORDER_SUCCESS = 'MAKE_ORDER_SUCCESS';
 const MAKE_ORDER_FAILED = 'MAKE_ORDER_FAILED';
 
-const apiUrl = 'https://norma.nomoreparties.space/api/orders'
 const makeOrder = () => {
   return (dispatch, getState) => {
     const bun = getState().burgerConstructor.bun;
@@ -16,17 +17,14 @@ const makeOrder = () => {
     dispatch({
       type: MAKE_ORDER_REQUEST
     })
-    fetch(apiUrl, {
+    fetch(`${baseUrl}/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(order)
     })
-      .then(res => {
-        if (res.ok) return res.json();
-        return Promise.reject(res.status)
-      })
+      .then(checkResponse)
       .then(data => {
         if (data.success) {
           dispatch({

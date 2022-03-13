@@ -5,7 +5,7 @@ import { removeFromConstructor, NEW_CONSTRUCTOR_ORDER } from '../../services/act
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-card.module.css';
 import ingredientType from '../../assets/scripts/propTypes'
-import { START_DRAGGING } from '../../services/actions/dragging';
+import { startDragging } from '../../services/actions/dragging';
 
 const ConstructorCard = ({ ingredient }) => {
   const dispatch = useDispatch();
@@ -28,11 +28,7 @@ const ConstructorCard = ({ ingredient }) => {
   React.useEffect(() => {
     if (isDragging) {
       const newArray = [...constructorArray].filter(item => item.nanoid !== ingredient.nanoid)
-      dispatch({
-        type: START_DRAGGING,
-        ingredient: {...ingredient},
-        constructorArray: newArray,
-      });
+      dispatch(startDragging(ingredient, newArray));
       dispatch(removeFromConstructor(ingredient));
     }
   }, [isDragging, endDrag, didDrop])

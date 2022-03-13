@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './app-header.module.css';
 import Navigation from '../navigation/navigation';
 

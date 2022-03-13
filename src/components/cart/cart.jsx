@@ -7,7 +7,7 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { nanoid } from 'nanoid';
 import whiteBun from '../../assets/images/whiteBun.png'
 import { CHANGE_DRAGGING_POSSITION } from '../../services/actions/dragging';
-import { addToConstructor, removeFromConstructor } from '../../services/actions/burger-constructor';
+import { addToConstructor } from '../../services/actions/burger-constructor';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -92,7 +92,7 @@ const Cart = () => {
   return (
     <>
       <ul className={styles.cart}>
-        <li className='ml-4 mr-4 pl-8' key={nanoid()} ref={upperBunTarget}>
+        <li className='ml-4 mr-4 pl-8' ref={upperBunTarget}>
           <ConstructorElement
             type="top"
             isLocked={true}
@@ -119,7 +119,7 @@ const Cart = () => {
             }
           </div>
         </div>
-        <li className='ml-4 mr-4 pl-8' key={nanoid()} ref={lowerBunTarget}>
+        <li className='ml-4 mr-4 pl-8' ref={lowerBunTarget}>
           <ConstructorElement
             type="bottom"
             isLocked={true}

@@ -1,3 +1,6 @@
+import { checkResponse } from "../../assets/scripts/checkResponse";
+import { baseUrl } from "../../assets/scripts/baseUrl";
+
 const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
@@ -5,18 +8,13 @@ const INCREASE_INGREDIENTS_COUNTER = 'INCREASE_INGREDIENTS_COUNTER';
 const DECREASE_INGREDIENTS_COUNTER = 'DECREASE_INGREDIENTS_COUNTER';
 const CLEAR_COUNTERS = 'CLEAR_COUNTERS';
 
-
-const apiUrl = 'https://norma.nomoreparties.space/api/ingredients'
 function getIngredients() {
   return function(dispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
     });
-    fetch(apiUrl)
-      .then(res => {
-        if (res.ok) return res.json();
-        return Promise.reject(res.status)
-      })
+    fetch(`${baseUrl}/ingredients`)
+      .then(checkResponse)
       .then(data => {
         const bun = [];
         const sauce = [];
