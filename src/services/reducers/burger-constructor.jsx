@@ -2,14 +2,14 @@ import {
   ADD_INGREDIENT_TO_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   CLEAR_CONSTRUCTOR,
-  NEW_CONSTRUCTOR_ORDER} from '../actions/burger-constructor';
+  CHANGE_CONSTRUCTOR_ORDER
+} from '../actions/burger-constructor';
 
 const initialState = {
   bun: {
     price: 0
   },
   ingredients: [],
-  temporaryIngredients: [],
   price: 0
 }
 
@@ -36,6 +36,14 @@ export const burgerConstructorReducer = (state = initialState, action) => {
     case CLEAR_CONSTRUCTOR: {
       return {
         ...initialState
+      }
+    }
+    case CHANGE_CONSTRUCTOR_ORDER: {
+      const price = action.ingredients.reduce((price, ingredient) => price + ingredient.price, 0) + state.bun.price * 2;
+      return {
+        ...state,
+        ingredients: action.ingredients,
+        price: price
       }
     }
     default: {

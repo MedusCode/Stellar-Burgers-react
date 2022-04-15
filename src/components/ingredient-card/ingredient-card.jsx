@@ -5,7 +5,8 @@ import ingredientType from '../../assets/scripts/propTypes';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OPEN_MODAL } from '../../services/actions/modal';
-import { startDragging } from '../../services/actions/dragging';
+import { startAddDragging, STOP_DRAGGING } from '../../services/actions/dragging';
+import { changeConstructorIngredients } from '../../services/actions/burger-constructor';
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();
@@ -21,7 +22,12 @@ const IngredientCard = ({ ingredient }) => {
     item: { id },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
-    })
+    }),
+    end: (dropResult, monitor) => {
+      const didDrop = monitor.didDrop();
+      didDrop && dispatch(changeConstructorIngredients(true));
+      dispatch({type: STOP_DRAGGING});
+    }
   });
 
   const [, bunRef] = useDrag({
@@ -30,7 +36,7 @@ const IngredientCard = ({ ingredient }) => {
   });
 
   React.useEffect(() => {
-    isDragging && dispatch(startDragging(ingredient, constructorArray));
+    isDragging && dispatch(startAddDragging(ingredient));
   }, [isDragging])
 
   return (

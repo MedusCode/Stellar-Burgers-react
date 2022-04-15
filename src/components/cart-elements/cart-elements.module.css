@@ -1,12 +1,10 @@
-.cart {
+.container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  /* gap: 16px; */
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-.cart div {
-  width: 100%;
+  overflow: overlay;
+  max-height: 300px;
 }

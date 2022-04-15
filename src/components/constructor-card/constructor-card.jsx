@@ -5,7 +5,8 @@ import { removeFromConstructor } from '../../services/actions/burger-constructor
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-card.module.css';
 import ingredientType from '../../assets/scripts/propTypes'
-import { startDragging } from '../../services/actions/dragging';
+import { startMoveDragging, STOP_DRAGGING } from '../../services/actions/dragging';
+import { changeConstructorIngredients } from '../../services/actions/burger-constructor';
 
 const ConstructorCard = ({ ingredient }) => {
   const dispatch = useDispatch();
@@ -17,21 +18,24 @@ const ConstructorCard = ({ ingredient }) => {
     dispatch(removeFromConstructor(ingredient));
   }
 
-  const [{endDrag, didDrop, isDragging}, ingredientRef] = useDrag({
+  const [{isDragging}, ingredientRef] = useDrag({
     type: "ingredient",
     item: { id, type },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
+    end: (dropResult, monitor) => {
+      const didDrop = monitor.didDrop();
+      didDrop && dispatch(changeConstructorIngredients(false))
+      dispatch({type: STOP_DRAGGING});
+    }
   });
 
   React.useEffect(() => {
     if (isDragging) {
-      const newArray = [...constructorArray].filter(item => item.nanoid !== ingredient.nanoid)
-      dispatch(startDragging(ingredient, newArray));
-      dispatch(removeFromConstructor(ingredient));
+      dispatch(startMoveDragging(ingredient));
     }
-  }, [isDragging, endDrag, didDrop])
+  }, [isDragging])
 
   return (
     <>
