@@ -1,12 +1,16 @@
 import React from "react";
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './cart-element.module.css';
 import ConstructorCard from '../constructor-card/constructor-card';
 import { useDrop } from "react-dnd";
-import { CHANGE_DRAGGING_POSSITION, STOP_DRAGGING } from '../../services/actions/dragging';
+import { CHANGE_DRAGGING_POSSITION } from '../../services/actions/dragging';
 
 const CartElement = ({ item, index }) => {
   const dispatch = useDispatch();
+  const {draggingIndex, draggingType} = useSelector(store => ({
+    draggingIndex: store.dragging.index,
+    draggingType: store.dragging.draggingType,
+  }));
 
   const [{ isOver }, ingredientTarget] = useDrop({
     accept: "ingredient",
@@ -16,15 +20,16 @@ const CartElement = ({ item, index }) => {
   });
 
   React.useEffect(() => {
-    isOver && dispatch({type: CHANGE_DRAGGING_POSSITION, index: index})
+    isOver && draggingIndex !== index && dispatch({type: CHANGE_DRAGGING_POSSITION, index: index});
   }, [isOver])
 
   return (
-    <div ref={ingredientTarget}>
-      { item ? <ConstructorCard ingredient={item} /> :
-        <li className={`${styles.ingredient} ml-4 mr-4`}>
-          <div className={`${styles.empty} ml-8`}></div>
-        </li>
+    <div ref={ingredientTarget} className={index === draggingIndex ? isOver || draggingType === 'move' ? styles.dragging : styles.draggingg : ''}>
+      { item
+        ? <ConstructorCard ingredient={item} isHidden={index === draggingIndex} />
+        : <li className={`${styles.ingredient} ml-4 mr-4 mt-2 mb-2`}>
+            <div className={`${styles.empty} ml-8`}></div>
+          </li>
       }
     </div>
   )

@@ -1,27 +1,25 @@
 import React from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styles from './cart-elements.module.css';
-import ConstructorCard from '../constructor-card/constructor-card'
 import CartElement from '../cart-element/cart-element';
 
 const CartElements = () => {
-  const dispatch = useDispatch();
   const cartContainerRef = React.useRef(null);
   const activeIngredients = useSelector(store => store.burgerConstructor.ingredients)
-  const { temporaryIngredients, isDragging } = useSelector(store => ({
+  const { temporaryIngredients, draggingType } = useSelector(store => ({
     temporaryIngredients: store.dragging.ingredients,
-    isDragging: store.dragging.isDragging
+    draggingType: store.dragging.draggingType,
   }))
   const [ingredients, setIngredients] = React.useState([]);
 
   React.useEffect(() => {
-    if (isDragging) setIngredients(temporaryIngredients)
+    if (draggingType !== 'no') setIngredients(temporaryIngredients)
     else setIngredients(activeIngredients)
-  }, [isDragging, temporaryIngredients, activeIngredients])
+  }, [draggingType, temporaryIngredients, activeIngredients])
 
   React.useEffect(() => {
     const sectionListSizing = () => {
-      cartContainerRef.current.style.maxHeight = `${window.innerHeight - cartContainerRef.current.offsetTop - 292}px`;
+      cartContainerRef.current.style.maxHeight = `${window.innerHeight - cartContainerRef.current.offsetTop - 285}px`;
     }
 
     window.addEventListener('resize', sectionListSizing);

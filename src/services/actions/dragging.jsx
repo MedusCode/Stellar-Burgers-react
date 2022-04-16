@@ -10,18 +10,23 @@ const startAddDragging = (ingredient) => {
     dispatch({
       type: START_DRAGGING,
       ingredient: {...ingredient, nanoid: id},
-      ingredients: [ ...ingredients]
+      ingredients: [ ...ingredients],
+      initialIngredients: [ ...ingredients],
+      draggingType: 'add'
     })
   }
 }
 
 const startMoveDragging = (ingredient) => {
   return (dispatch, getState) => {
-    const ingredients = getState().burgerConstructor.ingredients.filter(item => item.nanoid !== ingredient.nanoid);
+    const ingredients = getState().burgerConstructor.ingredients;
+    const initialIngredients = ingredients.filter(item => item.nanoid !== ingredient.nanoid);
     dispatch({
       type: START_DRAGGING,
-      ingredient: {...ingredient},
-      ingredients: [ ...ingredients]
+      ingredient: ingredient,
+      ingredients: [...ingredients],
+      initialIngredients: initialIngredients,
+      draggingType: 'move'
     })
   }
 }

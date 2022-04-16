@@ -10,7 +10,6 @@ import { changeConstructorIngredients } from '../../services/actions/burger-cons
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();
-  const constructorArray = useSelector(store => store.burgerConstructor.ingredients)
   const id = ingredient._id;
 
   const openModal = () => {

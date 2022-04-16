@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
 import { removeFromConstructor } from '../../services/actions/burger-constructor';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,11 +8,9 @@ import ingredientType from '../../assets/scripts/propTypes'
 import { startMoveDragging, STOP_DRAGGING } from '../../services/actions/dragging';
 import { changeConstructorIngredients } from '../../services/actions/burger-constructor';
 
-const ConstructorCard = ({ ingredient }) => {
+const ConstructorCard = ({ ingredient, isHidden }) => {
   const dispatch = useDispatch();
-  const constructorArray = useSelector(store => store.burgerConstructor.ingredients)
   const id = ingredient.nanoid
-  const type = 'move'
 
   const removeElement = (ingredient) => {
     dispatch(removeFromConstructor(ingredient));
@@ -20,37 +18,30 @@ const ConstructorCard = ({ ingredient }) => {
 
   const [{isDragging}, ingredientRef] = useDrag({
     type: "ingredient",
-    item: { id, type },
+    item: { id },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
-    end: (dropResult, monitor) => {
-      const didDrop = monitor.didDrop();
-      didDrop && dispatch(changeConstructorIngredients(false))
+    end: () => {
+      dispatch(changeConstructorIngredients(false))
       dispatch({type: STOP_DRAGGING});
     }
   });
 
   React.useEffect(() => {
-    if (isDragging) {
-      dispatch(startMoveDragging(ingredient));
-    }
+    isDragging && dispatch(startMoveDragging(ingredient));
   }, [isDragging])
 
   return (
-    <>
-      { !isDragging &&
-        <li className={`${styles.ingredient} ml-4 mr-4`} key={ingredient.nanoid} ref={ingredientRef}>
-          <DragIcon type="primary"/>
-          <ConstructorElement
-          text={ingredient.name}
-          price={ingredient.price}
-          thumbnail={ingredient.image}
-          handleClose={() => {removeElement(ingredient)}}
-          />
-        </li>
-      }
-    </>
+    <li className={`${styles.ingredient} ${isHidden ? styles.hidden : ''} pl-4 mr-4 mb-2 mt-2`} ref={ingredientRef}>
+      <DragIcon type="primary"/>
+      <ConstructorElement
+      text={ingredient.name}
+      price={ingredient.price}
+      thumbnail={ingredient.image}
+      handleClose={() => {removeElement(ingredient)}}
+      />
+    </li>
   )
 }
 

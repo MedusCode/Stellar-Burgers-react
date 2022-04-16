@@ -10,3 +10,12 @@
   border-radius: 40px;
   border: 2px dashed #2f2f37;
 }
+
+.dragging {
+  filter: brightness(140%);
+  opacity: 0.4;
+}
+
+.draggingg {
+  opacity: 0.1;
+}
