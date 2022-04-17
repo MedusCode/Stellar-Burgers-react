@@ -45,7 +45,7 @@ const Cart = () => {
   return (
     <>
       <ul className={styles.cart}>
-        <li className={`${temporaryBun._id ? styles.hidden : ''} ml-4 mr-4 pl-8`} ref={upperBunTarget}>
+        <li className={`${temporaryBun._id && temporaryBun._id !==  bun._id ? styles.hidden : ''} ml-4 mr-4 pl-8`} ref={upperBunTarget}>
           <ConstructorElement
             type="top"
             isLocked={true}
@@ -55,7 +55,7 @@ const Cart = () => {
           />
         </li>
         <CartElements />
-        <li className={`${temporaryBun._id ? styles.hidden : ''} ml-4 mr-4 pl-8`} ref={lowerBunTarget}>
+        <li className={`${temporaryBun._id && temporaryBun._id !==  bun._id ? styles.hidden : ''} ml-4 mr-4 pl-8`} ref={lowerBunTarget}>
           <ConstructorElement
             type="bottom"
             isLocked={true}

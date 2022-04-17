@@ -5,7 +5,6 @@ const initialState = {
   ingredients: [],
   initialIngredients: [],
   index: -1,
-  draggingType: 'no',
 }
 
 export const draggingReducer = (state = initialState, action) => {
@@ -16,7 +15,6 @@ export const draggingReducer = (state = initialState, action) => {
         ingredient: action.ingredient,
         ingredients: action.ingredients,
         initialIngredients: action.initialIngredients,
-        draggingType: action.draggingType
       }
     }
     case CHANGE_DRAGGING_POSSITION: {

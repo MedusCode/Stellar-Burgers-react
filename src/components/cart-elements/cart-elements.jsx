@@ -5,17 +5,8 @@ import CartElement from '../cart-element/cart-element';
 
 const CartElements = () => {
   const cartContainerRef = React.useRef(null);
-  const activeIngredients = useSelector(store => store.burgerConstructor.ingredients)
-  const { temporaryIngredients, draggingType } = useSelector(store => ({
-    temporaryIngredients: store.dragging.ingredients,
-    draggingType: store.dragging.draggingType,
-  }))
-  const [ingredients, setIngredients] = React.useState([]);
-
-  React.useEffect(() => {
-    if (draggingType !== 'no') setIngredients(temporaryIngredients)
-    else setIngredients(activeIngredients)
-  }, [draggingType, temporaryIngredients, activeIngredients])
+  const constructorIngredients = useSelector(store => store.burgerConstructor.ingredients);
+  const draggingIndredientIndex =  useSelector(store => store.dragging.index);
 
   React.useEffect(() => {
     const sectionListSizing = () => {
@@ -32,12 +23,10 @@ const CartElements = () => {
 
   return (
     <div className={styles.container} ref={cartContainerRef}>
-      {ingredients.length > 0
-        ? ingredients.map((item, index) => {
-            return (<CartElement item={item} index={index} key={item.nanoid} />)
-          })
-        : <CartElement />
-      }
+        {constructorIngredients.map((item, index) => {
+          return (<CartElement index={index} key={item.nanoid} />)
+        })}
+        <CartElement index={constructorIngredients.length} />
     </div>
   )
 }
