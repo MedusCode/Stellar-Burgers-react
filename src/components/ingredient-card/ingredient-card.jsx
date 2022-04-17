@@ -1,8 +1,8 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useDrag } from "react-dnd";
-import ingredientType from '../../assets/scripts/propTypes';
 import styles from './ingredient-card.module.css';
+import ingredientType from '../../assets/scripts/propTypes';
+import { useDispatch } from 'react-redux';
+import { useDrag } from "react-dnd";
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OPEN_MODAL } from '../../services/actions/modal';
 import { startAddDragging, STOP_DRAGGING } from '../../services/actions/dragging';

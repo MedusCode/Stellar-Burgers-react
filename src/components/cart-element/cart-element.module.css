@@ -11,11 +11,11 @@
   border: 2px dashed #2f2f37;
 }
 
-.dragging {
+.over {
   filter: brightness(140%);
   opacity: 0.4;
 }
 
-.draggingg {
+.notOver {
   opacity: 0.1;
 }

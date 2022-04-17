@@ -1,14 +1,15 @@
 import React from 'react';
+import styles from './constructor-card.module.css';
+import PropTypes from "prop-types";
+import ingredientType from '../../assets/scripts/propTypes'
 import { useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
-import { removeFromConstructor } from '../../services/actions/burger-constructor';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './constructor-card.module.css';
-import ingredientType from '../../assets/scripts/propTypes'
 import { startMoveDragging, STOP_DRAGGING } from '../../services/actions/dragging';
 import { changeConstructorIngredients } from '../../services/actions/burger-constructor';
+import { removeFromConstructor } from '../../services/actions/burger-constructor';
 
-const ConstructorCard = ({ ingredient, isHidden }) => {
+const ConstructorCard = ({ ingredient, isOver }) => {
   const dispatch = useDispatch();
   const id = ingredient.nanoid
 
@@ -33,7 +34,7 @@ const ConstructorCard = ({ ingredient, isHidden }) => {
   }, [isDragging])
 
   return (
-    <li className={`${styles.ingredient} ${isHidden ? styles.hidden : ''} pl-4 mr-4 mb-2 mt-2`} ref={ingredientRef}>
+    <li className={`${styles.ingredient} ${isOver ? styles.over : ''} pl-4 mr-4 mb-2 mt-2`} ref={ingredientRef}>
       <DragIcon type="primary"/>
       <ConstructorElement
       text={ingredient.name}
@@ -46,7 +47,8 @@ const ConstructorCard = ({ ingredient, isHidden }) => {
 }
 
 ConstructorCard.propTypes = {
-  ingredient: ingredientType.isRequired
+  ingredient: ingredientType.isRequired,
+  isOver: PropTypes.bool.isRequired,
 }
 
 export default ConstructorCard;

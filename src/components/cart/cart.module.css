@@ -2,16 +2,20 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.cart div {
-  width: 100%;
+.ingredientsContainer {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: overlay;
+  max-height: 300px;
 }
 
-.hidden {
-  filter: brightness(140%);
-  opacity: 0.4;
+.cart div {
+  width: 100%;
 }

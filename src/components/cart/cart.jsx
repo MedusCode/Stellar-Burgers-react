@@ -1,70 +1,43 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useDrop } from "react-dnd";
 import styles from './cart.module.css';
-import CartElements from '../cart-elements/cart-elements'
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import whiteBun from '../../assets/images/whiteBun.png'
-import { addToConstructor } from '../../services/actions/burger-constructor';
+import { useSelector } from 'react-redux';
+import ConstructorBunCard from '../constructor-bun-card/constructor-bun-card';
+import CartElement from '../cart-element/cart-element';
+
 
 const Cart = () => {
-  const dispatch = useDispatch();
-  const bun = useSelector(store => store.burgerConstructor.bun)
-  const allBuns = useSelector(store => store.ingredients.bun)
-  const [temporaryBun, setTemporaryBun] = React.useState({})
-
-  const [{bunItem, upperBunIsOver}, upperBunTarget] = useDrop({
-    accept: "bun",
-    collect: monitor => ({
-      upperBunIsOver: monitor.isOver(),
-      bunItem: monitor.getItem()
-    }),
-    drop() {
-      dispatch(addToConstructor(temporaryBun))
-    }
-  });
-
-  const [{lowerBunIsOver}, lowerBunTarget] = useDrop({
-    accept: "bun",
-    collect: monitor => ({
-      lowerBunIsOver: monitor.isOver(),
-    }),
-    drop() {
-      dispatch(addToConstructor(temporaryBun))
-    }
-  });
+  const [bun, setBun] = React.useState({});
+  const elementsContainerRef = React.useRef(null);
+  const constructorIngredients = useSelector(store => store.burgerConstructor.ingredients);
+  const { draggingIndredientIndex, draggingType } =  useSelector(store => ({
+    draggingIndredientIndex: store.dragging.index,
+    draggingType: store.dragging.draggingType,
+  }));
 
   React.useEffect(() => {
-    if (upperBunIsOver || lowerBunIsOver) {
-      const draggingBun = allBuns.find(bun => bun._id === bunItem.id)
-      setTemporaryBun(draggingBun)
+    const sectionListSizing = () => {
+      elementsContainerRef.current.style.maxHeight = `${window.innerHeight - elementsContainerRef.current.offsetTop - 285}px`;
     }
-    (!upperBunIsOver && !lowerBunIsOver) && setTemporaryBun({})
-  }, [upperBunIsOver, lowerBunIsOver])
+
+    window.addEventListener('resize', sectionListSizing);
+    sectionListSizing()
+
+    return () => {
+      window.removeEventListener('resize', sectionListSizing);
+    }
+  }, [])
 
   return (
     <>
-      <ul className={styles.cart}>
-        <li className={`${temporaryBun._id && temporaryBun._id !==  bun._id ? styles.hidden : ''} ml-4 mr-4 pl-8`} ref={upperBunTarget}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={temporaryBun._id ? `${temporaryBun.name} (верх)` : bun._id ? `${bun.name} (верх)` : 'Перетащите сюда булку'}
-            price={temporaryBun._id ? temporaryBun.price : bun._id ? bun.price : ''}
-            thumbnail={temporaryBun._id ? temporaryBun.image : bun._id ? bun.image : whiteBun}
-          />
-        </li>
-        <CartElements />
-        <li className={`${temporaryBun._id && temporaryBun._id !==  bun._id ? styles.hidden : ''} ml-4 mr-4 pl-8`} ref={lowerBunTarget}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={temporaryBun._id ? `${temporaryBun.name} (низ)` : bun._id ? `${bun.name} (низ)` : 'Перетащите сюда булку'}
-            price={temporaryBun._id ? temporaryBun.price : bun._id ? bun.price : ''}
-            thumbnail={temporaryBun._id ? temporaryBun.image : bun._id ? bun.image : whiteBun}
-          />
-        </li>
-      </ul>
+      <div className={styles.cart}>
+        <ConstructorBunCard type='top' bun={bun} setBun={setBun} />
+        <ul className={styles.ingredientsContainer} ref={elementsContainerRef}>
+          {constructorIngredients.map((item, index) => (<CartElement index={index} key={item.nanoid} />))}
+          {(draggingIndredientIndex >= 0 && draggingType === 'add' || constructorIngredients.length === 0)
+              && <CartElement index={constructorIngredients.length} />}
+        </ul>
+        <ConstructorBunCard type='bottom' bun={bun} setBun={setBun} />
+      </div>
     </>
   )
 }

@@ -1,8 +1,8 @@
 import {
-  ADD_INGREDIENT_TO_CONSTRUCTOR,
+  ADD_BUN_TO_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   CLEAR_CONSTRUCTOR,
-  CHANGE_CONSTRUCTOR_ORDER
+  CHANGE_CONSTRUCTOR_INGREDIENTS
 } from '../actions/burger-constructor';
 
 const initialState = {
@@ -15,16 +15,9 @@ const initialState = {
 
 export const burgerConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_INGREDIENT_TO_CONSTRUCTOR: {
-      let newState = {};
-      if (action.ingredient.type === 'bun') newState = {...state, bun: {...action.ingredient}}
-      else {
-        const newArray = [...state.ingredients];
-        newArray.splice(action.index, 0, action.ingredient)
-        newState = {...state, ingredients: newArray}
-      }
-      const newPrice = newState.ingredients.reduce((price, ingredient) => price + ingredient.price, 0) + newState.bun.price * 2;
-      return {...newState, price: newPrice}
+    case ADD_BUN_TO_CONSTRUCTOR: {
+      const price = state.ingredients.reduce((price, ingredient) => price + ingredient.price, 0) + action.bun.price * 2;
+      return {...state, bun: action.bun, price: price}
     }
     case REMOVE_INGREDIENT_FROM_CONSTRUCTOR: {
       return {
@@ -33,17 +26,17 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         price: state.price - action.ingredient.price
       }
     }
-    case CLEAR_CONSTRUCTOR: {
-      return {
-        ...initialState
-      }
-    }
-    case CHANGE_CONSTRUCTOR_ORDER: {
+    case CHANGE_CONSTRUCTOR_INGREDIENTS: {
       const price = action.ingredients.reduce((price, ingredient) => price + ingredient.price, 0) + state.bun.price * 2;
       return {
         ...state,
         ingredients: action.ingredients,
         price: price
+      }
+    }
+    case CLEAR_CONSTRUCTOR: {
+      return {
+        ...initialState
       }
     }
     default: {

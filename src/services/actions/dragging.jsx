@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 const START_DRAGGING = 'STAPT_DRAGGING';
-const CHANGE_DRAGGING_POSSITION = 'CHANGE_DRAGGING_POSSITION';
+const CHANGE_DRAGGING_INDEX = 'CHANGE_DRAGGING_INDEX';
 const STOP_DRAGGING = 'STOP_DRAGGING';
 
 const startAddDragging = (ingredient) => {
@@ -10,8 +10,8 @@ const startAddDragging = (ingredient) => {
     dispatch({
       type: START_DRAGGING,
       ingredient: {...ingredient, nanoid: id},
-      ingredients: [ ...ingredients],
-      initialIngredients: [ ...ingredients],
+      ingredients: [...ingredients],
+      initialIngredients: [...ingredients],
       draggingType: 'add'
     })
   }
@@ -31,4 +31,4 @@ const startMoveDragging = (ingredient) => {
   }
 }
 
-export { START_DRAGGING, CHANGE_DRAGGING_POSSITION, STOP_DRAGGING, startAddDragging, startMoveDragging };
+export { START_DRAGGING, CHANGE_DRAGGING_INDEX, STOP_DRAGGING, startAddDragging, startMoveDragging };
