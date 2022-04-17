@@ -13,3 +13,10 @@
 .gif {
   height: 120px;
 }
+
+.message {
+  display: box;
+  padding-top: 150px;
+  padding-bottom: 225px;
+  text-align: center;
+}

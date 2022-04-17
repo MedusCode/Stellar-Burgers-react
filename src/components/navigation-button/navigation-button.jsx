@@ -1,18 +1,21 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './navigation-button.module.css';
+import { SWITCH_PAGE } from '../../services/actions/app'
 
 const NavigationButton = (props) => {
+  const dispatch = useDispatch();
   const clickHandler = () => {
     switch (props.text) {
       case 'Конструктор':
-        props.setActiveButton('Constructor');
+        dispatch({type: SWITCH_PAGE, activePage: 'Constructor'})
         break;
       case 'Лента заказов':
-        props.setActiveButton('Order list');
+        dispatch({type: SWITCH_PAGE, activePage: 'Order list'})
         break;
       case 'Личный кабинет':
-        props.setActiveButton('Profile');
+        dispatch({type: SWITCH_PAGE, activePage: 'Profile'})
         break;
     }
   }
@@ -30,7 +33,6 @@ const NavigationButton = (props) => {
 NavigationButton.propTypes = {
   children: PropTypes.element,
   isActive: PropTypes.bool.isRequired,
-  setActiveButton: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired
 }
 

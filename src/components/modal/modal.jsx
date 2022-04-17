@@ -6,13 +6,9 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
 const Modal = (props) => {
-  const closeModal = () => {
-    props.setState(false);
-  }
-
   React.useEffect(() => {
     const handleEscClose = (evt) => {
-      evt.key === 'Escape' && closeModal();
+      evt.key === 'Escape' && props.onClose();
     }
 
     document.addEventListener('keydown', handleEscClose);
@@ -27,18 +23,17 @@ const Modal = (props) => {
       <section className={`${styles.modal} pt-10 pr-10 pb-15 pl-10`}>
         <div className={styles.header}>
           {props.title && <h2 className={`${styles.title} text text_type_main-large`}>{props.title}</h2>}
-          <button className={styles.closeButton} onClick={closeModal}><CloseIcon type="primary" /></button>
+          <button className={styles.closeButton} onClick={props.onClose}><CloseIcon type="primary" /></button>
         </div>
         {props.children}
       </section>
-      <ModalOverlay onClick={closeModal} />
+      <ModalOverlay onClick={props.onClose} />
     </>
   ), document.getElementById('modals'));
 }
 
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
-  setState: PropTypes.func.isRequired,
   title: PropTypes.string
 }
 
