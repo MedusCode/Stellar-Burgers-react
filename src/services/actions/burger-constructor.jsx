@@ -1,13 +1,25 @@
 import { INCREASE_INGREDIENTS_COUNTER, DECREASE_INGREDIENTS_COUNTER, CLEAR_COUNTERS } from './ingredients'
 
-const ADD_INGREDIENT_TO_CONSTRUCTOR = 'ADD_INGREDIENT_TO_CONSTRUCTOR';
+const ADD_BUN_TO_CONSTRUCTOR = 'ADD_BUN_TO_CONSTRUCTOR';
 const REMOVE_INGREDIENT_FROM_CONSTRUCTOR = 'REMOVE_INGREDIENT_FROM_CONSTRUCTOR';
 const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
+const CHANGE_CONSTRUCTOR_INGREDIENTS = 'CHANGE_CONSTRUCTOR_INGREDIENTS';
 
-const addToConstructor = (ingredient, index) => {
+const addBunToConstructor = (bun) => {
   return (dispatch) => {
-    dispatch({type: ADD_INGREDIENT_TO_CONSTRUCTOR, ingredient: ingredient, index: index});
-    dispatch({type: INCREASE_INGREDIENTS_COUNTER, ingredient: ingredient});
+    dispatch({type: ADD_BUN_TO_CONSTRUCTOR, bun: bun});
+    dispatch({type: INCREASE_INGREDIENTS_COUNTER, ingredient: bun});
+  }
+}
+
+const changeConstructorIngredients = (isNewIngredient) => {
+  return (dispatch, getState) => {
+    if (isNewIngredient) {
+      const ingredient = getState().dragging.ingredient;
+      dispatch({type: INCREASE_INGREDIENTS_COUNTER, ingredient: ingredient});
+    }
+    const ingredients = getState().dragging.ingredients;
+    dispatch({type: CHANGE_CONSTRUCTOR_INGREDIENTS, ingredients: ingredients});
   }
 }
 
@@ -25,10 +37,12 @@ const clearConstructor = () => {
   }
 }
 
-export { ADD_INGREDIENT_TO_CONSTRUCTOR,
+export { ADD_BUN_TO_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
+  CHANGE_CONSTRUCTOR_INGREDIENTS,
   CLEAR_CONSTRUCTOR,
-  addToConstructor,
+  addBunToConstructor,
   removeFromConstructor,
-  clearConstructor
+  clearConstructor,
+  changeConstructorIngredients
 }

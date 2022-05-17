@@ -1,31 +1,21 @@
 .cart {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  list-style: none;
+  gap: 8px;
   margin: 0;
   padding: 0;
 }
 
-.cart div {
-  width: 100%;
-}
-
-.container {
-  composes: cart;
+.ingredientsContainer {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
   overflow: overlay;
   max-height: 300px;
 }
 
-.ingredient {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.empty {
-  box-sizing: border-box;
-  min-height: 80px;
-  border-radius: 40px;
-  border: 2px dashed #2f2f37;
+.cart div {
+  width: 100%;
 }

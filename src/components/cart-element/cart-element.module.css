@@ -1,0 +1,21 @@
+.ingredient {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty {
+  box-sizing: border-box;
+  min-height: 80px;
+  border-radius: 40px;
+  border: 2px dashed #2f2f37;
+}
+
+.over {
+  filter: brightness(140%);
+  opacity: 0.4;
+}
+
+.notOver {
+  opacity: 0.1;
+}

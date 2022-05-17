@@ -1,57 +1,54 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useDrag } from "react-dnd";
-import { removeFromConstructor } from '../../services/actions/burger-constructor';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-card.module.css';
+import PropTypes from "prop-types";
 import ingredientType from '../../assets/scripts/propTypes'
-import { startDragging } from '../../services/actions/dragging';
+import { useDispatch } from 'react-redux';
+import { useDrag } from "react-dnd";
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { startMoveDragging, STOP_DRAGGING } from '../../services/actions/dragging';
+import { changeConstructorIngredients } from '../../services/actions/burger-constructor';
+import { removeFromConstructor } from '../../services/actions/burger-constructor';
 
-const ConstructorCard = ({ ingredient }) => {
+const ConstructorCard = ({ ingredient, isOver }) => {
   const dispatch = useDispatch();
-  const constructorArray = useSelector(store => store.burgerConstructor.ingredients)
   const id = ingredient.nanoid
-  const type = 'move'
 
   const removeElement = (ingredient) => {
     dispatch(removeFromConstructor(ingredient));
   }
 
-  const [{endDrag, didDrop, isDragging}, ingredientRef] = useDrag({
+  const [{isDragging}, ingredientRef] = useDrag({
     type: "ingredient",
-    item: { id, type },
+    item: { id },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
+    end: () => {
+      dispatch(changeConstructorIngredients(false))
+      dispatch({type: STOP_DRAGGING});
+    }
   });
 
   React.useEffect(() => {
-    if (isDragging) {
-      const newArray = [...constructorArray].filter(item => item.nanoid !== ingredient.nanoid)
-      dispatch(startDragging(ingredient, newArray));
-      dispatch(removeFromConstructor(ingredient));
-    }
-  }, [isDragging, endDrag, didDrop])
+    isDragging && dispatch(startMoveDragging(ingredient));
+  }, [isDragging])
 
   return (
-    <>
-      { !isDragging &&
-        <li className={`${styles.ingredient} ml-4 mr-4`} key={ingredient.nanoid} ref={ingredientRef}>
-          <DragIcon type="primary"/>
-          <ConstructorElement
-          text={ingredient.name}
-          price={ingredient.price}
-          thumbnail={ingredient.image}
-          handleClose={() => {removeElement(ingredient)}}
-          />
-        </li>
-      }
-    </>
+    <li className={`${styles.ingredient} ${isOver ? styles.over : ''} pl-4 mr-4 mb-2 mt-2`} ref={ingredientRef}>
+      <DragIcon type="primary"/>
+      <ConstructorElement
+      text={ingredient.name}
+      price={ingredient.price}
+      thumbnail={ingredient.image}
+      handleClose={() => {removeElement(ingredient)}}
+      />
+    </li>
   )
 }
 
 ConstructorCard.propTypes = {
-  ingredient: ingredientType.isRequired
+  ingredient: ingredientType.isRequired,
+  isOver: PropTypes.bool.isRequired,
 }
 
 export default ConstructorCard;

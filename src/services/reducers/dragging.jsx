@@ -1,10 +1,11 @@
-import {START_DRAGGING, CHANGE_DRAGGING_POSSITION } from '../actions/dragging'
+import {START_DRAGGING, CHANGE_DRAGGING_INDEX, STOP_DRAGGING } from '../actions/dragging'
 
 const initialState = {
   ingredient: {},
-  constructorArray: [],
-  previousIndex: 0,
-  newIndex: 0
+  ingredients: [],
+  initialIngredients: [],
+  index: -1,
+  draggingType: 'notDrugging',
 }
 
 export const draggingReducer = (state = initialState, action) => {
@@ -13,23 +14,24 @@ export const draggingReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredient: action.ingredient,
-        constructorArray: action.constructorArray,
-        previousIndex: 0,
-        newIndex: 0
+        ingredients: action.ingredients,
+        initialIngredients: action.initialIngredients,
+        draggingType: action.draggingType,
       }
     }
-    case CHANGE_DRAGGING_POSSITION: {
-      if (state.previousIndex !== action.newIndex) {
-        const newArray = state.constructorArray;
-        newArray.splice(state.previousIndex, 1);
-        newArray.splice(action.newIndex, 0, state.ingredient)
-        return {
-          ...state,
-          constructorArray: newArray,
-          previousIndex: action.newIndex,
-          newIndex: action.newIndex,
-        }
+    case CHANGE_DRAGGING_INDEX: {
+      const newArray = [...state.initialIngredients];
+      newArray.splice(action.index, 0, state.ingredient)
+      return {
+        ...state,
+        ingredients: newArray,
+        index: action.index,
       }
+    }
+    case STOP_DRAGGING: {
+      return {
+        ...initialState
+      };
     }
     default: {
       return state;
