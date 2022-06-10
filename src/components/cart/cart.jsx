@@ -9,8 +9,8 @@ const Cart = () => {
   const [bun, setBun] = React.useState({});
   const elementsContainerRef = React.useRef(null);
   const constructorIngredients = useSelector(store => store.burgerConstructor.ingredients);
-  const { draggingIndredientIndex, draggingType } =  useSelector(store => ({
-    draggingIndredientIndex: store.dragging.index,
+  const { draggingIngredientIndex, draggingType } =  useSelector(store => ({
+    draggingIngredientIndex: store.dragging.index,
     draggingType: store.dragging.draggingType,
   }));
 
@@ -33,7 +33,7 @@ const Cart = () => {
         <ConstructorBunCard type='top' bun={bun} setBun={setBun} />
         <ul className={styles.ingredientsContainer} ref={elementsContainerRef}>
           {constructorIngredients.map((item, index) => (<CartElement index={index} key={item.nanoid} />))}
-          {(draggingIndredientIndex >= 0 && draggingType === 'add' || constructorIngredients.length === 0)
+          {(draggingIngredientIndex >= 0 && draggingType === 'add' || constructorIngredients.length === 0)
               && <CartElement index={constructorIngredients.length} />}
         </ul>
         <ConstructorBunCard type='bottom' bun={bun} setBun={setBun} />

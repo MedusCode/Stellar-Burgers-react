@@ -1,0 +1,36 @@
+.container {
+  margin: 0 auto;
+  padding-top: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 480px;
+  color: #F2F2F3;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.valid {
+  margin-bottom: 31px;
+}
+
+.invalid {
+  margin-bottom: -11px;
+}
+
+.input {
+  width: 100%;
+}
+
+.input > div {
+  width: 100%;
+}
+
+.input > div > div {
+  width: 100%;
+}

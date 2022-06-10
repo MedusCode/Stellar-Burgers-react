@@ -1,5 +1,5 @@
-import { checkResponse } from "../../assets/scripts/checkResponse";
-import { baseUrl } from "../../assets/scripts/baseUrl";
+import checkResponse from "../../assets/scripts/checkResponse";
+import baseUrl from "../../assets/scripts/baseUrl";
 import { clearConstructor } from './burger-constructor'
 
 const MAKE_ORDER_REQUEST = 'MAKE_ORDER_REQUEST';
