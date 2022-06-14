@@ -3,6 +3,7 @@
 ### Обзор
 * Описание проекта и его функциональности
 * Технологии
+* Ссылка на github-pages
 * Доступные скрипты
 
 **Описание проекта и его функциональности**
@@ -13,7 +14,14 @@
 **Технологии**
 
 *Сборка: CRA-заготовка
-*Основная технология: React
+*React
+*React Redux
+*React dnd
+*React Router
+
+**Ссылка на github-pages**
+
+https://meduscode.github.io/Stellar-Burgers-react/
 
 
 ## Available Scripts
