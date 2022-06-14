@@ -6,8 +6,9 @@ import { setCookie, getCookie, deleteCookie } from "../../assets/scripts/cookie"
 const USER_REQUEST = 'USER_REQUEST';
 const USER_SUCCESS = 'USER_SUCCESS';
 const USER_FAILED = 'USER_FAILED';
-const RESET_STORAGE = 'RESET_STORAGE';
-const RESET_REQUEST_STATUS = 'RESET_REQUEST_STATUS';
+const RESET_USER_STORAGE = 'RESET_USER_STORAGE';
+const RESET_USER_REQUEST_STATUS = 'RESET_USER_REQUEST_STATUS';
+const TOKEN_AUTHORIZATION = 'TOKEN_AUTHORIZATION';
 
 const requestToServer = (method = 'POST', endpoint, body) => {
   return fetch(`${baseUrl}/auth/${endpoint}`, {
@@ -26,9 +27,6 @@ const refreshTokenRequest = () => {
       .then(data => {
         setCookie('refreshToken', data.refreshToken);
         setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
-      })
-      .catch(() => {
-        return 'Token was not refreshed';
       })
 }
 
@@ -71,7 +69,7 @@ const logoutRequest = () => {
     dispatch({type: USER_REQUEST});
     requestToServer('POST', 'logout', {token: getCookie('refreshToken')})
       .then(() => {
-        dispatch({type: RESET_STORAGE});
+        dispatch({type: RESET_USER_STORAGE});
         deleteCookie('refreshToken');
         deleteCookie('accessToken');
       })
@@ -87,25 +85,27 @@ const getUserRequest = () => {
       return requestToServer('GET', 'user')
         .then(data => {
           dispatch({ type: USER_SUCCESS, user: data.user });
-          dispatch({ type: RESET_REQUEST_STATUS });
+          dispatch({ type: RESET_USER_REQUEST_STATUS });
         })
     }
 
+    dispatch({ type: TOKEN_AUTHORIZATION }); 
     request()
       .catch(() => {
-        getCookie('refreshToken') && refreshTokenRequest()
+        if (getCookie('refreshToken')) refreshTokenRequest()
           .then(() => {
             request().catch(() => {
-              dispatch({type: RESET_STORAGE});
+              dispatch({type: RESET_USER_STORAGE});
               deleteCookie('refreshToken');
               deleteCookie('accessToken');
             })
           })
           .catch(() => {
-            dispatch({type: RESET_STORAGE});
+            dispatch({type: RESET_USER_STORAGE});
             deleteCookie('refreshToken');
             deleteCookie('accessToken');
           })
+        else dispatch({type: RESET_USER_STORAGE}); 
       })
   }
 }
@@ -122,15 +122,16 @@ const updateUserRequest = (body) => {
     dispatch({type: USER_REQUEST});
     request()
       .catch(() => {
-        getCookie('refreshToken') && refreshTokenRequest()
+        if (getCookie('refreshToken')) refreshTokenRequest()
           .then(() => {
             request().catch(error => {dispatch({ type: USER_FAILED, status: error })});
           })
           .catch(() => {
-            dispatch({type: RESET_STORAGE});
+            dispatch({type: RESET_USER_STORAGE});
             deleteCookie('refreshToken');
             deleteCookie('accessToken');
           })
+        else dispatch({type: RESET_USER_STORAGE});
       })
   }
 }
@@ -139,8 +140,9 @@ const updateUserRequest = (body) => {
 export { USER_REQUEST,
   USER_SUCCESS,
   USER_FAILED,
-  RESET_STORAGE,
-  RESET_REQUEST_STATUS,
+  RESET_USER_STORAGE,
+  RESET_USER_REQUEST_STATUS,
+  TOKEN_AUTHORIZATION,
   loginRequest,
   registerRequest,
   logoutRequest,

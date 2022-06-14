@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import styles from './form-message.module.css';
 import { Link } from 'react-router-dom';
 
@@ -12,6 +13,13 @@ const FormMessage = ({ message, linkText, link, replace }) => {
       </Link>
     </div>
   )
+}
+
+FormMessage.propTypes = {
+  message: PropTypes.string.isRequired,
+  linkText: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  replace: PropTypes.bool
 }
 
 export default FormMessage;

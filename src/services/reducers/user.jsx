@@ -1,4 +1,4 @@
-import { USER_REQUEST, USER_SUCCESS, USER_FAILED, RESET_STORAGE, RESET_REQUEST_STATUS } from '../actions/user';
+import { USER_REQUEST, USER_SUCCESS, USER_FAILED, RESET_USER_STORAGE, RESET_USER_REQUEST_STATUS, TOKEN_AUTHORIZATION } from '../actions/user';
 
 const initialState = {
   user: {
@@ -10,7 +10,8 @@ const initialState = {
   request: false,
   requestSuccess: false,
   requestFailed: false,
-  errorStatus: ''
+  errorStatus: '',
+  tokenAuthorization: false,
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -36,6 +37,7 @@ export const userReducer = (state = initialState, action) => {
         requestSuccess: true,
         request: false,
         requestFailed: false,
+        tokenAuthorization: false,
       }
     }
     case USER_FAILED: {
@@ -44,20 +46,31 @@ export const userReducer = (state = initialState, action) => {
         requestSuccess: false,
         request: false,
         requestFailed: true,
-        errorStatus: action.status
+        errorStatus: action.status,
+        tokenAuthorization: false,
       };
     }
-    case RESET_STORAGE: {
+    case RESET_USER_STORAGE: {
       return initialState
     }
-    case RESET_REQUEST_STATUS: {
+    case RESET_USER_REQUEST_STATUS: {
       return {
         ...state,
         requestSuccess: false,
         request: false,
         requestFailed: false,
-        errorStatus: ''
+        errorStatus: '',
+        tokenAuthorization: false,
       }
+    }
+    case TOKEN_AUTHORIZATION: {
+      return {
+        ...state,
+        tokenAuthorization: true,
+        requestSuccess: false,
+        requestFailed: false,
+        errorStatus: ''
+      } 
     }
     default: {
       return state;

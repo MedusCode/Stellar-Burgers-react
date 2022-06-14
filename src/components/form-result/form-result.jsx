@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styles from './form-result.module.css';
-import { RESET_REQUEST_STATUS } from '../../services/actions/user.jsx'
+import { RESET_USER_REQUEST_STATUS } from '../../services/actions/user.jsx'
 
 const FormResult = ({message, buttonText, href, reset}) => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const FormResult = ({message, buttonText, href, reset}) => {
   const resetRequestStatus = () => {
     href && history.replace({ pathname: href })
     if (reset) reset()
-    else dispatch({ type: RESET_REQUEST_STATUS });
+    else dispatch({ type: RESET_USER_REQUEST_STATUS });
   }
 
   return (
@@ -22,6 +23,13 @@ const FormResult = ({message, buttonText, href, reset}) => {
       </button>}
     </div>
   )
+}
+
+FormResult.propTypes = {
+  message: PropTypes.string.isRequired,
+  buttonText: PropTypes.string,
+  href: PropTypes.string,
+  reset: PropTypes.func
 }
 
 export default FormResult;

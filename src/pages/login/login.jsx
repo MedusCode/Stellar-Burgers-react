@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import styles from './login.module.css';
 import FormMessage from '../../components/form-message/form-message';
@@ -7,10 +7,11 @@ import FormResult from '../../components/form-result/form-result';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import useForm from '../../services/hooks/useForm';
 import useUserStatus from '../../services/hooks/useUserStatus';
-import { loginRequest, RESET_REQUEST_STATUS } from '../../services/actions/user';
+import { loginRequest, RESET_USER_REQUEST_STATUS } from '../../services/actions/user';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const state = useLocation().state;
   const history = useHistory();
   const { isAuthorized, request, requestFailed, errorStatus, isRequested } = useUserStatus();
   const { values, onChange, resetPassword } = useForm({email: '', password: ''});
@@ -23,8 +24,8 @@ const Login = () => {
   }
 
   const login = React.useCallback(() => {
-    history.replace({ pathname: '/' });
-    dispatch({ type: RESET_REQUEST_STATUS });
+    history.replace(state?.from.pathname || '/');
+    dispatch({ type: RESET_USER_REQUEST_STATUS });
   }, [history]);
 
   React.useEffect(() => {
@@ -42,6 +43,10 @@ const Login = () => {
     else if (errorStatus === 401) setRequestResult({message: 'Неправильный email или пароль', buttonText: 'Попробовать еще раз'})
     else if (requestFailed) setRequestResult({message: 'Ошибка сервера', buttonText: 'Попробовать еще раз'})
   }, [isAuthorized, request, requestFailed, errorStatus])
+  
+  if (isAuthorized) {
+    return (<Redirect to={{ pathname: '/' }} />)
+  }
 
   return (
     <div className={styles.container}>
@@ -63,7 +68,11 @@ const Login = () => {
             />
             <Button onClick={handleAuthorization} type="primary" size="medium" disabled={buttonDisability}>Войти</Button>
           </form>
-          <FormMessage message='Вы — новый пользователь?' linkText='Зарегистрироваться' link='/register' />
+          <FormMessage 
+            message='Вы — новый пользователь?' 
+            linkText='Зарегистрироваться' 
+            link={{ pathname: '/register', state: state }} 
+          />
           <FormMessage message='Забыли пароль?' linkText='Восстановить пароль' link='/forgot-password' />
         </>
       }

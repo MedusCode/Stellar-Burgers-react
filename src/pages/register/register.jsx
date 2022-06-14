@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormMessage from '../../components/form-message/form-message';
@@ -7,11 +8,13 @@ import FormResult from '../../components/form-result/form-result';
 import usePassword from '../../services/hooks/usePassword';
 import useForm from '../../services/hooks/useForm';
 import useUserStatus from '../../services/hooks/useUserStatus';
-import { registerRequest } from '../../services/actions/user';
+import { registerRequest, RESET_USER_REQUEST_STATUS } from '../../services/actions/user';
 
 
 const Register = () => {
   const dispatch = useDispatch();
+  const state = useLocation().state;
+  const history = useHistory();
   const { isAuthorized, request, requestFailed, errorStatus, isRequested } = useUserStatus();
   const { values, onChange, onBlur, invalid, buttonDisability, resetPassword } = useForm({name: '', email: '', password: ''});
   const { isPasswordHidden, onPasswordBlur, showPassword } = usePassword();
@@ -27,16 +30,27 @@ const Register = () => {
     onPasswordBlur();
   }
 
+  const login = React.useCallback(() => {
+    history.replace(state?.from.pathname || '/');
+    dispatch({ type: RESET_USER_REQUEST_STATUS });
+  }, [history]);
+
   React.useEffect(() => {
     !isRequested && resetPassword();
   }, [isRequested])
 
   React.useEffect(() => {
     if (request) setRequestResult({message: 'Отправка данных...', buttonText: '', href: ''})
-    else if (isAuthorized) setRequestResult({message: 'Вы успешно зарегистрированы', buttonText: 'Войти', href: '/'})
+    else if (isAuthorized) login();
     else if (errorStatus === 403) setRequestResult({message: 'Данный Email уже зарегистрирован', buttonText: 'Попробовать войти', href: '/login'})
     else if (requestFailed) setRequestResult({message: 'Ошибка сервера', buttonText: 'Попробовать еще раз', href: ''})
   }, [isAuthorized, request, requestFailed, errorStatus])
+  
+  if (isAuthorized) {
+    return (<Redirect to={{ pathname: '/' }} />)
+  }
+
+  console.log(state)
 
   return (
     <div className={styles.container}>

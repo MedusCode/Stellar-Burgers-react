@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import { useSelector, useDispatch } from 'react-redux';
 import useUserStatus from '../../services/hooks/useUserStatus.jsx';
 import styles from './confirmation.module.css'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { RESET_REQUEST_STATUS } from '../../services/actions/user.jsx';
+import { RESET_USER_REQUEST_STATUS } from '../../services/actions/user.jsx';
 
 const Confirmation = ({ closeModal }) => {
   const dispatch = useDispatch();
@@ -51,10 +52,10 @@ const Confirmation = ({ closeModal }) => {
   }, [isRequested, requestFailed])
 
   React.useEffect(() => {
-    dispatch({ type: RESET_REQUEST_STATUS });
+    dispatch({ type: RESET_USER_REQUEST_STATUS });
 
     return () => {
-      dispatch({ type: RESET_REQUEST_STATUS });
+      dispatch({ type: RESET_USER_REQUEST_STATUS });
     }
   }, [])
 
@@ -71,6 +72,10 @@ const Confirmation = ({ closeModal }) => {
       }
     </div>
   )
+}
+
+Confirmation.propTypes = {
+  closeModal: PropTypes.func.isRequired,
 }
 
 export default Confirmation;

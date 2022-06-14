@@ -1,5 +1,6 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useHistory, Redirect } from 'react-router-dom';
 import styles from './forgot-password.module.css';
 import FormMessage from '../../components/form-message/form-message';
 import FormResult from '../../components/form-result/form-result';
@@ -10,12 +11,13 @@ import checkResponse from "../../assets/scripts/checkResponse";
 
 const ForgotPassword = () => {
   const history = useHistory();
+  const isAuthorized = useSelector(store => store.user.isAuthorized)
   const { values, onChange, onBlur, invalid, buttonDisability } = useForm({email: ''});
   const [ resetStatus, setResetStatus ] = React.useState({loading: false, success: false, error: false});
   const [ requestResult, setRequestResult ] = React.useState({ message: '', buttonText: '' });
 
   const moveNextStep = React.useCallback(() => {
-    history.replace({ pathname: '/reset-password' });
+    history.push({ pathname: '/reset-password', state: { access: true } });
   }, [history]);
 
   const reset = () => {
@@ -48,6 +50,10 @@ const ForgotPassword = () => {
     else if (resetStatus.success) moveNextStep();
     else if (resetStatus.error) setRequestResult({message: 'Ошибка сервера', buttonText: 'Попробовать еще раз'});
   }, [resetStatus])
+
+  if (isAuthorized) {
+    return (<Redirect to={{ pathname: '/' }} />)
+  }
 
   return (
     <div className={styles.container}>
