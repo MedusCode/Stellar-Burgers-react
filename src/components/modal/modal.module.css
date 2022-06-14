@@ -10,6 +10,21 @@
   z-index: 2;
 }
 
+.smallModal {
+  composes: modal;
+  min-width: 400px;
+}
+
+.smallModal .closeButton {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+}
+
+.smallModal .header {
+  min-height: 0;
+}
+
 .header {
   display: flex;
   justify-content: right;

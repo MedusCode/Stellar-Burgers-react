@@ -3,26 +3,23 @@ import React from 'react';
 const usePassword = () => {
   const [isPasswordHidden, setIsPasswordHidden] = React.useState(true);
 
-  const hidePassword = React.useCallback((e) => {
-    if (e.target.name !== 'password') {
-      setIsPasswordHidden(true);
-      window.removeEventListener('click', hidePassword);
-    }
-  }, [])
+  const onPasswordBlur = () => {
+    setIsPasswordHidden(true);
+  }
 
-  const showPassword = () => {
-    if (isPasswordHidden) {
-      setIsPasswordHidden(false);
-      window.addEventListener('click', hidePassword);
-    }
-    else {
-      setIsPasswordHidden(true);
-      window.removeEventListener('click', hidePassword);
-    }
+  const showPassword = e => {
+    e.preventDefault();
+    const passwordInput =  e.currentTarget.parentNode.querySelector('input');
+    setTimeout(function(){
+      passwordInput.selectionStart = passwordInput.selectionEnd = passwordInput.value.length;
+      passwordInput.focus();
+    }, 0) // Использовал setTimeout, из-за бага в Chrome
+    setIsPasswordHidden(!isPasswordHidden)
   }
 
   return {
     isPasswordHidden,
+    onPasswordBlur,
     showPassword
   }
 }

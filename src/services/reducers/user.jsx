@@ -1,4 +1,4 @@
-import { GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILED, RESET_STORAGE } from '../actions/user';
+import { USER_REQUEST, USER_SUCCESS, USER_FAILED, RESET_STORAGE, RESET_REQUEST_STATUS } from '../actions/user';
 
 const initialState = {
   user: {
@@ -8,19 +8,23 @@ const initialState = {
 
   isAuthorized: false,
   request: false,
+  requestSuccess: false,
   requestFailed: false,
   errorStatus: ''
 }
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_USER_REQUEST: {
+    case USER_REQUEST: {
       return {
         ...state,
         request: true,
+        requestSuccess: false,
+        requestFailed: false,
+        errorStatus: ''
       };
     }
-    case GET_USER_SUCCESS: {
+    case USER_SUCCESS: {
       return {
         ...state,
         user: {
@@ -29,13 +33,15 @@ export const userReducer = (state = initialState, action) => {
         },
 
         isAuthorized: true,
+        requestSuccess: true,
         request: false,
         requestFailed: false,
       }
     }
-    case GET_USER_FAILED: {
+    case USER_FAILED: {
       return {
         ...state,
+        requestSuccess: false,
         request: false,
         requestFailed: true,
         errorStatus: action.status
@@ -43,6 +49,15 @@ export const userReducer = (state = initialState, action) => {
     }
     case RESET_STORAGE: {
       return initialState
+    }
+    case RESET_REQUEST_STATUS: {
+      return {
+        ...state,
+        requestSuccess: false,
+        request: false,
+        requestFailed: false,
+        errorStatus: ''
+      }
     }
     default: {
       return state;

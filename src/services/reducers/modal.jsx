@@ -1,26 +1,30 @@
 import { OPEN_MODAL, CLOSE_MODAL } from '../actions/modal'
 
 const initialState = {
-  currentIngedient: {},
+  currentIngredient: {},
+
+  confirmationType: '',
+  newValue: '',
+  handler: undefined,
+
   isOpen: false,
-  type: ''
+  modalType: '',
 }
 
 export const modalReducer = (state = initialState, action) => {
   switch (action.type) {
     case OPEN_MODAL: {
       return {
-        currentIngedient: action.ingredient || {},
+        currentIngredient: action.ingredient || {},
         isOpen: true,
-        type: action.ingredient ? 'ingredient' : 'order'
+        modalType: action.modalType,
+        confirmationType: action.confirmationType || '',
+        newValue: action.newValue || '',
+        handler: action.handler || undefined,
       }
     }
     case CLOSE_MODAL: {
-      return {
-        currentIngedient: {},
-        isOpen: false,
-        type: ''
-      }
+      return initialState;
     }
     default: {
       return state;

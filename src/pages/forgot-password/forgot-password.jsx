@@ -10,7 +10,7 @@ import checkResponse from "../../assets/scripts/checkResponse";
 
 const ForgotPassword = () => {
   const history = useHistory();
-  const { values, onChange, onBlur, invalid, buttonDisability } = useForm(['email'], true);
+  const { values, onChange, onBlur, invalid, buttonDisability } = useForm({email: ''});
   const [ resetStatus, setResetStatus ] = React.useState({loading: false, success: false, error: false});
   const [ requestResult, setRequestResult ] = React.useState({ message: '', buttonText: '' });
 

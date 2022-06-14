@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 
 const IngredientDetails = () => {
-  const ingredient = useSelector(store => store.modal.currentIngedient)
+  const ingredient = useSelector(store => store.modal.currentIngredient)
 
   return (
     <div className={styles.container}>

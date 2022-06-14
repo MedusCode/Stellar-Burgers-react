@@ -11,25 +11,27 @@ import ResetPassword from './pages/reset-password/reset-password';
 import Profile from './pages/profile/profile';
 import Modal from './components/modal/modal';
 import IngredientDetails from './components/ingredient-details/ingredient-details';
+import Confirmation from './components/confirmation/confirmation.jsx';
 import OrderDetails from './components/order-details/order-details';
 import { CLOSE_MODAL } from './services/actions/modal';
 import { getIngredients } from './services/actions/ingredients';
-import { userRequest } from './services/actions/user';
+import { getUserRequest } from './services/actions/user';
 
 const App = () => {
   const dispatch = useDispatch();
   const { isModalOpened, modalType } = useSelector(store => ({
     isModalOpened: store.modal.isOpen,
-    modalType: store.modal.type
+    modalType: store.modal.modalType
   }));
 
   const closeCommonModal = () => {
+    modalType === 'ingredient' && window.history.replaceState(null, 'Конструктор', `/`)
     dispatch({type: CLOSE_MODAL})
   }
 
   React.useEffect(() => {
     dispatch(getIngredients())
-    dispatch(userRequest());
+    dispatch(getUserRequest());
   }, [])
 
   return (
@@ -59,7 +61,9 @@ const App = () => {
       </main>
       {isModalOpened && (modalType === 'ingredient'
         ? <Modal title='Детали ингредиента' onClose={closeCommonModal}><IngredientDetails /></Modal>
-        : <Modal onClose={closeCommonModal}><OrderDetails /></Modal>)
+        : modalType === 'order' 
+          ? <Modal onClose={closeCommonModal}><OrderDetails /></Modal>
+          : <Modal onClose={closeCommonModal} size='small'><Confirmation closeModal={closeCommonModal} /></Modal>)
       }
     </BrowserRouter>
   )

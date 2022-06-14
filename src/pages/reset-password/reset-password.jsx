@@ -9,8 +9,8 @@ import baseUrl from "../../assets/scripts/baseUrl";
 import checkResponse from "../../assets/scripts/checkResponse";
 
 const ResetPassword = () => {
-  const { values, onChange, onBlur, invalid, buttonDisability } = useForm(['password', 'token'], true);
-  const { isPasswordHidden, showPassword } = usePassword();
+  const { values, onChange, onBlur, invalid, buttonDisability } = useForm({password: '', token: ''});
+  const { isPasswordHidden, onPasswordBlur, showPassword } = usePassword();
   const [ resetStatus, setResetStatus ] = React.useState({loading: false, success: false, error: false});
   const [ requestResult, setRequestResult ] = React.useState({ message: '', buttonText: '', href: '' });
 
@@ -35,6 +35,11 @@ const ResetPassword = () => {
       });
   }
 
+  const handlePasswordBlur = e => {
+    onBlur(e);
+    onPasswordBlur();
+  }
+
   React.useEffect(() => {
     if (resetStatus.loading) setRequestResult({message: 'Отправка данных...', buttonText: '', href: ''});
     else if (resetStatus.success) setRequestResult({message: 'Пароль успешно сброшен.', buttonText: 'Войти', href: '/login'});
@@ -51,7 +56,7 @@ const ResetPassword = () => {
             <div className={`${invalid.password ? styles.invalid : styles.valid} ${styles.input}`}>
               <Input
                 onChange={onChange}
-                onBlur={onBlur}
+                onBlur={handlePasswordBlur}
                 value={values.password}
                 type={isPasswordHidden ? 'password' : 'text'}
                 name={'password'}

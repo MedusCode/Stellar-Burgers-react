@@ -4,18 +4,16 @@ import { useDispatch } from 'react-redux';
 import styles from './login.module.css';
 import FormMessage from '../../components/form-message/form-message';
 import FormResult from '../../components/form-result/form-result';
-import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import useForm from '../../services/hooks/useForm';
-import usePassword from '../../services/hooks/usePassword';
 import useUserStatus from '../../services/hooks/useUserStatus';
-import { loginRequest } from '../../services/actions/user';
+import { loginRequest, RESET_REQUEST_STATUS } from '../../services/actions/user';
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { isAuthorized, request, requestFailed, errorStatus, isRequested } = useUserStatus();
-  const { values, onChange, resetPassword } = useForm(['email', 'password']);
-  const { isPasswordHidden, showPassword } = usePassword();
+  const { values, onChange, resetPassword } = useForm({email: '', password: ''});
   const [ buttonDisability, setButtonDisability ] = React.useState(true);
   const [ requestResult, setRequestResult ] = React.useState({ message: '', buttonText: '' });
 
@@ -26,6 +24,7 @@ const Login = () => {
 
   const login = React.useCallback(() => {
     history.replace({ pathname: '/' });
+    dispatch({ type: RESET_REQUEST_STATUS });
   }, [history]);
 
   React.useEffect(() => {
@@ -57,14 +56,10 @@ const Login = () => {
               name={'email'}
               placeholder={'E-mail'}
             />
-            <Input
+            <PasswordInput
               onChange={onChange}
               value={values.password}
-              type={isPasswordHidden ? 'password' : 'text'}
               name={'password'}
-              placeholder={'Пароль'}
-              icon={isPasswordHidden ? 'ShowIcon' : 'HideIcon'}
-              onIconClick={showPassword}
             />
             <Button onClick={handleAuthorization} type="primary" size="medium" disabled={buttonDisability}>Войти</Button>
           </form>

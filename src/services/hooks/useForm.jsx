@@ -1,13 +1,12 @@
 import React from 'react';
 import useValidation from './useValidation';
 
-const useForm = (inputNames, isValidationNeeded = false) => {
-  const initialValuesState = Object.fromEntries(inputNames.map(name => [name, '']));
-  const [ values, setValues ] = React.useState(initialValuesState);
+const useForm = (initialValues) => {
+  const [ values, setValues ] = React.useState(initialValues);
   const { invalid, buttonDisability, validate } = useValidation(values);
 
   const resetForm = () => {
-    setValues(initialValuesState);
+    setValues(initialValues);
   }
 
   const resetPassword = () => {
@@ -16,11 +15,15 @@ const useForm = (inputNames, isValidationNeeded = false) => {
 
   const onChange = e => {
     setValues({...values, [e.target.name]: e.target.value});
-    isValidationNeeded && validate(e.target);
+    validate(e.target);
   }
 
   const onBlur = e => {
-    isValidationNeeded && validate(e.target);
+    validate(e.target);
+  }
+
+  const onFocus = e => {
+    validate(e.target);
   }
 
   return {
@@ -29,8 +32,9 @@ const useForm = (inputNames, isValidationNeeded = false) => {
     resetForm,
     resetPassword,
     onBlur,
+    onFocus,
     invalid,
-    buttonDisability
+    buttonDisability,
   }
 }
 

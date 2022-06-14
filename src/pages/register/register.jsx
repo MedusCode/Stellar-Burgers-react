@@ -13,13 +13,18 @@ import { registerRequest } from '../../services/actions/user';
 const Register = () => {
   const dispatch = useDispatch();
   const { isAuthorized, request, requestFailed, errorStatus, isRequested } = useUserStatus();
-  const { values, onChange, onBlur, invalid, buttonDisability, resetPassword } = useForm(['name', 'email', 'password'], true)
-  const { isPasswordHidden, showPassword } = usePassword();
+  const { values, onChange, onBlur, invalid, buttonDisability, resetPassword } = useForm({name: '', email: '', password: ''});
+  const { isPasswordHidden, onPasswordBlur, showPassword } = usePassword();
   const [ requestResult, setRequestResult ] = React.useState({ message: '', buttonText: '', href: ''});
 
   const handleRegistration = e => {
     e.preventDefault();
     dispatch(registerRequest(values));
+  }
+
+  const handlePasswordBlur = e => {
+    onBlur(e);
+    onPasswordBlur();
   }
 
   React.useEffect(() => {
@@ -66,7 +71,7 @@ const Register = () => {
             <div className={`${invalid.password ? styles.invalid : styles.valid} ${styles.input}`}>
               <Input
                 onChange={onChange}
-                onBlur={onBlur}
+                onBlur={handlePasswordBlur}
                 value={values.password}
                 type={isPasswordHidden ? 'password' : 'text'}
                 name={'password'}

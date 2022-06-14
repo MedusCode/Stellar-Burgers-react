@@ -14,7 +14,7 @@ const BurgerConstructor = () => {
   }))
 
   const openModal = () => {
-    dispatch({type: OPEN_MODAL})
+    dispatch({type: OPEN_MODAL, modalType: 'order'})
   }
 
   return (
