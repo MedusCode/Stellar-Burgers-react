@@ -11,6 +11,7 @@ const initialState = {
   requestSuccess: false,
   requestFailed: false,
   errorStatus: '',
+  errorMessage: '',
   tokenAuthorization: false,
 }
 
@@ -22,7 +23,8 @@ export const userReducer = (state = initialState, action) => {
         request: true,
         requestSuccess: false,
         requestFailed: false,
-        errorStatus: ''
+        errorStatus: '',
+        errorMessage: '',
       };
     }
     case USER_SUCCESS: {
@@ -38,6 +40,8 @@ export const userReducer = (state = initialState, action) => {
         request: false,
         requestFailed: false,
         tokenAuthorization: false,
+        errorStatus: '',
+        errorMessage: '',
       }
     }
     case USER_FAILED: {
@@ -46,7 +50,8 @@ export const userReducer = (state = initialState, action) => {
         requestSuccess: false,
         request: false,
         requestFailed: true,
-        errorStatus: action.status,
+        errorStatus: action.status || '',
+        errorMessage: action.errorMessage || '',
         tokenAuthorization: false,
       };
     }
@@ -60,6 +65,7 @@ export const userReducer = (state = initialState, action) => {
         request: false,
         requestFailed: false,
         errorStatus: '',
+        errorMessage: '',
         tokenAuthorization: false,
       }
     }
@@ -69,7 +75,8 @@ export const userReducer = (state = initialState, action) => {
         tokenAuthorization: true,
         requestSuccess: false,
         requestFailed: false,
-        errorStatus: ''
+        errorStatus: '',
+        errorMessage: '',
       } 
     }
     default: {

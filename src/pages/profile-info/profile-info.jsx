@@ -43,7 +43,6 @@ const ProfileInfo = () => {
     dispatch({ 
       type: OPEN_MODAL, 
       modalType: 'request',
-      requestType: activeInput,
     });
   }
 

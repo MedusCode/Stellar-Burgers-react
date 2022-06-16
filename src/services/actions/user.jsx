@@ -44,7 +44,7 @@ const loginRequest = (body) => {
         setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
       })
       .catch(error => {
-        dispatch({type: USER_FAILED, status: error.status})
+        dispatch({type: USER_FAILED, status: error.status, errorMessage: error.body.message});
       })
   }
 }
@@ -59,7 +59,8 @@ const registerRequest = (body) => {
         setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
       })
       .catch(error => {
-        dispatch({type: USER_FAILED, status: error.status})
+        console.log(error.body.message)
+        dispatch({type: USER_FAILED, status: error.status, errorMessage: error.body.message});
       });
   }
 }
@@ -74,7 +75,7 @@ const logoutRequest = () => {
         deleteCookie('accessToken');
       })
       .catch(error => {
-        dispatch({type: USER_FAILED, status: error.status})
+        dispatch({type: USER_FAILED, status: error.status, errorMessage: error.body.message});
       });
   }
 }
@@ -121,7 +122,7 @@ const updateUserRequest = (body) => {
               request().catch(() => dispatch({type: RESET_USER_STORAGE}))
             })
         }
-        else dispatch({ type: USER_FAILED, status: error.status })
+        else dispatch({type: USER_FAILED, status: error.status, errorMessage: error.body.message});
       })
   }
 }

@@ -6,10 +6,9 @@ import { OPEN_MODAL, CLOSE_MODAL } from '../../services/actions/modal.jsx';
 
 const Confirmation = () => {
   const dispatch = useDispatch();
-  const { text, handleRequest, confirmationType } = useSelector(store => ({
+  const { text, handleRequest } = useSelector(store => ({
     text: store.modal.text,
     handleRequest: store.modal.handler,
-    confirmationType: store.modal.confirmationType
   }));
 
   const closeModal = () => {
@@ -17,7 +16,7 @@ const Confirmation = () => {
   }
 
   const handleYes = () => {
-    dispatch({ type: OPEN_MODAL, modalType: 'request', requestType: confirmationType })
+    dispatch({ type: OPEN_MODAL, modalType: 'request' })
     handleRequest();
   }
 

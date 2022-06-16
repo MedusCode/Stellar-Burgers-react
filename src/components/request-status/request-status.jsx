@@ -7,8 +7,7 @@ import { CLOSE_MODAL } from '../../services/actions/modal';
 
 const RequestStatus = () => {
   const dispatch = useDispatch();
-  const { isAuthorized, request, requestFailed, errorStatus, requestSuccess} = useUserStatus();
-  const requestType = useSelector(store => store.modal.requestType);
+  const { isAuthorized, request, requestFailed, errorMessage, requestSuccess} = useUserStatus();
   const [ text, setText ] = React.useState('Секунду...')
 
   const closeModal = () => {
@@ -23,10 +22,10 @@ const RequestStatus = () => {
     if (request) setText('Секунду...');
     else if (requestSuccess || !isAuthorized) closeModal();
     else if (requestFailed) {
-      if (requestType === 'email' && errorStatus === 403) setText('Данный Логин занят другим пользователем');
+      if (errorMessage === 'User with such email already exists') setText('Данный Логин занят другим пользователем');
       else setText('Ошибка при обработке запроса');
     }
-  }, [isAuthorized, request, requestFailed, errorStatus, requestSuccess])
+  }, [isAuthorized, request, requestFailed, errorMessage, requestSuccess])
 
   React.useEffect(() => {
     document.addEventListener('keydown', handleEnter);

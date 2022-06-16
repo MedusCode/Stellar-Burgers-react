@@ -15,7 +15,7 @@ const Register = () => {
   const dispatch = useDispatch();
   const state = useLocation().state;
   const history = useHistory();
-  const { isAuthorized, request, requestFailed, errorStatus, isRequested } = useUserStatus();
+  const { isAuthorized, request, requestFailed, errorMessage, isRequested } = useUserStatus();
   const { values, onChange, onBlur, invalid, buttonDisability, resetPassword } = useForm({name: '', email: '', password: ''});
   const { isPasswordHidden, onPasswordBlur, showPassword } = usePassword();
   const [ requestResult, setRequestResult ] = React.useState({ message: '', buttonText: '', href: ''});
@@ -42,9 +42,13 @@ const Register = () => {
   React.useEffect(() => {
     if (request) setRequestResult({message: 'Отправка данных...', buttonText: '', href: ''})
     else if (isAuthorized) login();
-    else if (errorStatus === 403) setRequestResult({message: 'Данный Email уже зарегистрирован', buttonText: 'Попробовать войти', href: '/login'})
+    else if (errorMessage === 'User already exists') setRequestResult({
+      message: 'Данный Email уже зарегистрирован', 
+      buttonText: 'Попробовать войти', 
+      href: '/login'
+    })
     else if (requestFailed) setRequestResult({message: 'Ошибка сервера', buttonText: 'Попробовать еще раз', href: ''})
-  }, [isAuthorized, request, requestFailed, errorStatus])
+  }, [isAuthorized, request, requestFailed, errorMessage])
   
   if (isAuthorized) {
     return (<Redirect to={{ pathname: '/' }} />)
