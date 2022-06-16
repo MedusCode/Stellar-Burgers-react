@@ -44,7 +44,6 @@ const ProfileInfo = () => {
       type: OPEN_MODAL, 
       modalType: 'request',
       requestType: activeInput,
-      text: 'Отправляем...'
     });
   }
 
