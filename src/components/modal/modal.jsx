@@ -1,13 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+import { CLOSE_MODAL } from '../../services/actions/modal.jsx';
 
-const Modal = ({title, onClose, size, children}) => {
+const Modal = ({title, size, children}) => {
+  const dispatch = useDispatch();
+  const modalType = useSelector(store => store.modal.modalType)
   const request = useSelector(store => store.user.request)
+
+  const onClose = () => {
+    modalType === 'ingredient' && window.history.replaceState(null, 'Конструктор', `/`)
+    dispatch({type: CLOSE_MODAL})
+  }
 
   const handleModalClose = () => {
     !request && onClose();
@@ -42,7 +50,6 @@ const Modal = ({title, onClose, size, children}) => {
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
   title: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
   size: PropTypes.string
 }
 

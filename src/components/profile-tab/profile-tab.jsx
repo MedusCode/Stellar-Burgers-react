@@ -7,6 +7,7 @@ import { OPEN_MODAL } from '../../services/actions/modal';
 
 const ProfileTab = () => {
   const dispatch = useDispatch();
+  const logoutButtonRef = React.useRef(null)
   const { path } = useRouteMatch();
   const confirmationType = useSelector(store => store.modal.confirmationType)
 
@@ -17,9 +18,11 @@ const ProfileTab = () => {
 
   const openConfirmationModal = e => {
     e.preventDefault();
+    logoutButtonRef.current.blur();
     dispatch({ 
       type: OPEN_MODAL, 
-      modalType: 'confirmation', 
+      modalType: 'confirmation',
+      text: 'Вы уверены, что хотите выйти?',
       confirmationType: 'logout', 
       handler: logout 
     });
@@ -45,6 +48,7 @@ const ProfileTab = () => {
       </NavLink>
       <button 
         onClick={openConfirmationModal} 
+        ref={logoutButtonRef}
         className={`${styles.link} ${confirmationType === 'logout' ? styles.activeButton : ''} text text_type_main-medium text_color_inactive`}
       >
         Выход

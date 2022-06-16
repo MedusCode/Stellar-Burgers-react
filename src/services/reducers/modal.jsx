@@ -4,11 +4,13 @@ const initialState = {
   currentIngredient: {},
 
   confirmationType: '',
-  newValue: '',
-  handler: undefined,
+
+  requestType: '',
 
   isOpen: false,
   modalType: '',
+  text: '',
+  handler: undefined,
 }
 
 export const modalReducer = (state = initialState, action) => {
@@ -19,8 +21,9 @@ export const modalReducer = (state = initialState, action) => {
         isOpen: true,
         modalType: action.modalType,
         confirmationType: action.confirmationType || '',
-        newValue: action.newValue || '',
+        text: action.text || '',
         handler: action.handler || undefined,
+        requestType: action.requestType || '',
       }
     }
     case CLOSE_MODAL: {

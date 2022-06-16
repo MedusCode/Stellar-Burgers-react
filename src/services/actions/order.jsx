@@ -36,7 +36,7 @@ const makeOrder = () => {
           dispatch(clearConstructor())
         }
       })
-      .catch(errorStatus => {
+      .catch(() => {
         dispatch({
           type: MAKE_ORDER_FAILED,
         });

@@ -18,7 +18,10 @@ const FormMessage = ({ message, linkText, link, replace }) => {
 FormMessage.propTypes = {
   message: PropTypes.string.isRequired,
   linkText: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
+  link: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.object.isRequired
+  ]),
   replace: PropTypes.bool
 }
 

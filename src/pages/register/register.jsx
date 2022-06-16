@@ -50,8 +50,6 @@ const Register = () => {
     return (<Redirect to={{ pathname: '/' }} />)
   }
 
-  console.log(state)
-
   return (
     <div className={styles.container}>
       <h1 className='text text_type_main-medium mb-6'>Регистрация</h1>

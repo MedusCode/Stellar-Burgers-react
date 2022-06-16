@@ -16,8 +16,8 @@ import Modal from './components/modal/modal';
 import IngredientDetails from './components/ingredient-details/ingredient-details';
 import Confirmation from './components/confirmation/confirmation.jsx';
 import OrderDetails from './components/order-details/order-details';
+import RequestStatus from './components/request-status/request-status';
 import LoadingPage from './components/loading-page/loading-page';
-import { CLOSE_MODAL } from './services/actions/modal';
 import { getIngredients } from './services/actions/ingredients';
 import { getUserRequest } from './services/actions/user';
 
@@ -30,9 +30,21 @@ const App = () => {
     modalType: store.modal.modalType
   }));
 
-  const closeCommonModal = () => {
-    modalType === 'ingredient' && window.history.replaceState(null, 'Конструктор', `/`)
-    dispatch({type: CLOSE_MODAL})
+  const modalSwitch = () => {
+    switch(modalType) {
+      case 'ingredient': {
+        return (<Modal title='Детали ингредиента'><IngredientDetails /></Modal>)
+      }
+      case 'order': {
+        return (<Modal><OrderDetails /></Modal>)
+      }
+      case 'confirmation': {
+        return (<Modal size='small'><Confirmation /></Modal>)
+      }
+      case 'request': {
+        return (<Modal size='small'><RequestStatus /></Modal>)
+      }
+    }
   }
 
   React.useEffect(() => {
@@ -75,12 +87,7 @@ const App = () => {
             </Route>
           </Switch>
       </main>
-      {isModalOpened && (modalType === 'ingredient'
-        ? <Modal title='Детали ингредиента' onClose={closeCommonModal}><IngredientDetails /></Modal>
-        : modalType === 'order' 
-          ? <Modal onClose={closeCommonModal}><OrderDetails /></Modal>
-          : <Modal onClose={closeCommonModal} size='small'><Confirmation closeModal={closeCommonModal} /></Modal>)
-      }
+      {isModalOpened && modalSwitch()}
     </BrowserRouter>
   )
 }

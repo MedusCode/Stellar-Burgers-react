@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile-info.module.css';
 import useForm from '../../services/hooks/useForm';
 import usePassword from '../../services/hooks/usePassword';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updateUserRequest } from '../../services/actions/user.jsx';
 import { OPEN_MODAL } from '../../services/actions/modal';
 
@@ -19,17 +19,11 @@ const ProfileInfo = () => {
   const lockInput = () => {
     document.getElementsByName(activeInput)[0].blur();
     setActiveInput('');
-    resetForm();
     onPasswordBlur();
   }
 
   const handleEsc = e => {
     if (e.key === 'Escape') lockInput();
-  }
-
-  const handleMissClick = e => {
-    const targetName = e.target.name;
-    targetName !== activeInput && targetName !== 'showButton' && targetName !== 'submitButton' && lockInput() && console.log('hey')
   }
 
   const unlockInput = e => {
@@ -42,39 +36,33 @@ const ProfileInfo = () => {
     setActiveInput(input.name);
   }
 
-  const submitForm = () => {
-    dispatch(updateUserRequest({ [activeInput]: values[activeInput] }));
-  }
-
-  const openConfirmationModal = e => {
+  const submitForm = e => {
     e.preventDefault()
     document.getElementsByName(activeInput)[0].blur();
+    dispatch(updateUserRequest({ [activeInput]: values[activeInput] }));
     dispatch({ 
       type: OPEN_MODAL, 
-      confirmationType: activeInput,
-      newValue: activeInput !== 'password' ? values[activeInput] : '', 
-      handler: submitForm 
+      modalType: 'request',
+      requestType: activeInput,
+      text: 'Отправляем...'
     });
   }
 
   React.useEffect(() => {
     if (activeInput) {
-      window.addEventListener('click', handleMissClick);
       document.addEventListener('keydown', handleEsc);
     }
     else {
-      window.removeEventListener('click', handleMissClick);
       document.removeEventListener('keydown', handleEsc); 
     }
     return () => {
-      window.removeEventListener('click', handleMissClick);
       document.removeEventListener('keydown', handleEsc)
     }
   }, [activeInput, setActiveInput])
 
   React.useEffect(() => {
     resetForm();
-  }, [user, requestFailed])
+  }, [activeInput, user, requestFailed])
 
   React.useEffect(() => {
     !isModalOpened && setActiveInput('')
@@ -83,75 +71,91 @@ const ProfileInfo = () => {
   return (
     <div className={styles.container}>
       <form className={`${invalid.name && activeInput === 'name' ? styles.invalid : styles.valid} ${styles.form}`} onSubmit={e => e.preventDefault()}>
-        <Input
-          type={'text'}
-          placeholder={'Имя'}
-          onChange={onChange}
-          onFocus={onFocus}
-          icon={activeInput === 'name' ? '' : 'EditIcon'}
-          value={values.name}
-          name={'name'}
-          disabled={activeInput !== 'name'}
-          onIconClick={unlockInput}
-          errorText={'Введите свое имя'}
-          error={activeInput === 'name' ? invalid.name : false}
-        />
-        {activeInput === 'name' ? 
-          <button 
-            className={styles.submitButton} 
-            onClick={openConfirmationModal} 
-            disabled={invalid.name || values.name === user.name} 
-            name='submitButton' 
+        <div className={styles.formContainer}>
+          <Input
+            type={'text'}
+            placeholder={'Имя'}
+            onChange={onChange}
+            onFocus={onFocus}
+            icon={activeInput === 'name' ? '' : 'EditIcon'}
+            value={values.name}
+            name={'name'}
+            disabled={activeInput !== 'name'}
+            onIconClick={unlockInput}
+            errorText={'Введите свое имя'}
+            error={activeInput === 'name' ? invalid.name : false}
           />
-        : ''}
+          <div className={`${styles.buttonsContainer} ${activeInput === 'name' ? styles.buttonsContainerActive : ''}`}>
+            <Button 
+                type="primary" 
+                size="small" 
+                onClick={submitForm} 
+                disabled={invalid.name || values.name === user.name} 
+                name='submitButton'
+              >
+                Сохранить
+              </Button>
+            <Button type="secondary" onClick={lockInput} disabled={activeInput !== 'name'} size="small">Отменить</Button>
+          </div>
+        </div>
       </form>
       <form className={`${invalid.email && activeInput === 'email' ? styles.invalid : styles.valid} ${styles.form}`} onSubmit={e => e.preventDefault()}>
-        <Input
-          type={'text'}
-          placeholder={'Логин'}
-          onChange={onChange}
-          onFocus={onFocus}
-          icon={activeInput === 'email' ? '' : 'EditIcon'}
-          value={values.email}
-          name={'email'}
-          disabled={activeInput !== 'email'}
-          onIconClick={unlockInput}
-          errorText={'Невозможный email'}
-          error={activeInput === 'email' ? invalid.email : false}
-        />
-        {activeInput === 'email' ? 
-          <button 
-            className={styles.submitButton} 
-            onClick={openConfirmationModal} 
-            disabled={invalid.email || values.email.toLowerCase() === user.email} 
-            name='submitButton' 
+        <div className={styles.formContainer}>
+          <Input
+            type={'text'}
+            placeholder={'Логин'}
+            onChange={onChange}
+            onFocus={onFocus}
+            icon={activeInput === 'email' ? '' : 'EditIcon'}
+            value={values.email}
+            name={'email'}
+            disabled={activeInput !== 'email'}
+            onIconClick={unlockInput}
+            errorText={'Невозможный email'}
+            error={activeInput === 'email' ? invalid.email : false}
           />
-        : ''}
+          <div className={`${styles.buttonsContainer} ${activeInput === 'email' ? styles.buttonsContainerActive : ''}`}>
+            <Button 
+                type="primary" 
+                size="small" 
+                onClick={submitForm} 
+                disabled={invalid.email || values.email.toLowerCase() === user.email} 
+                name='submitButton'
+              >
+                Сохранить
+              </Button>
+            <Button type="secondary" onClick={lockInput} disabled={activeInput !== 'email'} size="small">Отменить</Button>
+          </div>
+        </div>
       </form>
       <form className={`${invalid.password && activeInput === 'password' ? styles.invalid : styles.valid} ${styles.form}`} onSubmit={e => e.preventDefault()}>
-        <Input
-          type={isPasswordHidden ? 'password' : 'text'}
-          placeholder={'Пароль'}
-          onChange={onChange}
-          onFocus={onFocus}
-          icon={activeInput === 'password' ? '' : 'EditIcon'}
-          value={activeInput === 'password' ? values.password : '*********'}
-          name={'password'}
-          disabled={activeInput !== 'password'}
-          onIconClick={unlockInput}
-          errorText={'Пароль должен быть длиннее 5 символов'}
-          error={activeInput === 'password' ? invalid.password : false}
-        />
-        {activeInput === 'password' ? <>
-          <button 
-            className={styles.submitButton} 
-            onClick={openConfirmationModal} 
-            disabled={invalid.password || values.password === user.password} 
-            name='submitButton' 
+        <div className={styles.formContainer}>
+          <Input
+            type={isPasswordHidden ? 'password' : 'text'}
+            placeholder={'Пароль'}
+            onChange={onChange}
+            onFocus={onFocus}
+            icon={activeInput === 'password' ? isPasswordHidden ? 'ShowIcon' : 'HideIcon' : 'EditIcon'}
+            value={activeInput === 'password' ? values.password : '*********'}
+            name={'password'}
+            disabled={activeInput !== 'password'}
+            onIconClick={activeInput === 'password' ? showPassword : unlockInput}
+            errorText={'Пароль должен быть длиннее 5 символов'}
+            error={activeInput === 'password' ? invalid.password : false}
           />
-          <button className={isPasswordHidden ? styles.showButton : styles.hideButton} onClick={showPassword} name='showButton' />
-          </>
-        : ''}
+          <div className={`${styles.buttonsContainer} ${activeInput === 'password' ? styles.buttonsContainerActive : ''}`}>
+            <Button 
+                type="primary" 
+                size="small" 
+                onClick={submitForm} 
+                disabled={invalid.password} 
+                name='submitButton'
+              >
+                Сохранить
+              </Button>
+            <Button type="secondary" onClick={lockInput} disabled={activeInput !== 'password'} size="small">Отменить</Button>
+          </div>
+        </div>
       </form>
     </div>
   )

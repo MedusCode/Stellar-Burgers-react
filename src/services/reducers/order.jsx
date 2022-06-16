@@ -14,7 +14,7 @@ export const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case MAKE_ORDER_REQUEST: {
       return {
-        ...state,
+        ...initialState,
         orderRequest: true
       }
     }
@@ -31,13 +31,8 @@ export const orderReducer = (state = initialState, action) => {
     }
     case MAKE_ORDER_FAILED: {
       return {
-        ...state,
-        orderSuccess: false,
-        orderRequest: false,
+        ...initialState,
         orderFailed: true,
-        name: '',
-        orderNum: 0,
-        orderIngredients: []
       }
     }
     default: {

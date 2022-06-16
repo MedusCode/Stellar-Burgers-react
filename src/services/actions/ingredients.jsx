@@ -33,10 +33,10 @@ function getIngredients() {
           main: main
         });
       })
-      .catch(errorStatus => {
+      .catch(error => {
         dispatch({
           type: GET_INGREDIENTS_FAILED,
-          status: errorStatus
+          status: error.status
         });
       });
   };

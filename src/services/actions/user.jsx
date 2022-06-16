@@ -44,8 +44,8 @@ const loginRequest = (body) => {
         setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
       })
       .catch(error => {
-        dispatch({type: USER_FAILED, status: error})
-      }); 
+        dispatch({type: USER_FAILED, status: error.status})
+      })
   }
 }
 
@@ -59,7 +59,7 @@ const registerRequest = (body) => {
         setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
       })
       .catch(error => {
-        dispatch({type: USER_FAILED, status: error})
+        dispatch({type: USER_FAILED, status: error.status})
       });
   }
 }
@@ -74,7 +74,7 @@ const logoutRequest = () => {
         deleteCookie('accessToken');
       })
       .catch(error => {
-        dispatch({type: USER_FAILED, status: error})
+        dispatch({type: USER_FAILED, status: error.status})
       });
   }
 }
@@ -91,21 +91,14 @@ const getUserRequest = () => {
 
     dispatch({ type: TOKEN_AUTHORIZATION }); 
     request()
-      .catch(() => {
-        if (getCookie('refreshToken')) refreshTokenRequest()
-          .then(() => {
-            request().catch(() => {
-              dispatch({type: RESET_USER_STORAGE});
-              deleteCookie('refreshToken');
-              deleteCookie('accessToken');
+      .catch(error => {
+        if (error.status === 403 && error.body.message === 'jwt expired') {
+          refreshTokenRequest()
+            .then(() => {
+              request().catch(() => {dispatch({type: RESET_USER_STORAGE})})
             })
-          })
-          .catch(() => {
-            dispatch({type: RESET_USER_STORAGE});
-            deleteCookie('refreshToken');
-            deleteCookie('accessToken');
-          })
-        else dispatch({type: RESET_USER_STORAGE}); 
+        }
+        else dispatch({type: RESET_USER_STORAGE}) 
       })
   }
 }
@@ -121,17 +114,14 @@ const updateUserRequest = (body) => {
 
     dispatch({type: USER_REQUEST});
     request()
-      .catch(() => {
-        if (getCookie('refreshToken')) refreshTokenRequest()
-          .then(() => {
-            request().catch(error => {dispatch({ type: USER_FAILED, status: error })});
-          })
-          .catch(() => {
-            dispatch({type: RESET_USER_STORAGE});
-            deleteCookie('refreshToken');
-            deleteCookie('accessToken');
-          })
-        else dispatch({type: RESET_USER_STORAGE});
+      .catch(error => {
+        if (error.status === 403 && error.body.message === 'jwt expired') {
+          refreshTokenRequest()
+            .then(() => {
+              request().catch(() => dispatch({type: RESET_USER_STORAGE}))
+            })
+        }
+        else dispatch({ type: USER_FAILED, status: error.status })
       })
   }
 }

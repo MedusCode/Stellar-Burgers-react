@@ -5,17 +5,18 @@
 
 .form {
   position: relative;
+  z-index: 1;
 }
 
-.form > div {
+.formContainer > div {
   width: 100%;
 }
 
-.form > div > div {
+.formContainer > div > div {
   width: 100%;
 }
 
-.form > div > div > input {
+.formContainer > div > div > input {
   width: 85%;
 }
 
@@ -56,4 +57,27 @@
 .hideButton {
   composes: showButton;
   background-image: url('../../assets/images/hide-icon.svg');
+}
+
+.formContainer {
+  position: relative;
+  z-index: 0;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  position: absolute;
+  max-width: fit-content;
+  top: 12px;
+  right: 0;
+  transform: translate(0, 0);
+  transition: transform 0.2s ease-in-out;
+  z-index: -2;
+}
+
+.buttonsContainerActive {
+  z-index: -1;
+  opacity: 1;
+  transform: translate(100%, 0);
 }
