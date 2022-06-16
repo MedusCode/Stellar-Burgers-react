@@ -2,7 +2,7 @@ import { MAKE_ORDER_FAILED, MAKE_ORDER_SUCCESS, MAKE_ORDER_REQUEST } from '../ac
 
 const initialState = {
   name: '',
-  orderNum: 0,
+  orderNum: null,
   orderIngredients: [],
 
   orderRequest: false,
