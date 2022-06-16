@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.884b5f53.css",
-    "main.js": "./static/js/main.97ea2b31.js",
+    "main.css": "./static/css/main.74d4038c.css",
+    "main.js": "./static/js/main.d4a8258e.js",
     "static/media/successful-order.gif": "./static/media/successful-order.0996c7d1881737b5fe75.gif",
     "static/media/JetBrainsMono-Bold.woff": "./static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
     "static/media/JetBrainsMono-Regular.woff": "./static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
@@ -15,11 +15,11 @@
     "index.html": "./index.html",
     "static/media/ok-icon-dark.svg": "./static/media/ok-icon-dark.6006a4168fbc3c7684b1.svg",
     "static/media/ok-icon-light.svg": "./static/media/ok-icon-light.aa2d5358dffb5d69018f.svg",
-    "main.884b5f53.css.map": "./static/css/main.884b5f53.css.map",
-    "main.97ea2b31.js.map": "./static/js/main.97ea2b31.js.map"
+    "main.74d4038c.css.map": "./static/css/main.74d4038c.css.map",
+    "main.d4a8258e.js.map": "./static/js/main.d4a8258e.js.map"
   },
   "entrypoints": [
-    "static/css/main.884b5f53.css",
-    "static/js/main.97ea2b31.js"
+    "static/css/main.74d4038c.css",
+    "static/js/main.d4a8258e.js"
   ]
 }
