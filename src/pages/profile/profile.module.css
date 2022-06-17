@@ -4,3 +4,7 @@
   grid-template-columns: 320px auto 320px;
   gap: 60px;
 }
+
+.orders {
+  grid-template-columns: 320px 1fr;
+}

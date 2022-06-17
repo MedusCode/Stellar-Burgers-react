@@ -28,6 +28,10 @@ const refreshTokenRequest = () => {
         setCookie('refreshToken', data.refreshToken);
         setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
       })
+      .catch(err => {
+        deleteCookie('refreshToken');
+        deleteCookie('accessToken');
+      })
 }
 
 const loginRequest = (body) => {

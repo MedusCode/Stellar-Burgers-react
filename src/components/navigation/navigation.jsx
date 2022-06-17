@@ -11,7 +11,7 @@ const Navigation = () => {
         <NavigationButton text='Конструктор' path='/'>
           <BurgerIcon type='secondary' />
         </NavigationButton>
-        <NavigationButton text='Лента заказов' path='/order-list'>
+        <NavigationButton text='Лента заказов' path='/feed'>
           <ListIcon type='secondary' />
         </NavigationButton>
       </div>

@@ -10,6 +10,7 @@ import Register from './pages/register/register';
 import ForgotPassword from './pages/forgot-password/forgot-password';
 import ResetPassword from './pages/reset-password/reset-password';
 import Profile from './pages/profile/profile';
+import Feed from './pages/feed/feed';
 import Ingredients from './pages/ingredients/ingredients';
 import NotFound from './pages/not-found/not-found';
 import Modal from './components/modal/modal';
@@ -78,6 +79,9 @@ const App = () => {
             </ProtectedRoute>
             <Route path="/ingredients/:id" exact>
               <Ingredients />
+            </Route>
+            <Route path="/feed" exact>
+              <Feed />
             </Route>
             <Route path="/" exact>
               <Constructor />

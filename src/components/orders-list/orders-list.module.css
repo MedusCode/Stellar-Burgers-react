@@ -1,0 +1,6 @@
+.container {
+  list-style: none;
+  overflow-y: overlay;
+  padding-left: 0;
+  margin: 0;
+}
