@@ -16,6 +16,8 @@ import NotFound from './pages/not-found/not-found';
 import Modal from './components/modal/modal';
 import IngredientDetails from './components/ingredient-details/ingredient-details';
 import Confirmation from './components/confirmation/confirmation.jsx';
+import Order from './components/order/order';
+import FullOrder from './pages/full-order/full-order.jsx';
 import OrderDetails from './components/order-details/order-details';
 import RequestStatus from './components/request-status/request-status';
 import LoadingPage from './components/loading-page/loading-page';
@@ -34,10 +36,13 @@ const App = () => {
   const modalSwitch = () => {
     switch(modalType) {
       case 'ingredient': {
-        return (<Modal title='Детали ингредиента'><IngredientDetails /></Modal>)
+        return (<Modal><IngredientDetails /></Modal>)
+      }
+      case 'order-details': {
+        return (<Modal><OrderDetails /></Modal>)
       }
       case 'order': {
-        return (<Modal><OrderDetails /></Modal>)
+        return (<Modal><Order /></Modal>)
       }
       case 'confirmation': {
         return (<Modal size='small'><Confirmation /></Modal>)
@@ -68,6 +73,12 @@ const App = () => {
             <Route path="/register" exact>
               <Register />
             </Route>
+            <Route path="/feed/:id" exact>
+              <FullOrder />
+            </Route>
+            <ProtectedRoute path="/profile/orders/:id" exact>
+              <FullOrder />
+            </ProtectedRoute>
             <Route path="/forgot-password" exact>
               <ForgotPassword />
             </Route>

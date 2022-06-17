@@ -1,8 +1,10 @@
 import React from 'react';
-import styles from './orders-list.module.css';
-import OrderCard from '../order-card/order-card';
+import styles from './full-order.module.css';
+import { useParams } from 'react-router-dom';
+import Order from '../../components/order/order.jsx'
+import NotFound from '../not-found/not-found.jsx';
 
-const OrderList = ({ displayStatus }) => {
+const FullOrder = () => {
   const storage = {
     "success": true,
     "orders": [
@@ -308,28 +310,35 @@ const OrderList = ({ displayStatus }) => {
     ],
     "total": 2,
     "totalToday": 2
-  } 
+  }
 
-  const orderListRef = React.useRef(null);
+  const params = useParams();
+  const [activeOrder, setActiveOrder] = React.useState(null);
+  const [isOrderExist, setIsOrderExist] = React.useState(true);
 
   React.useEffect(() => {
-    const handleOrderListSizing = () => {
-      orderListRef.current.style.maxHeight = `${window.innerHeight - orderListRef.current.offsetTop}px`;
+    const order = storage.orders.find(order => order._id === params.id); 
+    if (storage.orders.length > 0 && !order) setIsOrderExist(false)
+    else {
+    console.log(order)
+      setActiveOrder(order);
     }
+  }, []);
 
-    window.addEventListener('resize', handleOrderListSizing);
-    handleOrderListSizing()
-
-    return () => {
-      window.removeEventListener('resize', handleOrderListSizing);
-    }
-  }, [])
+  if (!isOrderExist) return (
+    <NotFound />
+  )
 
   return (
-    <ul className={`${styles.container} pr-4`} ref={orderListRef}>
-      {storage.orders.map(order => <OrderCard order={order} displayStatus={displayStatus} key={order._id} />)}
-    </ul>
+    <div className={`${styles.container} pt-30`}>
+      {activeOrder && 
+        <>
+          <h2 className={`${styles.title} text text_type_digits-default mb-5`}>{`#${activeOrder.number}`}</h2>
+          <Order order={activeOrder} />
+        </>
+      }
+    </div>
   )
 }
 
-export default OrderList;
+export default FullOrder;

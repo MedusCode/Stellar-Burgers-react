@@ -18,7 +18,7 @@ const BurgerConstructor = () => {
   }))
 
   const openModal = () => {
-    if (isAuthorized) dispatch({type: OPEN_MODAL, modalType: 'order'})
+    if (isAuthorized) dispatch({type: OPEN_MODAL, modalType: 'order-details'})
     else history.push({ pathname: '/login', state: {from: location} })
   }
 

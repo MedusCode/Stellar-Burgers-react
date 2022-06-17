@@ -7,7 +7,7 @@
   background-color: #1C1C21;
   border-radius: 40px;
   cursor: pointer;
-  transition: box-shadow 0.15s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out;
   overflow-wrap: break-word;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .container:hover {
-  box-shadow: 5px 5px 5px #7f1ab23d;
+  box-shadow: 5px 5px 5px #0000006c;
 }
 
 .priceContainer {

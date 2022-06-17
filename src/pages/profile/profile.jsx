@@ -1,6 +1,7 @@
 import React from 'react';
-import { Route, Switch, useRouteMatch, useLocation } from 'react-router-dom';
+import { Switch, useRouteMatch, useLocation } from 'react-router-dom';
 import styles from './profile.module.css';
+import ProtectedRoute from '../../components/protected-route/protected-route.jsx';
 import ProfileTab from '../../components/profile-tab/profile-tab';
 import ProfileInfo from '../profile-info/profile-info';
 import ProfileOrders from '../profile-orders/profile-orders.jsx'
@@ -13,12 +14,12 @@ const Profile = () => {
     <div className={`${styles.container} ${location.pathname === '/profile' ? '' : styles.orders} pt-30`}>
       <ProfileTab />
       <Switch>
-        <Route path={path} exact>
+        <ProtectedRoute path={path} exact>
           <ProfileInfo />
-        </Route>
-        <Route path={`${path}/orders`} exact>
+        </ProtectedRoute>
+        <ProtectedRoute path={`${path}/orders`} exact>
           <ProfileOrders />
-        </Route>
+        </ProtectedRoute>
       </Switch>
     </div>
   )

@@ -1,0 +1,19 @@
+.container {
+  max-width: 640px;
+}
+
+.done {
+  composes: done from '../order-card/order-card.module.css';
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

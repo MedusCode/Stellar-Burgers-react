@@ -6,7 +6,7 @@ import NotFound from '../not-found/not-found.jsx';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 
 const Ingredients = () => {
-  const params = useParams()
+  const params = useParams();
   const {bun, sauce, main} = useSelector(store => ({
     bun: store.ingredients.bun,
     sauce: store.ingredients.sauce,

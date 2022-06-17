@@ -8,6 +8,7 @@
   border-radius: 40px;
   min-width: 720px;
   z-index: 2;
+  color: #F2F2F3;
 }
 
 .smallModal {
@@ -35,7 +36,6 @@
 
 .title {
   width: 100%;
-  color: #F2F2F3;
 }
 
 .closeButton {
