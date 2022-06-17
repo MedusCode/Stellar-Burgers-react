@@ -16,3 +16,12 @@
   margin: 0;
   overflow-y: overlay;
 }
+
+.sectionsList::-webkit-scrollbar {
+  background-color: #131316;
+}
+
+.sectionsList::-webkit-scrollbar-track-piece {
+  background: #2F2F37;
+  margin-bottom: 60px;
+}

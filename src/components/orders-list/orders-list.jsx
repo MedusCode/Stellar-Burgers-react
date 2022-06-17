@@ -295,7 +295,7 @@ const OrderList = ({ displayStatus }) => {
 
   React.useEffect(() => {
     const handleOrderListSizing = () => {
-      orderListRef.current.style.maxHeight = `${window.innerHeight - orderListRef.current.offsetTop - 40}px`;
+      orderListRef.current.style.maxHeight = `${window.innerHeight - orderListRef.current.offsetTop}px`;
     }
 
     window.addEventListener('resize', handleOrderListSizing);

@@ -37,7 +37,7 @@ const BurgerIngredients = () => {
 
   React.useEffect(() => {
     const handleSectionListSizing = () => {
-      sectionListRef.current.style.maxHeight = `${window.innerHeight - sectionListRef.current.offsetTop - 40}px`;
+      sectionListRef.current.style.maxHeight = `${window.innerHeight - sectionListRef.current.offsetTop}px`;
     }
 
     window.addEventListener('resize', handleSectionListSizing);
