@@ -1,39 +1,28 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './navigation-button.module.css';
-import { SWITCH_PAGE } from '../../services/actions/app'
 
-const NavigationButton = (props) => {
-  const dispatch = useDispatch();
-  const clickHandler = () => {
-    switch (props.text) {
-      case 'Конструктор':
-        dispatch({type: SWITCH_PAGE, activePage: 'Constructor'})
-        break;
-      case 'Лента заказов':
-        dispatch({type: SWITCH_PAGE, activePage: 'Order list'})
-        break;
-      case 'Личный кабинет':
-        dispatch({type: SWITCH_PAGE, activePage: 'Profile'})
-        break;
-    }
-  }
-
+const NavigationButton = ({ children, text, path }) => {
   return (
-    <button className={`${styles.button} pt-4 pr-5 pb-4 pl-5`} onClick={clickHandler}>
-      {props.children}
-      <span className={`${!props.isActive && 'text_color_inactive'} text text_type_main-default ml-2`}>
-        {props.text}
+    <NavLink
+      to={path}
+      exact={path === '/' ? true : false}
+      activeClassName={styles.activeLink}
+      className={`${styles.link} text_color_inactive pt-4 pr-5 pb-4 pl-5`}
+    >
+      {children}
+      <span className={'text text_type_main-default ml-2'}>
+        {text}
       </span>
-    </button>
+    </NavLink>
   )
 }
 
 NavigationButton.propTypes = {
   children: PropTypes.element,
-  isActive: PropTypes.bool.isRequired,
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired
 }
 
 export default NavigationButton;

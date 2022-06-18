@@ -13,7 +13,8 @@ const IngredientCard = ({ ingredient }) => {
   const id = ingredient._id;
 
   const openModal = () => {
-    dispatch({type: OPEN_MODAL, ingredient: ingredient })
+    window.history.replaceState(null, ingredient.name, `/ingredients/${ingredient._id}`)
+    dispatch({type: OPEN_MODAL, ingredient: ingredient, modalType: 'ingredient'})
   }
 
   const [{isDragging}, ingredientRef] = useDrag({

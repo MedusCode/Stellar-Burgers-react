@@ -1,5 +1,5 @@
-import { checkResponse } from "../../assets/scripts/checkResponse";
-import { baseUrl } from "../../assets/scripts/baseUrl";
+import checkResponse from "../../assets/scripts/checkResponse";
+import baseUrl from "../../assets/scripts/baseUrl";
 
 const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -33,10 +33,10 @@ function getIngredients() {
           main: main
         });
       })
-      .catch(errorStatus => {
+      .catch(error => {
         dispatch({
           type: GET_INGREDIENTS_FAILED,
-          status: errorStatus
+          status: error.status
         });
       });
   };

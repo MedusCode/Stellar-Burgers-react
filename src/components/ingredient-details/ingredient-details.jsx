@@ -1,9 +1,11 @@
 import React from 'react';
+import ingredientType from '../../assets/scripts/propTypes';
 import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 
-const IngredientDetails = () => {
-  const ingredient = useSelector(store => store.modal.currentIngedient)
+const IngredientDetails = (props) => {
+  const modalIngredient = useSelector(store => store.modal.currentIngredient)
+  const ingredient = props.ingredient ? props.ingredient : modalIngredient;
 
   return (
     <div className={styles.container}>
@@ -29,6 +31,10 @@ const IngredientDetails = () => {
       </div>
     </div>
   )
+}
+
+IngredientDetails.propTypes = {
+  ingredient: ingredientType
 }
 
 export default IngredientDetails;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom'
 import styles from './burger-constructor.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Cart from '../cart/cart';
@@ -8,13 +9,17 @@ import { OPEN_MODAL } from '../../services/actions/modal'
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+  const isAuthorized = useSelector(store => store.user.isAuthorized);
   const { price, bun } = useSelector(store => ({
     price: store.burgerConstructor.price,
     bun: store.burgerConstructor.bun
   }))
 
   const openModal = () => {
-    dispatch({type: OPEN_MODAL})
+    if (isAuthorized) dispatch({type: OPEN_MODAL, modalType: 'order'})
+    else history.push({ pathname: '/login', state: {from: location} })
   }
 
   return (

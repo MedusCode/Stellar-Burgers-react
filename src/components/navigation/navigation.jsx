@@ -1,26 +1,24 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react'
+import { Link } from 'react-router-dom';
 import styles from './navigation.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import NavigationButton from '../navigation-button/navigation-button';
 
 const Navigation = () => {
-  const activePage = useSelector(store => store.app.activePage)
-
   return (
     <nav className={styles.navigation}>
       <div className={styles.container}>
-        <NavigationButton text='Конструктор' isActive={activePage === 'Constructor'}>
-          <BurgerIcon type={activePage === 'Constructor' ? 'primary' : 'secondary'} />
+        <NavigationButton text='Конструктор' path='/'>
+          <BurgerIcon type='secondary' />
         </NavigationButton>
-        <NavigationButton text='Лента заказов' isActive={activePage === 'Order list'}>
-          <ListIcon type={activePage === 'Order list' ? 'primary' : 'secondary'} />
+        <NavigationButton text='Лента заказов' path='/order-list'>
+          <ListIcon type='secondary' />
         </NavigationButton>
       </div>
-      <a href='#'><Logo /></a>
+      <Link to='/'><Logo /></Link>
       <div className={styles.container}>
-        <NavigationButton text='Личный кабинет' isActive={activePage === 'Profile'}>
-          <ProfileIcon type={activePage === 'Profile' ? 'primary' : 'secondary'} />
+        <NavigationButton text='Личный кабинет' path='/profile'>
+          <ProfileIcon type='secondary' />
         </NavigationButton>
       </div>
     </nav>

@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+}
+
+.formContainer > div {
+  width: 100%;
+}
+
+.formContainer > div > div {
+  width: 100%;
+}
+
+.formContainer > div > div > input {
+  width: 85%;
+}
+
+.valid {
+  margin-bottom: 31px;
+}
+
+.invalid {
+  margin-bottom: -11px;
+}
+
+.submitButton {
+  background-image: url('../../assets/images/ok-icon-light.svg');
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  position: absolute;
+  top: 20px;
+  right: 26px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.submitButton:disabled {
+  cursor: default;
+  background-image: url('../../assets/images/ok-icon-dark.svg');
+}
+
+.showButton {
+  composes: submitButton;
+  width: 24px;
+  height: 24px;
+  background-image: url('../../assets/images/show-icon.svg');
+  right: calc(26px + 10px + 24px)
+}
+
+.hideButton {
+  composes: showButton;
+  background-image: url('../../assets/images/hide-icon.svg');
+}
+
+.formContainer {
+  position: relative;
+  z-index: 0;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  position: absolute;
+  max-width: fit-content;
+  top: 12px;
+  right: 0;
+  transform: translate(0, 0);
+  transition: transform 0.2s ease-in-out;
+  z-index: -2;
+}
+
+.buttonsContainerActive {
+  z-index: -1;
+  opacity: 1;
+  transform: translate(100%, 0);
+}

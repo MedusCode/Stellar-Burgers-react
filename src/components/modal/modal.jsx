@@ -1,14 +1,29 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+import { CLOSE_MODAL } from '../../services/actions/modal.jsx';
 
-const Modal = (props) => {
+const Modal = ({title, size, children}) => {
+  const dispatch = useDispatch();
+  const modalType = useSelector(store => store.modal.modalType)
+  const request = useSelector(store => store.user.request)
+
+  const onClose = () => {
+    modalType === 'ingredient' && window.history.replaceState(null, 'Конструктор', `/`)
+    dispatch({type: CLOSE_MODAL})
+  }
+
+  const handleModalClose = () => {
+    !request && onClose();
+  }
+
   React.useEffect(() => {
     const handleEscClose = (evt) => {
-      evt.key === 'Escape' && props.onClose();
+      evt.key === 'Escape' && handleModalClose();
     }
 
     document.addEventListener('keydown', handleEscClose);
@@ -16,25 +31,26 @@ const Modal = (props) => {
     return () => {
       document.removeEventListener('keydown', handleEscClose);
     }
-  }, [])
+  }, [request])
 
   return ReactDOM.createPortal((
     <>
-      <section className={`${styles.modal} pt-10 pr-10 pb-15 pl-10`}>
+      <section className={size === 'small' ? `${styles.smallModal} pt-10 pr-10 pb-2 pl-10` : `${styles.modal} pt-10 pr-10 pb-15 pl-10`}>
         <div className={styles.header}>
-          {props.title && <h2 className={`${styles.title} text text_type_main-large`}>{props.title}</h2>}
-          <button className={styles.closeButton} onClick={props.onClose}><CloseIcon type="primary" /></button>
+          {title && <h2 className={`${styles.title} text text_type_main-large`}>{title}</h2>}
+          {!request && <button className={styles.closeButton} onClick={handleModalClose}><CloseIcon type="primary" /></button>}
         </div>
-        {props.children}
+        {children}
       </section>
-      <ModalOverlay onClick={props.onClose} />
+      <ModalOverlay onClick={handleModalClose} />
     </>
   ), document.getElementById('modals'));
 }
 
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
-  title: PropTypes.string
+  title: PropTypes.string,
+  size: PropTypes.string
 }
 
 export default Modal;
