@@ -26,19 +26,10 @@
   min-height: 0;
 }
 
-.header {
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  width: 100%;
-  min-height: 64px;
-}
-
-.title {
-  width: 100%;
-}
-
 .closeButton {
+  position: absolute;
+  top: 60px;
+  right: 40px;
   padding: 0;
   background-color: transparent;
   border: none;

@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './full-order.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useParams, useLocation } from 'react-router-dom';
 import Order from '../../components/order/order.jsx'
 import NotFound from '../not-found/not-found.jsx';
 import useWebSocketData from '../../services/hooks/useWebSocketData.jsx';
 import LoadingRocket from '../../components/loading-rocket/loading-rocket.jsx';
+import { ALL_ORDERS_WS_CLOSE_CONNECTION, ALL_ORDERS_WS_CONNECTION_START } from '../../services/actions/all-orders-web-socket';
+import { USER_ORDERS_WS_CLOSE_CONNECTION, USER_ORDERS_WS_CONNECTION_START } from '../../services/actions/user-orders-web-socket';
 
 const FullOrder = () => {
   const dispatch = useDispatch();
@@ -16,12 +18,12 @@ const FullOrder = () => {
   const [isOrderExist, setIsOrderExist] = React.useState(true);
 
   React.useEffect(() => {
-    if (location.pathname.includes('feed')) dispatch({ type: 'ALL_ORDERS_WS_CONNECTION_START' })
-    else dispatch({ type: 'USER_ORDERS_WS_CONNECTION_START' })
+    if (location.pathname.includes('feed')) dispatch({ type: ALL_ORDERS_WS_CONNECTION_START })
+    else dispatch({ type: USER_ORDERS_WS_CONNECTION_START })
 
     return () => {
-      dispatch({ type: 'ALL_ORDERS_WS_CLOSE_CONNECTION' });
-      dispatch({ type: 'USER_ORDERS_WS_CLOSE_CONNECTION' });
+      dispatch({ type: ALL_ORDERS_WS_CLOSE_CONNECTION });
+      dispatch({ type: USER_ORDERS_WS_CLOSE_CONNECTION });
     }
   }, [])
 
@@ -42,13 +44,7 @@ const FullOrder = () => {
 
   return (
     <div className={`${styles.container} pt-30`}>
-      {activeOrder ?
-        <>
-          <h2 className={`${styles.title} text text_type_digits-default mb-5`}>{`#${activeOrder.number}`}</h2>
-          <Order order={activeOrder} />
-        </>
-        : <LoadingRocket />
-      }
+      {activeOrder ? <Order order={activeOrder} /> : <LoadingRocket />}
     </div>
   )
 }

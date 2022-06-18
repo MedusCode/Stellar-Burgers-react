@@ -1,8 +1,20 @@
 .container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
   align-items: center;
   color: #F2F2F3;
+}
+
+.title {
+  display: flex;
+  min-height:64px;
+  align-items: center;
+}
+
+.titleLeft {
+  justify-self: left;
+  margin-left: -50px;
 }
 
 .infoContainer {

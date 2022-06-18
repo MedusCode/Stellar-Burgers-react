@@ -24,7 +24,7 @@ const Login = () => {
   }
 
   const login = React.useCallback(() => {
-    history.replace(state?.from.pathname || '/');
+    history.replace(state?.from?.pathname || '/');
     dispatch({ type: RESET_USER_REQUEST_STATUS });
   }, [history]);
 
@@ -53,7 +53,7 @@ const Login = () => {
       <h1 className='text text_type_main-medium mb-6'>Вход</h1>
       {!isRequested &&
         <>
-          <form className={`${styles.form} mb-20`}>
+          <form className={`${styles.form} mb-20`} onSubmit={handleAuthorization}>
             <Input
               onChange={onChange}
               value={values.email}
@@ -66,7 +66,7 @@ const Login = () => {
               value={values.password}
               name={'password'}
             />
-            <Button onClick={handleAuthorization} type="primary" size="medium" disabled={buttonDisability}>Войти</Button>
+            <Button type="primary" size="medium" disabled={buttonDisability}>Войти</Button>
           </form>
           <FormMessage 
             message='Вы — новый пользователь?' 

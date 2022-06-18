@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './ingredient-card.module.css';
 import { ingredient as ingredientType } from '../../assets/scripts/propTypes';
+import { useLocation, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,11 +11,13 @@ import { changeConstructorIngredients } from '../../services/actions/burger-cons
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
   const id = ingredient._id;
 
   const openModal = () => {
-    window.history.replaceState(null, ingredient.name, `/ingredients/${ingredient._id}`)
     dispatch({type: OPEN_MODAL, ingredient: ingredient, modalType: 'ingredient'})
+    history.push({ pathname: `ingredients/${ingredient._id}`, state: { background: location } })
   }
 
   const [{isDragging}, ingredientRef] = useDrag({

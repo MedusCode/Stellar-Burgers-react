@@ -59,7 +59,7 @@ const Register = () => {
       <h1 className='text text_type_main-medium mb-6'>Регистрация</h1>
       {!isRequested &&
         <>
-          <form className={`${styles.form} mb-20`}>
+          <form className={`${styles.form} mb-20`} onSubmit={handleRegistration}>
             <div className={`${invalid.name ? styles.invalid : styles.valid} ${styles.input}`}>
               <Input
                 onChange={onChange}
@@ -98,7 +98,7 @@ const Register = () => {
                 error={invalid.password}
               />
             </div>
-            <Button type="primary" size="medium" onClick={handleRegistration} disabled={buttonDisability}>
+            <Button type="primary" size="medium" disabled={buttonDisability}>
               Зарегистрироваться
             </Button>
           </form>

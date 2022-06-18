@@ -1,7 +1,6 @@
 import checkResponse from "../../assets/scripts/checkResponse";
 import baseUrl from "../../assets/scripts/baseUrl";
 import checkIfEmailInvalid from "../../assets/scripts/checkIfEmailInvalid";
-import { setCookie, getCookie, deleteCookie } from "../../assets/scripts/cookie";
 
 const USER_REQUEST = 'USER_REQUEST';
 const USER_SUCCESS = 'USER_SUCCESS';
@@ -15,7 +14,7 @@ const requestToServer = (method = 'POST', endpoint, body) => {
     method: method,
     headers: {
       'Content-Type': 'application/json',
-      authorization: method === 'GET' || method === 'PATCH' ? 'Bearer ' + getCookie('accessToken') : undefined
+      authorization: method === 'GET' || method === 'PATCH' ? 'Bearer ' + localStorage.getItem('accessToken') : undefined
     },
     body: body ? JSON.stringify(body) : undefined
   })
@@ -23,14 +22,14 @@ const requestToServer = (method = 'POST', endpoint, body) => {
 }
 
 const refreshTokenRequest = () => {
-    return requestToServer('POST', 'token', {token: getCookie('refreshToken')})
+    return requestToServer('POST', 'token', {token: localStorage.getItem('refreshToken')})
       .then(data => {
-        setCookie('refreshToken', data.refreshToken);
-        setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
+        localStorage.setItem('refreshToken', data.refreshToken);
+        localStorage.setItem('accessToken', data.accessToken.split('Bearer ')[1]);
       })
-      .catch(err => {
-        deleteCookie('refreshToken');
-        deleteCookie('accessToken');
+      .catch(() => {
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('accessToken');
       })
 }
 
@@ -43,8 +42,8 @@ const loginRequest = (body) => {
     dispatch({type: USER_REQUEST});
     requestToServer('POST', 'login', body)
       .then(data => {
-        setCookie('refreshToken', data.refreshToken);
-        setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
+        localStorage.setItem('refreshToken', data.refreshToken);
+        localStorage.setItem('accessToken', data.accessToken.split('Bearer ')[1]);
         dispatch({ type: USER_SUCCESS, user: data.user });
       })
       .catch(error => {
@@ -58,8 +57,8 @@ const registerRequest = (body) => {
     dispatch({type: USER_REQUEST});
     requestToServer('POST', 'register', body)
       .then(data => {
-        setCookie('refreshToken', data.refreshToken);
-        setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
+        localStorage.setItem('refreshToken', data.refreshToken);
+        localStorage.setItem('accessToken', data.accessToken.split('Bearer ')[1]);
         dispatch({ type: USER_SUCCESS, user: data.user });
       })
       .catch(error => {
@@ -71,10 +70,10 @@ const registerRequest = (body) => {
 const logoutRequest = () => {
   return (dispatch) => {
     dispatch({type: USER_REQUEST});
-    requestToServer('POST', 'logout', {token: getCookie('refreshToken')})
+    requestToServer('POST', 'logout', {token: localStorage.getItem('refreshToken')})
       .then(() => {
-        deleteCookie('refreshToken');
-        deleteCookie('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('accessToken');
         dispatch({ type: RESET_USER_STORAGE });
       })
       .catch(error => {

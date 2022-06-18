@@ -63,7 +63,7 @@ const ResetPassword = () => {
       <h1 className='text text_type_main-medium mb-6'>Восстановление пароля</h1>
       {!resetStatus.error && !resetStatus.success && !resetStatus.loading  &&
         <>
-          <form className={`${styles.form} mb-20`}>
+          <form className={`${styles.form} mb-20`} onSubmit={handleReset}>
             <div className={`${invalid.password ? styles.invalid : styles.valid} ${styles.input}`}>
               <Input
                 onChange={onChange}
@@ -90,7 +90,7 @@ const ResetPassword = () => {
                 error={invalid.token}
               />
             </div>
-            <Button onClick={handleReset} type="primary" size="medium" disabled={buttonDisability}>Сохранить</Button>
+            <Button type="primary" size="medium" disabled={buttonDisability}>Сохранить</Button>
           </form>
           <FormMessage message='Вспомнили пароль?' linkText='Войти' link='/login' replace={true}/>
         </>

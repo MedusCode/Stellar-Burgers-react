@@ -4,7 +4,7 @@ import getData from '../../assets/scripts/getData';
 import PropTypes from 'prop-types';
 import { order as orderType } from '../../assets/scripts/propTypes';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import useOrderHandler from '../../services/hooks/useOrderHandler';
 import styles from './order-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,13 +13,14 @@ import getOrderStatus from '../../assets/scripts/getOrderStatus';
 
 
 const OrderCard = ({ initialOrder, displayStatus }) => {
-  const { order } = useOrderHandler(initialOrder)
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
+  const { order } = useOrderHandler(initialOrder);
 
   const handleClick = () => {
     dispatch({ type: OPEN_MODAL, modalType: 'order', order: order })
-    window.history.replaceState(null, 'Детали заказа', `${location.pathname}/${order._id}`)
+    history.push({ pathname: `${location.pathname}/${order._id}`, state: { background: location } })
   }
 
   return (

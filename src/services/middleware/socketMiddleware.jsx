@@ -1,5 +1,3 @@
-import { getCookie } from "../../assets/scripts/cookie";
-
 export const socketMiddleware = (wsUrl, wsActions, isTokenNeeded) => {
   return store => {
     let socket = null;
@@ -10,7 +8,7 @@ export const socketMiddleware = (wsUrl, wsActions, isTokenNeeded) => {
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage, wsClose } = wsActions;
 
       if (type === wsInit) {
-        socket = new WebSocket(isTokenNeeded ? `${wsUrl}?token=${getCookie('accessToken')}` : wsUrl);
+        socket = new WebSocket(isTokenNeeded ? `${wsUrl}?token=${localStorage.getItem('accessToken')}` : wsUrl);
       }
       if (socket) {
         socket.onopen = event => {

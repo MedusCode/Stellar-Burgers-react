@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './order.module.css';
 import { useSelector } from 'react-redux';
-import { order as orderType } from '../../assets/scripts/propTypes'
 import Compound from '../compound/compound.jsx';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import getOrderStatus from '../../assets/scripts/getOrderStatus';
@@ -9,10 +8,12 @@ import getData from '../../assets/scripts/getData';
 import useOrderHandler from '../../services/hooks/useOrderHandler';
 
 const Order = (props) => {
-  const modalOrder = useSelector(store => store.modal.currentOrder);
+  const { isModalOpened, modalOrder } = useSelector(store => ({
+    isModalOpened: store.modal.isOpen,
+    modalOrder: store.modal.currentOrder
+  }));
   const fullPageOrder = useOrderHandler(props.order)
   const order = fullPageOrder ? fullPageOrder.order : modalOrder;
-  console.log(fullPageOrder)
 
   const getIngredientsList = (ingredients) => {
     let ingredientsList = {};
@@ -28,7 +29,8 @@ const Order = (props) => {
   }
 
   return (
-    <div className={`${styles.container} mt-5`}>
+    <div className={styles.container}>
+      <span className={`${styles.title} ${!isModalOpened ? styles.titleCenter : ''} text text_type_digits-default mb-5`}>{`#${order.number}`}</span>
       <h2 className={'text text_type_main-medium mb-2'}>{order.name}</h2>
       <span className={`${order.status === 'done' ? styles.done : ''} text text_type_main-default`}>
         {getOrderStatus(order.status)}

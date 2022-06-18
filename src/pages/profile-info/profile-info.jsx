@@ -68,7 +68,7 @@ const ProfileInfo = () => {
   
   return (
     <div className={styles.container}>
-      <form className={`${invalid.name && activeInput === 'name' ? styles.invalid : styles.valid} ${styles.form}`} onSubmit={e => e.preventDefault()}>
+      <form className={`${invalid.name && activeInput === 'name' ? styles.invalid : styles.valid} ${styles.form}`} onSubmit={submitForm}>
         <div className={styles.formContainer}>
           <Input
             type={'text'}
@@ -87,7 +87,6 @@ const ProfileInfo = () => {
             <Button 
                 type="primary" 
                 size="small" 
-                onClick={submitForm} 
                 disabled={invalid.name || values.name === user.name} 
                 name='submitButton'
               >
@@ -97,7 +96,7 @@ const ProfileInfo = () => {
           </div>
         </div>
       </form>
-      <form className={`${invalid.email && activeInput === 'email' ? styles.invalid : styles.valid} ${styles.form}`} onSubmit={e => e.preventDefault()}>
+      <form className={`${invalid.email && activeInput === 'email' ? styles.invalid : styles.valid} ${styles.form}`} onSubmit={submitForm}>
         <div className={styles.formContainer}>
           <Input
             type={'text'}
@@ -116,7 +115,6 @@ const ProfileInfo = () => {
             <Button 
                 type="primary" 
                 size="small" 
-                onClick={submitForm} 
                 disabled={invalid.email || values.email.toLowerCase() === user.email} 
                 name='submitButton'
               >
@@ -126,7 +124,7 @@ const ProfileInfo = () => {
           </div>
         </div>
       </form>
-      <form className={`${invalid.password && activeInput === 'password' ? styles.invalid : styles.valid} ${styles.form}`} onSubmit={e => e.preventDefault()}>
+      <form className={`${invalid.password && activeInput === 'password' ? styles.invalid : styles.valid} ${styles.form}`} onSubmit={submitForm}>
         <div className={styles.formContainer}>
           <Input
             type={isPasswordHidden ? 'password' : 'text'}
@@ -145,7 +143,6 @@ const ProfileInfo = () => {
             <Button 
                 type="primary" 
                 size="small" 
-                onClick={submitForm} 
                 disabled={invalid.password} 
                 name='submitButton'
               >

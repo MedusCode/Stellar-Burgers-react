@@ -27,7 +27,6 @@ const Ingredients = () => {
 
   return (
     <div className={`${styles.container} pt-30`}>
-      <h1 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h1>
       <IngredientDetails ingredient={activeIngredient} />
     </div>
   )

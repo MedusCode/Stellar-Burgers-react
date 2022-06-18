@@ -2,6 +2,16 @@
   width: 640px;
 }
 
+.title {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+}
+
+.titleCenter {
+  justify-content: center;
+}
+
 .done {
   composes: done from '../order-card/order-card.module.css';
 }

@@ -1,7 +1,6 @@
 import checkResponse from "../../assets/scripts/checkResponse";
 import baseUrl from "../../assets/scripts/baseUrl";
 import { clearConstructor } from './burger-constructor';
-import { getCookie } from '../../assets/scripts/cookie';
 import { refreshTokenRequest } from "./user";
 
 const MAKE_ORDER_REQUEST = 'MAKE_ORDER_REQUEST';
@@ -23,7 +22,7 @@ const makeOrder = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: 'Bearer ' + getCookie('accessToken')
+        authorization: 'Bearer ' + localStorage.getItem('accessToken')
       },
       body: JSON.stringify(order)
     })
