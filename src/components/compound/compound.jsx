@@ -1,5 +1,7 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
+import { ingredient as ingredientType } from '../../assets/scripts/propTypes';
+import PropTypes from "prop-types";
 import styles from './compound.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -9,7 +11,7 @@ const Compound = ({ ingredientsList }) => {
     <ul className={styles.list}>
       {ingredientsList.map(ingredient => {
         return (
-          <li className={`${styles.item} mr-8`} key={nanoid()}>
+          <li className={styles.item} key={nanoid()}>
             <div className={styles.ingredientImageContainer}>
               <img 
                 className={styles.ingredientImage} 
@@ -27,6 +29,10 @@ const Compound = ({ ingredientsList }) => {
       })}
     </ul>
   )
+}
+
+Compound.propTypes = {
+  ingredientsList: PropTypes.arrayOf(ingredientType).isRequired,
 }
 
 export default Compound;

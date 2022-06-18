@@ -15,7 +15,9 @@ const Modal = ({ size, children }) => {
     modalType: store.modal.modalType,
     orderNum: store.modal.currentOrder.number
   }))
-  const request = useSelector(store => store.user.request)
+  const userRequest = useSelector(store => store.user.request);
+  const orderRequest = useSelector(store => store.order.orderRequest);
+  const request = userRequest || orderRequest;
 
   const onClose = () => {
     if (modalType === 'ingredient') window.history.replaceState(null, 'Конструктор', `/`);

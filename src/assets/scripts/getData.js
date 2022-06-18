@@ -18,7 +18,8 @@ const stringifyMonth = (month) => {
 const getData = (stringDate) => {
   const date = new Date(stringDate);
   const dateNow = new Date(Date.now());
-  const time = `${date.getHours()}:${date.getMinutes()} i-GMT+3`;
+  const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  const time = `${date.getHours()}:${minutes} i-GMT+3`;
   if (dateNow.getYear() - date.getYear() > 0 || dateNow.getMonth() - date.getMonth() > 0) {
     return `${date.getDate()} ${stringifyMonth(date.getMonth() + 1)} ${date.getFullYear()}, ${time}`
   }

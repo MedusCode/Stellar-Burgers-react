@@ -1,87 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './orders-readiness.module.css';
 
-const OrdersReadiness = ({ title, status }) => {
-  const storage = {
-    "success": true,
-    "orders": [
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-      {
-        "status": "done",
-        "number": '034533', 
-      },
-
-    ],
-    "total": 2,
-    "totalToday": 2
-  } 
-
-
-
+const OrdersReadiness = ({ title, status, initialOrders }) => {
   return (
     <div>
       <h2 className='text text_type_main-medium mb-6'>{title}</h2>
       <ul className={styles.ordersList}>
-        {storage.orders.map(order => {
+        {initialOrders.orders.map(order => {
           if (order.status === status) {
             return (
               <li className={`${styles.order} ${status === 'done' ? styles.done : ''}`} key={order.number}>
@@ -93,6 +19,12 @@ const OrdersReadiness = ({ title, status }) => {
       </ul>
     </div>
   )
+}
+
+OrdersReadiness.propTypes = {
+  title: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  initialOrders: PropTypes.object.isRequired,
 }
 
 export default OrdersReadiness;

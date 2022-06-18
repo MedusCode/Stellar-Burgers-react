@@ -1,15 +1,19 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 import getData from '../../assets/scripts/getData';
-import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { order as orderType } from '../../assets/scripts/propTypes';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import useOrderHandler from '../../services/hooks/useOrderHandler';
 import styles from './order-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OPEN_MODAL } from '../../services/actions/modal';
 import getOrderStatus from '../../assets/scripts/getOrderStatus';
 
 
-const OrderCard = ({ order, displayStatus }) => {
+const OrderCard = ({ initialOrder, displayStatus }) => {
+  const { order } = useOrderHandler(initialOrder)
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -51,6 +55,11 @@ const OrderCard = ({ order, displayStatus }) => {
       </div>
     </li>
   )
+}
+
+OrderCard.prototype = {
+  initialOrder: orderType.isRequired,
+  displayStatus: PropTypes.bool
 }
 
 export default OrderCard;

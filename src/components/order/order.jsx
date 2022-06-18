@@ -1,22 +1,23 @@
 import React from 'react';
 import styles from './order.module.css';
 import { useSelector } from 'react-redux';
+import { order as orderType } from '../../assets/scripts/propTypes'
 import Compound from '../compound/compound.jsx';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import getOrderStatus from '../../assets/scripts/getOrderStatus';
-import getData from '../../assets/scripts/getData'
+import getData from '../../assets/scripts/getData';
+import useOrderHandler from '../../services/hooks/useOrderHandler';
 
 const Order = (props) => {
   const modalOrder = useSelector(store => store.modal.currentOrder);
-  const order = props.order ? props.order : modalOrder;
+  const fullPageOrder = useOrderHandler(props.order)
+  const order = fullPageOrder ? fullPageOrder.order : modalOrder;
+  console.log(fullPageOrder)
 
   const getIngredientsList = (ingredients) => {
     let ingredientsList = {};
     ingredients.forEach(ingredient => {
-      if (ingredient.type === 'bun') {
-        ingredientsList[ingredient._id] = {...ingredient, amount: 2};
-      }
-      else if (Object.keys(ingredientsList).includes(ingredient._id)) {
+      if (Object.keys(ingredientsList).includes(ingredient._id)) {
         ingredientsList[ingredient._id].amount++;
       }
       else {
@@ -42,7 +43,6 @@ const Order = (props) => {
         </div>
       </div>
     </div>
-    
   )
 }
 

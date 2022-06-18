@@ -20,7 +20,7 @@ import Order from './components/order/order';
 import FullOrder from './pages/full-order/full-order.jsx';
 import OrderDetails from './components/order-details/order-details';
 import RequestStatus from './components/request-status/request-status';
-import LoadingPage from './components/loading-page/loading-page';
+import LoadingRocket from './components/loading-rocket/loading-rocket.jsx';
 import { getIngredients } from './services/actions/ingredients';
 import { getUserRequest } from './services/actions/user';
 
@@ -28,6 +28,7 @@ const App = () => {
   const dispatch = useDispatch();
   const tokenAuthorization = useSelector(store => store.user.tokenAuthorization)
   const ingredientsRequest = useSelector(store => store.ingredients.ingredientsRequest)
+  const isAuthorized = useSelector(store => store.user.isAuthorized)
   const { isModalOpened, modalType } = useSelector(store => ({
     isModalOpened: store.modal.isOpen,
     modalType: store.modal.modalType
@@ -59,7 +60,7 @@ const App = () => {
   }, [])
 
   if (ingredientsRequest || tokenAuthorization) {
-    return (<LoadingPage />)
+    return (<LoadingRocket />)
   }
 
   return (

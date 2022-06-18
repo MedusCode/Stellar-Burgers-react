@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(0, 35vh);
+}
+
+.img {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 100px;
+  transform: rotate(90deg) translate(-50%, 75%);
+}
+
+.below {
+  top: 65%;
+}

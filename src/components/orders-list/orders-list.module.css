@@ -1,5 +1,6 @@
 .container {
-  position: relative;
+  display: flex;
+  flex-direction: column;
   list-style: none;
   overflow-y: overlay;
   padding-left: 0;

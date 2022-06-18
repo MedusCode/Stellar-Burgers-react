@@ -10,7 +10,7 @@ import usePassword from '../../services/hooks/usePassword';
 import baseUrl from "../../assets/scripts/baseUrl";
 import checkResponse from "../../assets/scripts/checkResponse";
 
-const ResetPassword = (props) => {
+const ResetPassword = () => {
   const location = useLocation();
   const isAuthorized = useSelector(store => store.user.isAuthorized)
   const { values, onChange, onBlur, invalid, buttonDisability } = useForm({password: '', token: ''});

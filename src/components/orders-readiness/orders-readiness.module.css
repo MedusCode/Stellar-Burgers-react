@@ -3,7 +3,8 @@
   grid-auto-flow: column;
   grid-template-rows: repeat(5, 1fr);
   grid-template-columns: repeat(auto, 1fr);
-  gap: 8px;
+  row-gap: 8px;
+  column-gap: 20px;
   list-style: none;
   width: 272px;
   overflow-x: overlay;

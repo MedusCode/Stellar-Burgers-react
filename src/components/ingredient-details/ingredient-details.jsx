@@ -1,5 +1,5 @@
 import React from 'react';
-import ingredientType from '../../assets/scripts/propTypes';
+import { ingredient as ingredientType } from '../../assets/scripts/propTypes';
 import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 
