@@ -8,12 +8,12 @@ const useWebSocketData = () => {
   const [allOrders, setAllOrders] = React.useState(null);
 
   React.useEffect(() => {
-    const lastUpdate = allOrdersMessages.find(message => message.success && message.orders);
+    const lastUpdate = allOrdersMessages.reverse().find(message => message.success && message.orders);
     setAllOrders(lastUpdate);
   }, [allOrdersMessages])
   
   React.useEffect(() => {
-    const lastUpdate = userOrdersMessages.find(message => message.success && message.orders);
+    const lastUpdate = userOrdersMessages.reverse().find(message => message.success && message.orders);
     if (lastUpdate) lastUpdate.orders = lastUpdate.orders.sort((a,b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
