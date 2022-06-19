@@ -11,7 +11,7 @@ const Profile = () => {
   const { path } = useRouteMatch();
 
   return (
-    <div className={`${styles.container} ${location.pathname === '/profile' ? '' : styles.orders} pt-30`}>
+    <div className={`${styles.container} ${location.pathname === '/profile' ? '' : styles.orders} pt-10`}>
       <ProfileTab />
       <Switch>
         <ProtectedRoute path={path} exact>

@@ -29,7 +29,7 @@ const ProfileTab = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} mt-20`}>
       <NavLink 
         to={path} 
         exact 

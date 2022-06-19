@@ -67,7 +67,7 @@ const ProfileInfo = () => {
   }, [isModalOpened])
   
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} mt-20`}>
       <form className={`${invalid.name && activeInput === 'name' ? styles.invalid : styles.valid} ${styles.form}`} onSubmit={submitForm}>
         <div className={styles.formContainer}>
           <Input
