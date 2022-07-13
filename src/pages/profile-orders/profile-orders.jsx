@@ -1,9 +1,23 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './profile-orders.module.css';
+import OrderList from '../../components/orders-list/orders-list';
+import useWebSocketData from '../../services/hooks/useWebSocketData.jsx';
+import LoadingRocket from '../../components/loading-rocket/loading-rocket.jsx';
+import { USER_ORDERS_WS_CLOSE_CONNECTION, USER_ORDERS_WS_CONNECTION_START } from '../../services/actions/user-orders-web-socket.jsx';
 
 const ProfileOrders = () => {
+  const dispatch = useDispatch();
+  const { userOrders } = useWebSocketData();
+
+  React.useEffect(() => {
+    dispatch({ type: USER_ORDERS_WS_CONNECTION_START })
+
+    return () => dispatch({ type: USER_ORDERS_WS_CLOSE_CONNECTION });
+  }, [])
+
   return (
-    <p className="text text_type_main-medium">Здесь пока ничего нет :(</p>
+    <>{userOrders ? <OrderList initialOrders={userOrders} displayStatus={true} /> : <LoadingRocket />}</>
   )
 }
 

@@ -1,0 +1,28 @@
+.ordersList {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(auto, 1fr);
+  row-gap: 8px;
+  column-gap: 20px;
+  list-style: none;
+  width: 272px;
+  overflow-x: overlay;
+  overflow-y: hidden;
+  padding: 0 0 8px 0;
+  margin: 0;
+}
+
+.ordersList::-webkit-scrollbar {
+  background-color: transparent;
+  height: 4px;
+}
+
+.order {
+  display: block;
+  width: fit-content;
+}
+
+.done {
+  color: #00CCCC;
+}

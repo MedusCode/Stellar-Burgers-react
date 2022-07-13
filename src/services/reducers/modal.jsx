@@ -2,6 +2,7 @@ import { OPEN_MODAL, CLOSE_MODAL } from '../actions/modal'
 
 const initialState = {
   currentIngredient: {},
+  currentOrder: {},
 
   confirmationType: '',
 
@@ -16,6 +17,7 @@ export const modalReducer = (state = initialState, action) => {
     case OPEN_MODAL: {
       return {
         currentIngredient: action.ingredient || {},
+        currentOrder: action.order || {},
         isOpen: true,
         modalType: action.modalType,
         confirmationType: action.confirmationType || '',

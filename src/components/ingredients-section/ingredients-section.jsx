@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ingredientType from '../../assets/scripts/propTypes';
+import { ingredient as ingredientType } from '../../assets/scripts/propTypes';
 import styles from './ingredients-section.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
 

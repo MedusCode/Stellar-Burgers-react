@@ -1,6 +1,7 @@
 import checkResponse from "../../assets/scripts/checkResponse";
 import baseUrl from "../../assets/scripts/baseUrl";
-import { clearConstructor } from './burger-constructor'
+import { clearConstructor } from './burger-constructor';
+import { refreshTokenRequest } from "./user";
 
 const MAKE_ORDER_REQUEST = 'MAKE_ORDER_REQUEST';
 const MAKE_ORDER_SUCCESS = 'MAKE_ORDER_SUCCESS';
@@ -20,7 +21,8 @@ const makeOrder = () => {
     fetch(`${baseUrl}/orders`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + localStorage.getItem('accessToken')
       },
       body: JSON.stringify(order)
     })
@@ -37,6 +39,7 @@ const makeOrder = () => {
         }
       })
       .catch(() => {
+        refreshTokenRequest()
         dispatch({
           type: MAKE_ORDER_FAILED,
         });

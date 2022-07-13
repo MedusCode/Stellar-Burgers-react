@@ -15,4 +15,14 @@ const ingredient = PropTypes.shape({
   __v: PropTypes.number,
 })
 
-export default ingredient;
+const order = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  updatedAt: PropTypes.string.isRequired,
+  ingredient: PropTypes.array.isRequired
+})
+
+export { ingredient, order };

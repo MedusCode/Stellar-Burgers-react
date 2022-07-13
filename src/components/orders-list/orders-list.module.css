@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  overflow-y: overlay;
+  padding-left: 0;
+  margin: 0;
+}
+
+.container::-webkit-scrollbar {
+  background-color: #131316;
+}
+
+.container::-webkit-scrollbar-track-piece {
+  background: #2F2F37;
+  margin-bottom: 60px;
+}

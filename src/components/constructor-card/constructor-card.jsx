@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './constructor-card.module.css';
 import PropTypes from "prop-types";
-import ingredientType from '../../assets/scripts/propTypes'
+import { ingredient as ingredientType } from '../../assets/scripts/propTypes'
 import { useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';

@@ -13,6 +13,7 @@
   border: none;
   cursor: pointer;
   text-align: left;
+  transition: opacity 0.15s ease-in-out;
 }
 
 .link:hover {
@@ -21,6 +22,10 @@
 
 .activeLink {
   color: #F2F2F3;
+}
+
+.activeLink:hover {
+  opacity: 1
 }
 
 .activeButton {

@@ -1,0 +1,29 @@
+.container {
+  width: 640px;
+}
+
+.title {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+}
+
+.titleCenter {
+  justify-content: center;
+}
+
+.done {
+  composes: done from '../order-card/order-card.module.css';
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
