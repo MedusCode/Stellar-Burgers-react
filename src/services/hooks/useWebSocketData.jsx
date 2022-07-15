@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 const useWebSocketData = () => {
   const userOrdersMessages = useSelector(store => store.userOrdersWebSocket.messages)
   const allOrdersMessages = useSelector(store => store.allOrdersWebSocket.messages)
-  const [userOrders, setUserOrders] = React.useState(null);
-  const [allOrders, setAllOrders] = React.useState(null);
+  const [userOrdersData, setUserOrdersData] = React.useState(null);
+  const [allOrdersData, setAllOrdersData] = React.useState(null);
 
   React.useEffect(() => {
     const lastUpdate = allOrdersMessages.reverse().find(message => message.success && message.orders);
-    setAllOrders(lastUpdate);
+    setAllOrdersData(lastUpdate);
   }, [allOrdersMessages])
   
   React.useEffect(() => {
@@ -17,12 +17,12 @@ const useWebSocketData = () => {
     if (lastUpdate) lastUpdate.orders = lastUpdate.orders.sort((a,b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
-    setUserOrders(lastUpdate);
+    setUserOrdersData(lastUpdate);
   }, [userOrdersMessages])
 
   return {
-    userOrders,
-    allOrders,
+    userOrdersData,
+    allOrdersData,
   }
 }
 

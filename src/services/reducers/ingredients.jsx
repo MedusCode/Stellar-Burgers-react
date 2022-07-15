@@ -39,7 +39,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsRequest: false,
         ingredientsFailed: true,
-        errorCode: action.status
+        errorCode: action.status || ''
       };
     }
     case INCREASE_INGREDIENTS_COUNTER: {

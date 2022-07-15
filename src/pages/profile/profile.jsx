@@ -1,10 +1,10 @@
 import React from 'react';
 import { Switch, useRouteMatch, useLocation } from 'react-router-dom';
 import styles from './profile.module.css';
-import ProtectedRoute from '../../components/protected-route/protected-route.jsx';
+import ProtectedRoute from '../../components/protected-route/protected-route';
 import ProfileTab from '../../components/profile-tab/profile-tab';
 import ProfileInfo from '../profile-info/profile-info';
-import ProfileOrders from '../profile-orders/profile-orders.jsx'
+import ProfileOrders from '../profile-orders/profile-orders';
 
 const Profile = () => {
   const location = useLocation();

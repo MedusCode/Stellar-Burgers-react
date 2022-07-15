@@ -15,15 +15,15 @@ import Ingredients from '../../pages/ingredients/ingredients';
 import NotFound from '../../pages/not-found/not-found';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import Confirmation from '../confirmation/confirmation.jsx';
+import Confirmation from '../confirmation/confirmation';
 import Order from '../order/order';
-import FullOrder from '../../pages/full-order/full-order.jsx';
+import FullOrder from '../../pages/full-order/full-order';
 import OrderDetails from '../order-details/order-details';
 import RequestStatus from '../request-status/request-status';
-import LoadingRocket from '../loading-rocket/loading-rocket.jsx';
+import LoadingRocket from '../loading-rocket/loading-rocket';
 import { getIngredients } from '../../services/actions/ingredients';
 import { getUserRequest } from '../../services/actions/user';
-import { CLOSE_MODAL } from '../../services/actions/modal.jsx';
+import { CLOSE_MODAL } from '../../services/actions/modal';
 
 const App = () => {
   const dispatch = useDispatch();

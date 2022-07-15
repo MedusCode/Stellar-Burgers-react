@@ -8,26 +8,24 @@ import BurgerIngredients from '../../components/burger-ingredients/burger-ingred
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 
 const Constructor = () => {
-  const { ingredientsRequest, ingredientsFailed, errorCode } = useSelector(store => ({
-    ingredientsRequest: store.ingredients.ingredientsRequest,
+  const { ingredientsFailed, errorCode } = useSelector(store => ({
     ingredientsFailed: store.ingredients.ingredientsFailed,
     errorCode: store.ingredients.errorCode
   }));
 
+  if (ingredientsFailed) {
+    return (
+      <InfoPage info='Попробуйте перезапустить страницу.'>Произошла ошибка {errorCode ? `: ${errorCode}` : ''}</InfoPage>
+    )
+  }
+
   return (
-    <>
-      {!ingredientsRequest && !ingredientsFailed ?
-        <DndProvider backend={HTML5Backend}>
-          <section className={styles.constructorPage}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </section>
-        </DndProvider>
-        : ingredientsRequest
-          ? <InfoPage>Загрузка...</InfoPage>
-          : <InfoPage info='Попробуйте перезапустить страницу.'>Произошла ошибка: {errorCode}</InfoPage>
-      }
-    </>
+    <DndProvider backend={HTML5Backend}>
+      <section className={styles.constructorPage}>
+        <BurgerIngredients />
+        <BurgerConstructor />
+      </section>
+    </DndProvider>
   )
 }
 

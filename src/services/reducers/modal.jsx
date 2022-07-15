@@ -1,8 +1,8 @@
 import { OPEN_MODAL, CLOSE_MODAL } from '../actions/modal'
 
 const initialState = {
-  currentIngredient: {},
-  currentOrder: {},
+  currentIngredient: null,
+  currentOrder: null,
 
   confirmationType: '',
 
