@@ -1,8 +1,18 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-const useUserStatus = () => {
-  const { isAuthorized, request, requestSuccess, requestFailed, errorStatus, errorMessage } = useSelector(store => ({
+interface IUseUserStatusReturns {
+  isAuthorized: boolean;
+  request: boolean;
+  requestFailed: boolean;
+  errorStatus: number;
+  isRequested: boolean;
+  requestSuccess: boolean;
+  errorMessage: string;
+}
+
+const useUserStatus = (): IUseUserStatusReturns => {
+  const { isAuthorized, request, requestSuccess, requestFailed, errorStatus, errorMessage } = useSelector((store: any) => ({
     isAuthorized: store.user.isAuthorized,
     request: store.user.request,
     requestSuccess: store.user.requestSuccess,
@@ -10,9 +20,9 @@ const useUserStatus = () => {
     errorStatus: store.user.errorStatus,
     errorMessage: store.user.errorMessage
   }))
-  const [isRequested, setIsRequested] = React.useState(false)
+  const [isRequested, setIsRequested] = useState<boolean>(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (request || requestFailed || requestSuccess) setIsRequested(true)
     else setIsRequested(false)
   }, [request, requestFailed, requestSuccess])

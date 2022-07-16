@@ -4,6 +4,7 @@ import { NavLink, useRouteMatch, useLocation } from 'react-router-dom';
 import styles from './profile-tab.module.css';
 import { logoutRequest } from '../../services/actions/user.jsx';
 import { OPEN_MODAL } from '../../services/actions/modal';
+import ILocation from '../../types/location';
 
 interface IRouteMatch {
   path: string;
@@ -11,7 +12,7 @@ interface IRouteMatch {
 
 const ProfileTab: FC = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<ILocation>();
   const logoutButtonRef = useRef<HTMLButtonElement>(null)
   const { path } = useRouteMatch<IRouteMatch>();
   const confirmationType = useSelector((store: any) => store.modal.confirmationType)

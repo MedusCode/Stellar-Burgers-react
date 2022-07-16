@@ -1,24 +1,26 @@
-import React from 'react';
+import { FC, useState, useEffect, FormEvent, FocusEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, Redirect } from 'react-router-dom';
 import styles from './reset-password.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormMessage from '../../components/form-message/form-message';
-import FormResult from '../../components/form-result/form-result';
+import FormResult, { IFormResultProps } from '../../components/form-result/form-result';
 import useForm from '../../services/hooks/useForm';
 import usePassword from '../../services/hooks/usePassword';
 import baseUrl from "../../assets/scripts/baseUrl";
 import checkResponse from "../../assets/scripts/checkResponse";
+import IRequestStatus from '../../types/requestStatus';
+import ILocation from '../../types/location';
 
-const ResetPassword = () => {
-  const location = useLocation();
-  const isAuthorized = useSelector(store => store.user.isAuthorized)
+const ResetPassword: FC = () => {
+  const location = useLocation<ILocation>();
+  const isAuthorized = useSelector((store: any) => store.user.isAuthorized)
   const { values, onChange, onBlur, invalid, buttonDisability } = useForm({password: '', token: ''});
   const { isPasswordHidden, onPasswordBlur, showPassword } = usePassword();
-  const [ resetStatus, setResetStatus ] = React.useState({loading: false, success: false, error: false});
-  const [ requestResult, setRequestResult ] = React.useState({ message: '', buttonText: '', href: '' });
+  const [ resetStatus, setResetStatus ] = useState<IRequestStatus>({loading: false, success: false, error: false});
+  const [ requestResult, setRequestResult ] = useState<IFormResultProps>({ message: '', buttonText: '', href: '' });
 
-  const handleReset = e => {
+  const handleReset = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setResetStatus({loading: true, success: false, error: false});
 
@@ -39,12 +41,12 @@ const ResetPassword = () => {
       });
   }
 
-  const handlePasswordBlur = e => {
+  const handlePasswordBlur = (e: FocusEvent<HTMLInputElement>) => {
     onBlur(e);
     onPasswordBlur();
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (resetStatus.loading) setRequestResult({message: 'Отправка данных...', buttonText: '', href: ''});
     else if (resetStatus.success) setRequestResult({message: 'Пароль успешно сброшен.', buttonText: 'Войти', href: '/login'});
     else if (resetStatus.error) setRequestResult({message: 'Не удалось восстановить пароль', buttonText: 'Вернуться назад', href: '/login'});

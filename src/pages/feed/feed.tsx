@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './feed.module.css';
 import OrderList from '../../components/orders-list/orders-list';
@@ -7,14 +7,16 @@ import useWebSocketData from '../../services/hooks/useWebSocketData';
 import LoadingRocket from '../../components/loading-rocket/loading-rocket';
 import { ALL_ORDERS_WS_CLOSE_CONNECTION, ALL_ORDERS_WS_CONNECTION_START } from '../../services/actions/all-orders-web-socket';
 
-const Feed = () => {
+const Feed: FC = () => {
   const dispatch = useDispatch();
   const { allOrdersData } = useWebSocketData()
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch({ type: ALL_ORDERS_WS_CONNECTION_START })
 
-    return () => dispatch({ type: ALL_ORDERS_WS_CLOSE_CONNECTION });
+    return () => {
+      dispatch({ type: ALL_ORDERS_WS_CLOSE_CONNECTION })
+    };
   }, [])
 
   return (

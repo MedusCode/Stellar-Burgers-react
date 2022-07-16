@@ -1,9 +1,10 @@
 import { FC, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './request-status.module.css';
-import useUserStatus from '../../services/hooks/useUserStatus.jsx';
+import useUserStatus from '../../services/hooks/useUserStatus';
 import { RESET_USER_REQUEST_STATUS } from '../../services/actions/user';
 import { CLOSE_MODAL } from '../../services/actions/modal';
+import rocket from '../../assets/images/rocket.gif';
 
 const RequestStatus: FC = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,12 @@ const RequestStatus: FC = () => {
       dispatch({ type: RESET_USER_REQUEST_STATUS });
     }
   }, [])
+
+  if (request) return (
+    <div className={styles.rocketContainer}>
+      <img className={styles.rocket} src={rocket}></img>
+    </div>
+  )
 
   return (
     <span className={`${styles.text} text text_type_main-medium mb-10`}>{text}</span>

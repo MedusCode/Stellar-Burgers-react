@@ -6,11 +6,12 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Cart from '../cart/cart';
 import CurrencyIconLarge from '../currency-icon-large/currency-icon-large';
 import { OPEN_MODAL } from '../../services/actions/modal';
+import ILocation from '../../types/location';
 
 const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<ILocation>();
   const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
   const { price, bun } = useSelector((store: any) => ({
     price: store.burgerConstructor.price,

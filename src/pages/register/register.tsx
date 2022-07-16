@@ -1,45 +1,46 @@
-import React from 'react';
+import { FC, useState, useEffect, useCallback, FormEvent, FocusEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormMessage from '../../components/form-message/form-message';
-import FormResult from '../../components/form-result/form-result';
+import FormResult, { IFormResultProps } from '../../components/form-result/form-result';
 import usePassword from '../../services/hooks/usePassword';
 import useForm from '../../services/hooks/useForm';
 import useUserStatus from '../../services/hooks/useUserStatus';
 import { registerRequest, RESET_USER_REQUEST_STATUS } from '../../services/actions/user';
+import ILocation from '../../types/location';
 
 
-const Register = () => {
+const Register: FC = () => {
   const dispatch = useDispatch();
-  const state = useLocation().state;
+  const state = useLocation<ILocation>().state;
   const history = useHistory();
   const { isAuthorized, request, requestFailed, errorMessage, isRequested } = useUserStatus();
   const { values, onChange, onBlur, invalid, buttonDisability, resetPassword } = useForm({name: '', email: '', password: ''});
   const { isPasswordHidden, onPasswordBlur, showPassword } = usePassword();
-  const [ requestResult, setRequestResult ] = React.useState({ message: '', buttonText: '', href: ''});
+  const [ requestResult, setRequestResult ] = useState<IFormResultProps>({ message: '', buttonText: '', href: ''});
 
-  const handleRegistration = e => {
+  const handleRegistration = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(registerRequest(values));
   }
 
-  const handlePasswordBlur = e => {
+  const handlePasswordBlur = (e: FocusEvent<HTMLInputElement>) => {
     onBlur(e);
     onPasswordBlur();
   }
 
-  const login = React.useCallback(() => {
-    history.replace(state?.from.pathname || '/');
+  const login = useCallback(() => {
+    history.replace(state?.from?.pathname || '/');
     dispatch({ type: RESET_USER_REQUEST_STATUS });
   }, [history]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     !isRequested && resetPassword();
   }, [isRequested])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (request) setRequestResult({message: 'Отправка данных...', buttonText: '', href: ''})
     else if (isAuthorized) login();
     else if (errorMessage === 'User already exists') setRequestResult({

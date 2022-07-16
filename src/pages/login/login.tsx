@@ -1,43 +1,44 @@
-import React from 'react';
+import { FC, useState, useEffect, useCallback, FormEvent } from 'react';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import styles from './login.module.css';
 import FormMessage from '../../components/form-message/form-message';
-import FormResult from '../../components/form-result/form-result';
+import FormResult, { IFormResultProps } from '../../components/form-result/form-result';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import useForm from '../../services/hooks/useForm';
 import useUserStatus from '../../services/hooks/useUserStatus';
 import { loginRequest, RESET_USER_REQUEST_STATUS } from '../../services/actions/user';
+import ILocation from '../../types/location';
 
-const Login = () => {
+const Login: FC = () => {
   const dispatch = useDispatch();
-  const state = useLocation().state;
+  const state = useLocation<ILocation>().state;
   const history = useHistory();
   const { isAuthorized, request, requestFailed, errorStatus, isRequested } = useUserStatus();
   const { values, onChange, resetPassword } = useForm({email: '', password: ''});
-  const [ buttonDisability, setButtonDisability ] = React.useState(true);
-  const [ requestResult, setRequestResult ] = React.useState({ message: '', buttonText: '' });
+  const [ buttonDisability, setButtonDisability ] = useState<boolean>(true);
+  const [ requestResult, setRequestResult ] = useState<IFormResultProps>({ message: '', buttonText: '' });
 
-  const handleAuthorization = e => {
+  const handleAuthorization = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(loginRequest(values));
   }
 
-  const login = React.useCallback(() => {
+  const login = useCallback(() => {
     history.replace(state?.from?.pathname || '/');
     dispatch({ type: RESET_USER_REQUEST_STATUS });
   }, [history]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (Object.values(values).includes('')) setButtonDisability(true);
     else setButtonDisability(false);
   }, [values])
   
-  React.useEffect(() => {
+  useEffect(() => {
     !isRequested && resetPassword();
   }, [isRequested])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (request) setRequestResult({message: 'Авторизация...', buttonText: ''})
     else if (isAuthorized) login()
     else if (errorStatus === 401) setRequestResult({message: 'Неправильный email или пароль', buttonText: 'Попробовать еще раз'})

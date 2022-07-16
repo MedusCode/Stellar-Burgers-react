@@ -5,7 +5,7 @@ import IOrder from '../../types/order';
 
 interface IOrderListProps {
   orders: Array<IOrder>;
-  displayStatus: boolean;
+  displayStatus?: boolean;
 }
 
 const OrderList: FC<IOrderListProps> = ({ orders, displayStatus }) => { 

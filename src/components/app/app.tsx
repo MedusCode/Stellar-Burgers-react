@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, useEffect } from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import ProtectedRoute from '../protected-route/protected-route';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,7 +13,7 @@ import Profile from '../../pages/profile/profile';
 import Feed from '../../pages/feed/feed';
 import Ingredients from '../../pages/ingredients/ingredients';
 import NotFound from '../../pages/not-found/not-found';
-import Modal from '../modal/modal';
+import Modal, { ModalSize } from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Confirmation from '../confirmation/confirmation';
 import Order from '../order/order';
@@ -24,14 +24,15 @@ import LoadingRocket from '../loading-rocket/loading-rocket';
 import { getIngredients } from '../../services/actions/ingredients';
 import { getUserRequest } from '../../services/actions/user';
 import { CLOSE_MODAL } from '../../services/actions/modal';
+import ILocation from '../../types/location';
 
-const App = () => {
+const App: FC = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<ILocation>();
   const history = useHistory();
-  const tokenAuthorization = useSelector(store => store.user.tokenAuthorization)
-  const ingredientsRequest = useSelector(store => store.ingredients.ingredientsRequest)
-  const { isModalOpened, modalType } = useSelector(store => ({
+  const tokenAuthorization = useSelector((store: any) => store.user.tokenAuthorization)
+  const ingredientsRequest = useSelector((store: any) => store.ingredients.ingredientsRequest)
+  const { isModalOpened, modalType } = useSelector((store: any) => ({
     isModalOpened: store.modal.isOpen,
     modalType: store.modal.modalType
   }));
@@ -49,18 +50,20 @@ const App = () => {
   const modalSwitch = () => {
     switch(modalType) {
       case 'order-details': {
-        return (<Modal onClose={closeOrdinaryModal}><OrderDetails /></Modal>)
+        return (<Modal onClose={closeOrdinaryModal} size={ModalSize.default}><OrderDetails /></Modal>)
       }
       case 'confirmation': {
-        return (<Modal onClose={closeOrdinaryModal} size='small'><Confirmation /></Modal>)
+        return (<Modal onClose={closeOrdinaryModal} size={ModalSize.small}><Confirmation /></Modal>)
       }
       case 'request': {
-        return (<Modal onClose={closeOrdinaryModal} size='small'><RequestStatus /></Modal>)
+        return (<Modal onClose={closeOrdinaryModal} size={ModalSize.small}><RequestStatus /></Modal>)
       }
+      default: 
+        return (<span>Произошла ошибка</span>)
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(getIngredients())
     dispatch(getUserRequest());
   }, [])

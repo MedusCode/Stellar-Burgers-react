@@ -3,7 +3,7 @@ import styles from './form-message.module.css';
 import { Link } from 'react-router-dom';
 
 interface ILink {
-  path: string;
+  pathname: string;
   state?: Object | undefined;
 }
 

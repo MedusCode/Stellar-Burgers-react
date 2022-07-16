@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import styles from './form-result.module.css';
 import { RESET_USER_REQUEST_STATUS } from '../../services/actions/user.jsx';
 
-interface IFormResultProps {
+export interface IFormResultProps {
   message: string;
   buttonText?: string;
   href?: string;

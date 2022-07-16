@@ -4,7 +4,7 @@ import styles from './ingredient-details.module.css';
 import IIngredient from '../../types/ingredient';
 
 interface IIngredientDetailsProps {
-  ingredient: IIngredient;
+  ingredient?: IIngredient;
 }
 
 const IngredientDetails: FC<IIngredientDetailsProps> = (props) => {

@@ -9,6 +9,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { OPEN_MODAL } from '../../services/actions/modal';
 import getOrderStatus from '../../assets/scripts/getOrderStatus';
 import IOrder from '../../types/order';
+import ILocation from '../../types/location';
 
 interface IOrderCardProps {
   initialOrder: IOrder;
@@ -17,7 +18,7 @@ interface IOrderCardProps {
 
 const OrderCard: FC<IOrderCardProps> = ({ initialOrder, displayStatus }) => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<ILocation>();
   const history = useHistory();
   const order = useOrderHandler(initialOrder);
 

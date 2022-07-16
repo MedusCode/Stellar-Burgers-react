@@ -1,22 +1,23 @@
-import React from 'react';
+import { FC, useState, useEffect, useCallback, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, Redirect } from 'react-router-dom';
 import styles from './forgot-password.module.css';
 import FormMessage from '../../components/form-message/form-message';
-import FormResult from '../../components/form-result/form-result';
+import FormResult, { IFormResultProps } from '../../components/form-result/form-result';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import useForm from '../../services/hooks/useForm';
 import baseUrl from "../../assets/scripts/baseUrl";
 import checkResponse from "../../assets/scripts/checkResponse";
+import IRequestStatus from '../../types/requestStatus';
 
-const ForgotPassword = () => {
+const ForgotPassword: FC = () => {
   const history = useHistory();
-  const isAuthorized = useSelector(store => store.user.isAuthorized)
+  const isAuthorized = useSelector((store: any) => store.user.isAuthorized)
   const { values, onChange, onBlur, invalid, buttonDisability } = useForm({email: ''});
-  const [ resetStatus, setResetStatus ] = React.useState({loading: false, success: false, error: false});
-  const [ requestResult, setRequestResult ] = React.useState({ message: '', buttonText: '' });
+  const [ resetStatus, setResetStatus ] = useState<IRequestStatus>({loading: false, success: false, error: false});
+  const [ requestResult, setRequestResult ] = useState<IFormResultProps>({ message: '', buttonText: '' });
 
-  const moveNextStep = React.useCallback(() => {
+  const moveNextStep = useCallback(() => {
     history.push({ pathname: '/reset-password', state: { access: true } });
   }, [history]);
 
@@ -24,7 +25,7 @@ const ForgotPassword = () => {
     setResetStatus({loading: false, success: false, error: false});
   }
 
-  const handleReset = e => {
+  const handleReset = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setResetStatus({loading: true, success: false, error: false});
 
@@ -37,6 +38,7 @@ const ForgotPassword = () => {
     })
       .then(checkResponse)
       .then(data => {
+        console.log(data)
         if (data.success) setResetStatus({loading: false, success: true, error: false});
         else return Promise.reject('error');
       })
@@ -45,7 +47,7 @@ const ForgotPassword = () => {
       });
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (resetStatus.loading) setRequestResult({message: 'Отправка данных...', buttonText: ''});
     else if (resetStatus.success) moveNextStep();
     else if (resetStatus.error) setRequestResult({message: 'Ошибка сервера', buttonText: 'Попробовать еще раз'});

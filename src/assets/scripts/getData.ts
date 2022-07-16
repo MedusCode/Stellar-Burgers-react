@@ -1,4 +1,4 @@
-const stringifyMonth = (month) => {
+const stringifyMonth = (month: number): string => {
   switch (month) {
     case 1: return 'Явнваря'
     case 2: return 'Февраля'
@@ -12,15 +12,16 @@ const stringifyMonth = (month) => {
     case 10: return 'Октября'
     case 11: return 'Ноября'
     case 12: return 'Декабря'
+    default: return 'Неизвестно'
   }
 }
 
-const getData = (stringDate) => {
+const getData = (stringDate: string): string => {
   const date = new Date(stringDate);
   const dateNow = new Date(Date.now());
   const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
   const time = `${date.getHours()}:${minutes} i-GMT+3`;
-  if (dateNow.getYear() - date.getYear() > 0 || dateNow.getMonth() - date.getMonth() > 0) {
+  if (dateNow.getFullYear() - date.getFullYear() > 0 || dateNow.getMonth() - date.getMonth() > 0) {
     return `${date.getDate()} ${stringifyMonth(date.getMonth() + 1)} ${date.getFullYear()}, ${time}`
   }
   switch (dateNow.getDate() - date.getDate()) {
