@@ -3,7 +3,7 @@ import baseUrl from "../../assets/scripts/baseUrl";
 import checkIfEmailInvalid from "../../assets/scripts/checkIfEmailInvalid";
 import TUser from "../../types/user";
 import { IGetUserResponseBody, ILoginRequestBody, ILoginResponseBody, IRefreshTokenResponseBody, IRegisterRequestBody, IUpdateUserRequestBody, TRequestBody } from "../../types/requests";
-import { AppDispatch, AppThunk } from "../../types/appThunk";
+import { AppThunk } from "../../types/appThunk";
 
 const USER_REQUEST: 'USER_REQUEST' = 'USER_REQUEST';
 const USER_SUCCESS: 'USER_SUCCESS' = 'USER_SUCCESS';
@@ -64,7 +64,7 @@ const refreshTokenRequest = () => {
 }
 
 const loginRequest: AppThunk = (body: ILoginRequestBody) => {
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     if (checkIfEmailInvalid(body.email) || body.password.length < 5) {
       dispatch({type: USER_FAILED, status: 401});
       return;
@@ -84,7 +84,7 @@ const loginRequest: AppThunk = (body: ILoginRequestBody) => {
 }
 
 const registerRequest: AppThunk = (body: IRegisterRequestBody) => {
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     dispatch({type: USER_REQUEST});
     requestToServer('POST', 'register', body)
       .then(res => checkResponse<ILoginResponseBody>(res))
@@ -100,7 +100,7 @@ const registerRequest: AppThunk = (body: IRegisterRequestBody) => {
 }
 
 const logoutRequest: AppThunk = () => {
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     dispatch({type: USER_REQUEST});
     requestToServer('POST', 'logout', {token: localStorage.getItem('refreshToken')})
       .then(checkResponse)
@@ -116,7 +116,7 @@ const logoutRequest: AppThunk = () => {
 }
 
 const getUserRequest: AppThunk = () => {
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     const request = () => {
       return requestToServer('GET', 'user')
         .then(res => checkResponse<IGetUserResponseBody>(res))
@@ -143,7 +143,7 @@ const getUserRequest: AppThunk = () => {
 }
 
 const updateUserRequest: AppThunk= (body: IUpdateUserRequestBody) => {
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     const request = () => {
       return requestToServer('PATCH', 'user', body)
         .then(res => checkResponse<IGetUserResponseBody>(res))

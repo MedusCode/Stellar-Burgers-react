@@ -1,3 +1,4 @@
+import { TOrderActions } from './../services/actions/order';
 import { ThunkAction } from 'redux-thunk';
 import { ActionCreator } from 'redux';
 import { store } from '../services/store';
@@ -18,6 +19,7 @@ export type TApplicationActions =
   | TBurgerConstructorActions
   | TDraggingActions
   | TUserActions
+  | TOrderActions
 
 type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, unknown, TApplicationActions>>;
 type AppDispatch = typeof store.dispatch;

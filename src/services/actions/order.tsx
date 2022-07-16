@@ -3,9 +3,8 @@ import baseUrl from "../../assets/scripts/baseUrl";
 import { CLEAR_CONSTRUCTOR } from './burger-constructor';
 import { refreshTokenRequest } from "./user";
 import IIngredient from "../../types/ingredient";
-import { AppDispatch, AppThunk} from "../../types/appThunk";
+import { AppThunk } from "../../types/appThunk";
 import { IOrderResponseBody } from "../../types/requests";
-import RootState from "../../types/rootState";
 import { CLEAR_COUNTERS } from "./ingredients";
 
 const MAKE_ORDER_REQUEST: 'MAKE_ORDER_REQUEST' = 'MAKE_ORDER_REQUEST';
@@ -28,7 +27,7 @@ interface IMakeOrderFailedAction {
 }
 
 const makeOrder: AppThunk = () => {
-  return (dispatch: AppDispatch, getState: () => RootState) => {
+  return (dispatch, getState) => {
     const bun = getState().burgerConstructor.bun;
     const ingredients = getState().burgerConstructor.ingredients;
     const order = {

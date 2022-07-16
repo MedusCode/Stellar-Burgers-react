@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid';
-import { AppDispatch, AppThunk } from '../../types/appThunk';
+import { AppThunk } from '../../types/appThunk';
 import IIngredient from '../../types/ingredient';
-import RootState from '../../types/rootState';
 
 const START_DRAGGING: 'START_DRAGGING' = 'START_DRAGGING';
 const CHANGE_DRAGGING_INDEX: 'CHANGE_DRAGGING_INDEX' = 'CHANGE_DRAGGING_INDEX';
@@ -25,7 +24,7 @@ interface IStopDraggingAction {
 }
 
 const startAddDragging: AppThunk = (ingredient: IIngredient) => {
-  return (dispatch: AppDispatch, getState: () => RootState) => {
+  return (dispatch, getState) => {
     const ingredients = getState().burgerConstructor.ingredients;
     const id = nanoid();
     dispatch({
@@ -39,7 +38,7 @@ const startAddDragging: AppThunk = (ingredient: IIngredient) => {
 }
 
 const startMoveDragging: AppThunk= (ingredient: IIngredient) => {
-  return (dispatch: AppDispatch, getState: () => RootState) => {
+  return (dispatch, getState) => {
     const ingredients = getState().burgerConstructor.ingredients;
     const initialIngredients = ingredients.filter(item => item.nanoid !== ingredient.nanoid);
     dispatch({

@@ -1,6 +1,5 @@
-import { AppDispatch, AppThunk} from '../../types/appThunk';
+import { AppThunk } from '../../types/appThunk';
 import IIngredient, { TBun } from '../../types/ingredient';
-import RootState from '../../types/rootState';
 import { INCREASE_INGREDIENTS_COUNTER, DECREASE_INGREDIENTS_COUNTER, CLEAR_COUNTERS } from './ingredients'
 
 const ADD_BUN_TO_CONSTRUCTOR: 'ADD_BUN_TO_CONSTRUCTOR' = 'ADD_BUN_TO_CONSTRUCTOR';
@@ -28,14 +27,14 @@ interface IChangeConstructorIngredients {
 }
 
 const addBunToConstructor: AppThunk = (bun: TBun) => {
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     dispatch({type: ADD_BUN_TO_CONSTRUCTOR, bun: bun});
     dispatch({type: INCREASE_INGREDIENTS_COUNTER, ingredient: bun});
   }
 }
 
 const changeConstructorIngredients: AppThunk = (isNewIngredient: boolean) => {
-  return (dispatch: AppDispatch, getState: () => RootState) => {
+  return (dispatch, getState) => {
     if (isNewIngredient) {
       const ingredient = getState().dragging.ingredient;
       dispatch({type: INCREASE_INGREDIENTS_COUNTER, ingredient: ingredient});
@@ -46,14 +45,14 @@ const changeConstructorIngredients: AppThunk = (isNewIngredient: boolean) => {
 }
 
 const removeFromConstructor: AppThunk = (ingredient: IIngredient) => {
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     dispatch({type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR, ingredient: ingredient});
     dispatch({type: DECREASE_INGREDIENTS_COUNTER, ingredient: ingredient});
   }
 }
 
 const clearConstructor: AppThunk = () => {
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     dispatch({type: CLEAR_CONSTRUCTOR});
     dispatch({type: CLEAR_COUNTERS});
   }

@@ -1,7 +1,7 @@
 import checkResponse from "../../assets/scripts/checkResponse";
 import baseUrl from "../../assets/scripts/baseUrl";
 import IIngredient from "../../types/ingredient";
-import { AppDispatch, AppThunk } from "../../types/appThunk";
+import { AppThunk } from "../../types/appThunk";
 import { IIngredientsResponseBody } from "../../types/requests";
 
 const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
@@ -42,7 +42,7 @@ interface IClearCounters {
 }
 
 const getIngredients: AppThunk = () => {
-  return function(dispatch: AppDispatch) {
+  return function(dispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
     });

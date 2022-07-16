@@ -1,11 +1,10 @@
 import { Middleware, MiddlewareAPI } from 'redux';
-import { rootReducer } from '../reducers/root';
+import { AppDispatch } from '../../types/appThunk';
+import RootState from '../../types/rootState';
 import { IWsActions } from '../store';
 
-type RootState = ReturnType<typeof rootReducer>;
-
-export const socketMiddleware = (wsUrl: string, wsActions: IWsActions, isTokenNeeded: boolean): Middleware<{}, RootState> => {
-  return (store) => {
+export const socketMiddleware = (wsUrl: string, wsActions: IWsActions, isTokenNeeded: boolean): Middleware => {
+  return (store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 
     return (next) => (action) => {
