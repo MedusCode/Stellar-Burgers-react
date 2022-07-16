@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, useCallback, FormEvent } from 'react';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks/reduxHooks';
 import styles from './login.module.css';
 import FormMessage from '../../components/form-message/form-message';
 import FormResult, { IFormResultProps } from '../../components/form-result/form-result';

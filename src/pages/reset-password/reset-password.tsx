@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, FormEvent, FocusEvent } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 import { useLocation, Redirect } from 'react-router-dom';
 import styles from './reset-password.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -14,7 +14,7 @@ import ILocation from '../../types/location';
 
 const ResetPassword: FC = () => {
   const location = useLocation<ILocation>();
-  const isAuthorized = useSelector((store: any) => store.user.isAuthorized)
+  const isAuthorized = useSelector(store => store.user.isAuthorized)
   const { values, onChange, onBlur, invalid, buttonDisability } = useForm({password: '', token: ''});
   const { isPasswordHidden, onPasswordBlur, showPassword } = usePassword();
   const [ resetStatus, setResetStatus ] = useState<IRequestStatus>({loading: false, success: false, error: false});

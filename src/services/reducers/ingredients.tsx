@@ -1,22 +1,34 @@
+import IIngredient from '../../types/ingredient';
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
   INCREASE_INGREDIENTS_COUNTER,
   DECREASE_INGREDIENTS_COUNTER,
-  CLEAR_COUNTERS } from '../actions/ingredients';
+  CLEAR_COUNTERS, 
+  TIngredientsActions} from '../actions/ingredients';
 
-const initialState = {
+interface IIngredientsState {
+  bun: Array<IIngredient>;
+  sauce: Array<IIngredient>;
+  main: Array<IIngredient>;
+
+  ingredientsRequest: boolean;
+  ingredientsFailed: boolean;
+  errorCode: number | null;
+}
+
+const initialState: IIngredientsState = {
   bun: [],
   sauce: [],
   main: [],
 
   ingredientsRequest: false,
   ingredientsFailed: false,
-  errorCode: ''
+  errorCode: null
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions): IIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
@@ -39,7 +51,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsRequest: false,
         ingredientsFailed: true,
-        errorCode: action.status || ''
+        errorCode: action.status || null
       };
     }
     case INCREASE_INGREDIENTS_COUNTER: {

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from './constructor.module.css';
@@ -8,7 +8,7 @@ import BurgerIngredients from '../../components/burger-ingredients/burger-ingred
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 
 const Constructor: FC = () => {
-  const { ingredientsFailed, errorCode } = useSelector((store: any) => ({
+  const { ingredientsFailed, errorCode } = useSelector(store => ({
     ingredientsFailed: store.ingredients.ingredientsFailed,
     errorCode: store.ingredients.errorCode
   }));

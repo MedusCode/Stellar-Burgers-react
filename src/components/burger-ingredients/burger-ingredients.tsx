@@ -1,5 +1,5 @@
 import {FC, useRef, useState, useEffect, RefObject} from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsSection from '../ingredients-section/ingredients-section';
@@ -11,7 +11,7 @@ enum SectionName {
 }
 
 const BurgerIngredients: FC = () => {
-  const { bun, sauce, main } = useSelector((store:any) => ({bun: store.ingredients.bun, sauce: store.ingredients.sauce, main: store.ingredients.main}))
+  const { bun, sauce, main } = useSelector(store => ({bun: store.ingredients.bun, sauce: store.ingredients.sauce, main: store.ingredients.main}))
   const sectionListRef = useRef<HTMLUListElement>(null);
   const bunSectionRef = useRef<HTMLHeadingElement>(null);
   const sauceSectionRef = useRef<HTMLHeadingElement>(null);

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 import styles from './loading-rocket.module.css';
 import rocket from '../../assets/images/rocket.gif';
 
@@ -8,8 +8,8 @@ interface ILoadingRocketProps {
 }
 
 const LoadingRocket: FC<ILoadingRocketProps> = ({ below }) => {
-  const allOrdersError = useSelector((store: any) => store.allOrdersWebSocket.error)
-  const userOrdersError = useSelector((store: any) => store.userOrdersWebSocket.error)
+  const allOrdersError = useSelector(store => store.allOrdersWebSocket.error)
+  const userOrdersError = useSelector(store => store.userOrdersWebSocket.error)
 
   return (
     <>

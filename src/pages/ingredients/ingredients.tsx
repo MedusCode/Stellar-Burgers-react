@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 import { useParams } from 'react-router-dom'
 import styles from './ingredients.module.css'
 import NotFound from '../not-found/not-found';
@@ -12,7 +12,7 @@ interface IIngredientsParams {
 
 const Ingredients: FC = () => {
   const params = useParams<IIngredientsParams>();
-  const {bun, sauce, main} = useSelector((store: any) => ({
+  const {bun, sauce, main} = useSelector(store => ({
     bun: store.ingredients.bun,
     sauce: store.ingredients.sauce,
     main: store.ingredients.main
@@ -20,7 +20,7 @@ const Ingredients: FC = () => {
   const [activeIngredient, setActiveIngredient] = useState<IIngredient | null>(null);
 
   useEffect(() => {
-    const ingredient: IIngredient = [...bun, ...sauce, ...main].find(ingredient => ingredient._id === params.id); 
+    const ingredient = [...bun, ...sauce, ...main].find(ingredient => ingredient._id === params.id); 
     ingredient && setActiveIngredient(ingredient);
   }, [bun, sauce, main]);
 

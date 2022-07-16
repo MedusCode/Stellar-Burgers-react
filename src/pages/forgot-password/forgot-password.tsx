@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useCallback, FormEvent } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 import { useHistory, Redirect } from 'react-router-dom';
 import styles from './forgot-password.module.css';
 import FormMessage from '../../components/form-message/form-message';
@@ -12,7 +12,7 @@ import IRequestStatus from '../../types/requestStatus';
 
 const ForgotPassword: FC = () => {
   const history = useHistory();
-  const isAuthorized = useSelector((store: any) => store.user.isAuthorized)
+  const isAuthorized = useSelector(store => store.user.isAuthorized)
   const { values, onChange, onBlur, invalid, buttonDisability } = useForm({email: ''});
   const [ resetStatus, setResetStatus ] = useState<IRequestStatus>({loading: false, success: false, error: false});
   const [ requestResult, setRequestResult ] = useState<IFormResultProps>({ message: '', buttonText: '' });
@@ -38,7 +38,6 @@ const ForgotPassword: FC = () => {
     })
       .then(checkResponse)
       .then(data => {
-        console.log(data)
         if (data.success) setResetStatus({loading: false, success: true, error: false});
         else return Promise.reject('error');
       })

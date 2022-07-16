@@ -1,19 +1,27 @@
+import IIngredient, { TBun } from '../../types/ingredient';
 import {
   ADD_BUN_TO_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   CLEAR_CONSTRUCTOR,
-  CHANGE_CONSTRUCTOR_INGREDIENTS
+  CHANGE_CONSTRUCTOR_INGREDIENTS,
+  TBurgerConstructorActions
 } from '../actions/burger-constructor';
 
-const initialState = {
+interface IBurgerConstructorState {
+  bun: TBun;
+  ingredients: Array<IIngredient>;
+  price: number;
+}
+
+const initialState: IBurgerConstructorState = {
   bun: {
     price: 0
-  },
+  } as TBun,
   ingredients: [],
   price: 0
 }
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const burgerConstructorReducer = (state = initialState, action: TBurgerConstructorActions): IBurgerConstructorState => {
   switch (action.type) {
     case ADD_BUN_TO_CONSTRUCTOR: {
       const price = state.ingredients.reduce((price, ingredient) => price + ingredient.price, 0) + action.bun.price * 2;

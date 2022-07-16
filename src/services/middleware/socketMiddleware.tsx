@@ -1,11 +1,17 @@
-export const socketMiddleware = (wsUrl, wsActions, isTokenNeeded) => {
-  return store => {
-    let socket = null;
+import { Middleware, MiddlewareAPI } from 'redux';
+import { rootReducer } from '../reducers/root';
+import { IWsActions } from '../store';
 
-    return next => action => {
-      const { dispatch, getState } = store;
-      const { type, payload } = action;
-      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage, wsClose } = wsActions;
+type RootState = ReturnType<typeof rootReducer>;
+
+export const socketMiddleware = (wsUrl: string, wsActions: IWsActions, isTokenNeeded: boolean): Middleware<{}, RootState> => {
+  return (store) => {
+    let socket: WebSocket | null = null;
+
+    return (next) => (action) => {
+      const { dispatch } = store;
+      const { type } = action;
+      const { wsInit, onOpen, onClose, onError, onMessage, wsClose } = wsActions;
 
       if (type === wsInit) {
         socket = new WebSocket(isTokenNeeded ? `${wsUrl}?token=${localStorage.getItem('accessToken')}` : wsUrl);
@@ -26,11 +32,6 @@ export const socketMiddleware = (wsUrl, wsActions, isTokenNeeded) => {
         socket.onclose = event => {
           dispatch({ type: onClose, payload: event });
         };
-
-        if (type === wsSendMessage) {
-          const message = payload;
-          socket.send(JSON.stringify(message));
-        }
 
         if (type === wsClose) {
           socket.close(1000, 'CLOSE_NORMAL')

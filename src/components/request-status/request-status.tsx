@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks/reduxHooks';
 import styles from './request-status.module.css';
 import useUserStatus from '../../services/hooks/useUserStatus';
 import { RESET_USER_REQUEST_STATUS } from '../../services/actions/user';

@@ -1,6 +1,6 @@
 import {FC, useEffect} from 'react';
 import styles from './constructor-card.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks/reduxHooks';
 import { useDrag, ConnectDropTarget, ConnectDragPreview } from "react-dnd";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { startMoveDragging, STOP_DRAGGING } from '../../services/actions/dragging';

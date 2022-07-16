@@ -1,6 +1,6 @@
 import {FC, useState, useEffect} from "react";
 import styles from './cart-element.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks/reduxHooks';
 import { ConnectDropTarget, useDrop } from "react-dnd";
 import ConstructorCard from '../constructor-card/constructor-card';
 import { CHANGE_DRAGGING_INDEX } from '../../services/actions/dragging';
@@ -14,8 +14,8 @@ const CartElement: FC<ICartElementProps> = ({ index }) => {
   const dispatch = useDispatch();
   const [ingredient, setIngredient] = useState<IIngredient | null>(null);
   const [cardStyle, setCardStyle] = useState<string>('')
-  const constructorIngredients = useSelector((store: any) => store.burgerConstructor.ingredients);
-  const { temporaryIngredients, draggingIngredientIndex, draggingType } = useSelector((store: any) => ({
+  const constructorIngredients = useSelector(store => store.burgerConstructor.ingredients);
+  const { temporaryIngredients, draggingIngredientIndex, draggingType } = useSelector(store => ({
     temporaryIngredients: store.dragging.ingredients,
     draggingIngredientIndex: store.dragging.index,
     draggingType: store.dragging.draggingType,

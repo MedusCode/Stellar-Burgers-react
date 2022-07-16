@@ -1,11 +1,11 @@
 import {FC, useEffect} from 'react';
 import styles from './constructor-bun-card.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks/reduxHooks';
 import { ConnectDropTarget, useDrop } from "react-dnd";
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { addBunToConstructor } from '../../services/actions/burger-constructor';
 import whiteBun from '../../assets/images/whiteBun.png';
-import IIngredient from '../../types/ingredient'
+import IIngredient from '../../types/ingredient';
 
 export enum BunType {
   top = 'top',
@@ -21,14 +21,14 @@ interface IConstructorBunCard {
 const ConstructorBunCard: FC<IConstructorBunCard> = ({ type, bun, setBun }) => {
   const dispatch = useDispatch();
   const caption: string = type === BunType.top ? '(верх)' : '(низ)'
-  const actualBun = useSelector((store: any) => store.burgerConstructor.bun)
-  const allBuns = useSelector((store: any) => store.ingredients.bun)
+  const actualBun = useSelector(store => store.burgerConstructor.bun)
+  const allBuns = useSelector(store => store.ingredients.bun)
 
-  const [{temporaryBun, isOver}, bunTarget]: [{isOver: boolean, temporaryBun: {id: string}}, ConnectDropTarget] = useDrop({
+  const [{temporaryBunItem, isOver}, bunTarget]: [{isOver: boolean, temporaryBunItem: {id: string}}, ConnectDropTarget] = useDrop({
     accept: "bun",
     collect: monitor => ({
       isOver: monitor.isOver(),
-      temporaryBun: monitor.getItem()
+      temporaryBunItem: monitor.getItem()
     }),
     drop() {
       actualBun !== bun && dispatch(addBunToConstructor(bun))
@@ -36,7 +36,8 @@ const ConstructorBunCard: FC<IConstructorBunCard> = ({ type, bun, setBun }) => {
   });
 
   useEffect(() => {
-    isOver && setBun(allBuns.find((bun: IIngredient) => bun._id === temporaryBun.id))
+    const temporaryBun: IIngredient | undefined = allBuns.find((bun: IIngredient) => bun._id === temporaryBunItem?.id) 
+    if (isOver && temporaryBun) setBun(temporaryBun)
     !isOver && setBun(actualBun)
   }, [isOver, actualBun])
 

@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks/reduxHooks';
 import { useHistory, useLocation } from 'react-router-dom'
 import styles from './burger-constructor.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,8 +12,8 @@ const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation<ILocation>();
-  const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
-  const { price, bun } = useSelector((store: any) => ({
+  const isAuthorized = useSelector(store => store.user.isAuthorized);
+  const { price, bun } = useSelector(store => ({
     price: store.burgerConstructor.price,
     bun: store.burgerConstructor.bun
   }))

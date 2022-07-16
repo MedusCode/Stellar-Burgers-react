@@ -1,8 +1,8 @@
 import {FC} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks/reduxHooks';
 import { useHistory } from 'react-router-dom';
 import styles from './form-result.module.css';
-import { RESET_USER_REQUEST_STATUS } from '../../services/actions/user.jsx';
+import { RESET_USER_REQUEST_STATUS } from '../../services/actions/user';
 
 export interface IFormResultProps {
   message: string;

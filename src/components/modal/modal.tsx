@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -16,8 +16,8 @@ interface IModalProps {
 }
 
 const Modal: FC<IModalProps> = ({ onClose, size, children }) => {
-  const userRequest = useSelector((store: any)=> store.user.request);
-  const orderRequest = useSelector((store: any) => store.order.orderRequest);
+  const userRequest = useSelector(store => store.user.request);
+  const orderRequest = useSelector(store => store.order.orderRequest);
   const request: boolean = userRequest || orderRequest;
 
   const handleModalClose = () => {

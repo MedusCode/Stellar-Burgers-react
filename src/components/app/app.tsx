@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import ProtectedRoute from '../protected-route/protected-route';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks/reduxHooks';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import Constructor from '../../pages/constructor/constructor';
@@ -30,9 +30,9 @@ const App: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation<ILocation>();
   const history = useHistory();
-  const tokenAuthorization = useSelector((store: any) => store.user.tokenAuthorization)
-  const ingredientsRequest = useSelector((store: any) => store.ingredients.ingredientsRequest)
-  const { isModalOpened, modalType } = useSelector((store: any) => ({
+  const tokenAuthorization = useSelector(store => store.user.tokenAuthorization)
+  const ingredientsRequest = useSelector(store => store.ingredients.ingredientsRequest)
+  const { isModalOpened, modalType } = useSelector(store => ({
     isModalOpened: store.modal.isOpen,
     modalType: store.modal.modalType
   }));

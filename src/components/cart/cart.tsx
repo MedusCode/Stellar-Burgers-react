@@ -1,16 +1,16 @@
 import {FC, useState, useRef, useEffect} from 'react';
 import styles from './cart.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 import ConstructorBunCard, { BunType } from '../constructor-bun-card/constructor-bun-card';
 import CartElement from '../cart-element/cart-element';
 import IIngredient from '../../types/ingredient';
 
 
 const Cart: FC = () => {
-  const [bun, setBun] = useState<IIngredient>({} as IIngredient);
+  const [bun, setBun] = useState<IIngredient >({} as IIngredient);
   const elementsContainerRef = useRef<HTMLUListElement>(null);
-  const constructorIngredients = useSelector((store: any) => store.burgerConstructor.ingredients);
-  const { draggingIngredientIndex, draggingType } =  useSelector((store: any) => ({
+  const constructorIngredients = useSelector(store => store.burgerConstructor.ingredients);
+  const { draggingIngredientIndex, draggingType } =  useSelector(store => ({
     draggingIngredientIndex: store.dragging.index,
     draggingType: store.dragging.draggingType,
   }));

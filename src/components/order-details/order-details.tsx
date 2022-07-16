@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks/reduxHooks';
 import styles from './order-details.module.css';
 import SuccessfulOrderGif from '../../assets/images/successful-order.gif';
 import { makeOrder } from '../../services/actions/order';
@@ -7,7 +7,7 @@ import LoadingRocket from '../loading-rocket/loading-rocket';
 
 const OrderDetails: FC = () => {
   const dispatch = useDispatch();
-  const { orderNum, orderSuccess, orderFailed } = useSelector((store: any) => ({
+  const { orderNum, orderSuccess, orderFailed } = useSelector(store => ({
     orderNum: store.order.orderNum,
     orderSuccess: store.order.orderSuccess,
     orderFailed: store.order.orderFailed,

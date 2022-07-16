@@ -1,10 +1,10 @@
 import { FC, useState, useEffect, MouseEvent, FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks/reduxHooks';
 import styles from './profile-info.module.css';
 import useForm from '../../services/hooks/useForm';
 import usePassword from '../../services/hooks/usePassword';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { updateUserRequest } from '../../services/actions/user.jsx';
+import { updateUserRequest } from '../../services/actions/user';
 import { OPEN_MODAL } from '../../services/actions/modal';
 
 enum InputsNames {
@@ -17,9 +17,9 @@ enum InputsNames {
 const ProfileInfo: FC = () => {
   const dispatch = useDispatch();
   const { isPasswordHidden, onPasswordBlur, showPassword } = usePassword();
-  const isModalOpened = useSelector((store: any) => store.modal.isOpen);
-  const requestFailed = useSelector((store: any) => store.user.requestFailed);
-  const user = useSelector((store: any) => store.user.user)
+  const isModalOpened = useSelector(store => store.modal.isOpen);
+  const requestFailed = useSelector(store => store.user.requestFailed);
+  const user = useSelector(store => store.user.user)
   const [ activeInput, setActiveInput ] = useState<InputsNames>(InputsNames.none);
   const { values, onChange, onFocus, invalid, resetForm } = useForm({name: user.name, email: user.email, password: ''});
 

@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks/reduxHooks';
 import styles from './feed.module.css';
 import OrderList from '../../components/orders-list/orders-list';
 import OrdersStats from '../../components/orders-stats/orders-stats';

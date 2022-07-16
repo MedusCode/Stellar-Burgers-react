@@ -1,7 +1,7 @@
 import {FC, useEffect} from 'react';
 import styles from './ingredient-card.module.css';
 import { useLocation, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks/reduxHooks';
 import { useDrag, ConnectDropTarget, ConnectDragPreview, ConnectDragSource } from "react-dnd";
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OPEN_MODAL } from '../../services/actions/modal';

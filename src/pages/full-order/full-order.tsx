@@ -1,6 +1,6 @@
 import {FC, useState, useEffect} from 'react';
 import styles from './full-order.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks/reduxHooks';
 import { useParams, useLocation } from 'react-router-dom';
 import Order from '../../components/order/order'
 import NotFound from '../not-found/not-found';

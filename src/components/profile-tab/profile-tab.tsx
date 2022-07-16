@@ -1,8 +1,8 @@
 import { FC, useRef, MouseEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks/reduxHooks';
 import { NavLink, useRouteMatch, useLocation } from 'react-router-dom';
 import styles from './profile-tab.module.css';
-import { logoutRequest } from '../../services/actions/user.jsx';
+import { logoutRequest } from '../../services/actions/user';
 import { OPEN_MODAL } from '../../services/actions/modal';
 import ILocation from '../../types/location';
 
@@ -15,7 +15,8 @@ const ProfileTab: FC = () => {
   const location = useLocation<ILocation>();
   const logoutButtonRef = useRef<HTMLButtonElement>(null)
   const { path } = useRouteMatch<IRouteMatch>();
-  const confirmationType = useSelector((store: any) => store.modal.confirmationType)
+  const modalType = useSelector(store => store.modal.modalType);
+  const isConfirmationModal = modalType === 'confirmation';
 
   const logout = () => {
     dispatch(logoutRequest());
@@ -29,7 +30,6 @@ const ProfileTab: FC = () => {
         type: OPEN_MODAL, 
         modalType: 'confirmation',
         text: 'Вы уверены, что хотите выйти?',
-        confirmationType: 'logout', 
         handler: logout 
       });
     }
@@ -41,7 +41,7 @@ const ProfileTab: FC = () => {
         to={path} 
         exact 
         className={`${styles.link} text text_type_main-medium text_color_inactive`} 
-        activeClassName={confirmationType !== 'logout' ? styles.activeLink : ''}
+        activeClassName={!isConfirmationModal ? styles.activeLink : ''}
       >
         Профиль
       </NavLink>
@@ -49,14 +49,14 @@ const ProfileTab: FC = () => {
         to={`${path}/orders`} 
         exact 
         className={`${styles.link} text text_type_main-medium text_color_inactive`} 
-        activeClassName={confirmationType !== 'logout' ? styles.activeLink : ''}
+        activeClassName={!isConfirmationModal ? styles.activeLink : ''}
       >
         История Заказов
       </NavLink>
       <button 
         onClick={openConfirmationModal} 
         ref={logoutButtonRef}
-        className={`${styles.link} ${confirmationType === 'logout' ? styles.activeButton : ''} text text_type_main-medium text_color_inactive`}
+        className={`${styles.link} ${isConfirmationModal ? styles.activeButton : ''} text text_type_main-medium text_color_inactive`}
       >
         Выход
       </button>

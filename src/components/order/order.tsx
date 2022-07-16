@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styles from './order.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 import Composition from '../composition/composition';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import getOrderStatus from '../../assets/scripts/getOrderStatus';
@@ -14,12 +14,16 @@ interface IOrderProps {
 }
 
 const Order: FC<IOrderProps> = (props) => {
-  const { isModalOpened, modalOrder } = useSelector((store: any) => ({
+  const { isModalOpened, modalOrder } = useSelector(store => ({
     isModalOpened: store.modal.isOpen,
     modalOrder: store.modal.currentOrder
   }));
   const fullPageOrder = useOrderHandler(props.order); 
-  const order: IOrderWithIngredientList = props.order ? fullPageOrder : modalOrder;
+  const order = props.order ? fullPageOrder : modalOrder;
+
+  if (!order) return (
+    <span>Заказ ее найден :(</span>
+  )
 
   const getIngredientsList = (ingredients: Array<IIngredient>): Array<IIngredient> => {
     let ingredientsList = {} as {[id: string]: IIngredient & { amount: number } };

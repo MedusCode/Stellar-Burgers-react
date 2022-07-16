@@ -1,12 +1,12 @@
 import {FC, useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks/reduxHooks';
 import styles from './confirmation.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OPEN_MODAL, CLOSE_MODAL } from '../../services/actions/modal';
 
 const Confirmation: FC = () => {
   const dispatch = useDispatch();
-  const { text, handleRequest } = useSelector((store: any) => ({
+  const { text, handleRequest } = useSelector(store => ({
     text: store.modal.text,
     handleRequest: store.modal.handler,
   }));

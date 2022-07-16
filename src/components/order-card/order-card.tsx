@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { nanoid } from 'nanoid';
 import getData from '../../assets/scripts/getData';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks/reduxHooks';
 import { useLocation, useHistory } from 'react-router-dom';
 import useOrderHandler from '../../services/hooks/useOrderHandler';
 import styles from './order-card.module.css';

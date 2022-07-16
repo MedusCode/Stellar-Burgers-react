@@ -1,6 +1,19 @@
-import { USER_REQUEST, USER_SUCCESS, USER_FAILED, RESET_USER_STORAGE, RESET_USER_REQUEST_STATUS, TOKEN_AUTHORIZATION } from '../actions/user';
+import TUser from '../../types/user';
+import { USER_REQUEST, USER_SUCCESS, USER_FAILED, RESET_USER_STORAGE, RESET_USER_REQUEST_STATUS, TOKEN_AUTHORIZATION, TUserActions } from '../actions/user';
 
-const initialState = {
+interface IUserState {
+  user: TUser;
+
+  isAuthorized: boolean;
+  request: boolean;
+  requestSuccess: boolean;
+  requestFailed: boolean;
+  errorStatus: number | null;
+  errorMessage: string;
+  tokenAuthorization: boolean;
+}
+
+const initialState: IUserState = {
   user: {
     email: '',
     name: ''
@@ -10,12 +23,12 @@ const initialState = {
   request: false,
   requestSuccess: false,
   requestFailed: false,
-  errorStatus: '',
+  errorStatus: null,
   errorMessage: '',
   tokenAuthorization: false,
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions): IUserState => {
   switch (action.type) {
     case USER_REQUEST: {
       return {
@@ -23,7 +36,7 @@ export const userReducer = (state = initialState, action) => {
         request: true,
         requestSuccess: false,
         requestFailed: false,
-        errorStatus: '',
+        errorStatus: null,
         errorMessage: '',
       };
     }
@@ -40,7 +53,7 @@ export const userReducer = (state = initialState, action) => {
         request: false,
         requestFailed: false,
         tokenAuthorization: false,
-        errorStatus: '',
+        errorStatus: null,
         errorMessage: '',
       }
     }
@@ -50,13 +63,10 @@ export const userReducer = (state = initialState, action) => {
         requestSuccess: false,
         request: false,
         requestFailed: true,
-        errorStatus: action.status || '',
+        errorStatus: action.status || null,
         errorMessage: action.errorMessage || '',
         tokenAuthorization: false,
       };
-    }
-    case RESET_USER_STORAGE: {
-      return initialState
     }
     case RESET_USER_REQUEST_STATUS: {
       return {
@@ -64,7 +74,7 @@ export const userReducer = (state = initialState, action) => {
         requestSuccess: false,
         request: false,
         requestFailed: false,
-        errorStatus: '',
+        errorStatus: null,
         errorMessage: '',
         tokenAuthorization: false,
       }
@@ -75,9 +85,14 @@ export const userReducer = (state = initialState, action) => {
         tokenAuthorization: true,
         requestSuccess: false,
         requestFailed: false,
-        errorStatus: '',
+        errorStatus: null,
         errorMessage: '',
       } 
+    }
+    case RESET_USER_STORAGE: {
+      return {
+        ...initialState
+      }
     }
     default: {
       return state;

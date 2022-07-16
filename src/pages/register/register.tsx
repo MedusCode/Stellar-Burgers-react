@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, useCallback, FormEvent, FocusEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks/reduxHooks';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';

@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 
 interface IUseUserStatusReturns {
   isAuthorized: boolean;
   request: boolean;
   requestFailed: boolean;
-  errorStatus: number;
+  errorStatus: number | null;
   isRequested: boolean;
   requestSuccess: boolean;
   errorMessage: string;
 }
 
 const useUserStatus = (): IUseUserStatusReturns => {
-  const { isAuthorized, request, requestSuccess, requestFailed, errorStatus, errorMessage } = useSelector((store: any) => ({
+  const { isAuthorized, request, requestSuccess, requestFailed, errorStatus, errorMessage } = useSelector(store => ({
     isAuthorized: store.user.isAuthorized,
     request: store.user.request,
     requestSuccess: store.user.requestSuccess,

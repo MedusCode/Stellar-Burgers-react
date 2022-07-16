@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 import styles from './ingredient-details.module.css';
 import IIngredient from '../../types/ingredient';
 
@@ -8,11 +8,15 @@ interface IIngredientDetailsProps {
 }
 
 const IngredientDetails: FC<IIngredientDetailsProps> = (props) => {
-  const { isModalOpened, modalIngredient } = useSelector((store: any) => ({
+  const { isModalOpened, modalIngredient } = useSelector(store => ({
     isModalOpened: store.modal.isOpen,
     modalIngredient: store.modal.currentIngredient
   }))
-  const ingredient: IIngredient = props.ingredient ? props.ingredient : modalIngredient;
+  const ingredient = props.ingredient ? props.ingredient : modalIngredient;
+
+  if (!ingredient) return (
+    <span>Ингредиент не найден :(</span>
+  )
 
   return (
     <div className={styles.container}>

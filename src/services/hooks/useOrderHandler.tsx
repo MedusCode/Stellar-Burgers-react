@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks/reduxHooks';
 import IIngredient from '../../types/ingredient';
 import IOrder, { IOrderWithIngredientList } from '../../types/order';
 
 const useOrderHandler = (initialOrder: IOrder | undefined): IOrderWithIngredientList | null => {
-  const { bun, sauce, main } = useSelector((store: any) => ({
+  const { bun, sauce, main } = useSelector(store => ({
     bun: store.ingredients.bun,
     sauce: store.ingredients.sauce,
     main: store.ingredients.main
