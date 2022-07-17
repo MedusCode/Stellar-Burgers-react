@@ -2,3 +2,14 @@
   display: block;
   text-align: center;
 }  
+
+.rocketContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.rocket {
+  height: 100px;
+  transform: rotate(90deg);
+}
