@@ -6,7 +6,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import getOrderStatus from '../../assets/scripts/getOrderStatus';
 import getData from '../../assets/scripts/getData';
 import useOrderHandler from '../../services/hooks/useOrderHandler';
-import IOrder, { IOrderWithIngredientList } from '../../types/order';
+import IOrder from '../../types/order';
 import IIngredient from '../../types/ingredient'
 
 interface IOrderProps {
@@ -18,7 +18,7 @@ const Order: FC<IOrderProps> = (props) => {
     isModalOpened: store.modal.isOpen,
     modalOrder: store.modal.currentOrder
   }));
-  const fullPageOrder = useOrderHandler(props.order); 
+  const fullPageOrder = useOrderHandler(props.order);
   const order = props.order ? fullPageOrder : modalOrder;
 
   if (!order) return (
@@ -48,9 +48,9 @@ const Order: FC<IOrderProps> = (props) => {
       <h3 className={'text text_type_main-medium mt-15 mb-6'}>Состав:</h3>
       <Composition compositionIngredients={getIngredientsList(order.ingredients)} />
       <div className={styles.footer}>
-        <span className={`${styles.date} text text_type_main-default text_color_inactive`}>{getData(order.createdAt)}</span>
+        <span className='text text_type_main-default text_color_inactive'>{getData(order.createdAt)}</span>
         <div className={styles.priceContainer}>
-          <span className={`${styles.price} 'text text_type_digits-default`}>{order.price}</span>
+          <span className={'text text_type_digits-default'}>{order.price}</span>
           <CurrencyIcon type="primary" />
         </div>
       </div>

@@ -21,7 +21,7 @@ const IngredientDetails: FC<IIngredientDetailsProps> = (props) => {
   return (
     <div className={styles.container}>
       <h2 className={`${styles.title} ${isModalOpened ? styles.titleLeft : ''} text text_type_main-large`}>Детали ингредиента</h2>
-      <img className={`${styles.image} mb-4`} src={ingredient.image_large} alt={ingredient.name} />
+      <img className='mb-4' src={ingredient.image_large} alt={ingredient.name} />
       <h3 className='text text_type_main-medium mb-8'>{ingredient.name}</h3>
       <div className={styles.infoContainer}>
         <div className={`${styles.info} mr-5`}>

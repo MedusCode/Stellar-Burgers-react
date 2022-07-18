@@ -35,7 +35,7 @@ const ConstructorCard: FC<IConstructorCardProps> = ({ ingredient, isOver }) => {
 
   useEffect(() => {
     isDragging && dispatch(startMoveDragging(ingredient));
-  }, [isDragging])
+  }, [isDragging, dispatch, ingredient])
 
   return (
     <li className={`${styles.ingredient} ${isOver ? styles.over : ''} pl-4 mr-4 mb-2 mt-2`} ref={ingredientRef}>

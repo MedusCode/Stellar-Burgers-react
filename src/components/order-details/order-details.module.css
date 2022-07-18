@@ -15,7 +15,7 @@
 }
 
 .message {
-  display: box;
+  display: flex;
   padding-top: 150px;
   padding-bottom: 225px;
   text-align: center;
