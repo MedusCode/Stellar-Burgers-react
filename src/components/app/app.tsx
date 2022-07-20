@@ -37,7 +37,10 @@ const App: FC = () => {
     modalType: store.modal.modalType
   }));
   const background = location.state && location.state.background;
-  window.history.replaceState({}, document.title)
+
+  useEffect(() => {
+    window.history.replaceState({}, document.title)
+  }, [ background ])
 
   const closeOrdinaryModal = () => {
     dispatch({type: CLOSE_MODAL})

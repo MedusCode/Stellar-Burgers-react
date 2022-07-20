@@ -36,7 +36,7 @@ const Cart: FC = () => {
         <ConstructorBunCard type={BunType.top} bun={bun} setBun={setBun} />
         <ul className={styles.ingredientsContainer} ref={elementsContainerRef}>
           {constructorIngredients.map((item: IIngredient, index: number) => (<CartElement index={index} key={item.nanoid} />))}
-          {(draggingIngredientIndex >= 0 && draggingType === 'add' || constructorIngredients.length === 0)
+          {((draggingIngredientIndex >= 0 && draggingType === 'add') || constructorIngredients.length === 0)
               && <CartElement index={constructorIngredients.length} />}
         </ul>
         <ConstructorBunCard type={BunType.bottom} bun={bun} setBun={setBun} />
