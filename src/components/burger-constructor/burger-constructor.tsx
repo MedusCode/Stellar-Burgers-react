@@ -24,14 +24,14 @@ const BurgerConstructor: FC = () => {
   }
 
   return (
-    <section className={`${styles.constructor} pt-25`}>
+    <section className={`${styles.constructorContainer} pt-25`}>
       <Cart />
       <div className={`${styles.takeOrderContainer} mt-10 mr-4`}>
         <div className={`${styles.priceContainer} mr-10`}>
           <span className='text text_type_digits-medium mr-2'>{price}</span>
           <CurrencyIconLarge />
         </div>
-        <Button type="primary" size="large" onClick={openModal} disabled={bun._id ? false : true}>Оформить заказ</Button>
+        <Button type="primary" size="large" onClick={openModal} disabled={!bun._id}>Оформить заказ</Button>
       </div>
     </section>
   )
